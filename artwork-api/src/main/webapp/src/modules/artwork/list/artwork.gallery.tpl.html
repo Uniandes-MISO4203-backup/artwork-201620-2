@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<div class="list">            
+    <div ng-if="true" class="col-md-2 well" >
+        <h4>Categorías</h4>
+        <span style="cursor: pointer" class="glyphicon glyphicon-repeat" ng-click="filtrar('')"></span>
+        <ul style="list-style:none">
+            <li ng-repeat="category in categorys"><a ng-click="filtrar(category.id)" style="cursor: pointer">{{category.name}}</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div ng-repeat="artwork in records">
+            <div style="box-shadow: 2px 2px 5px gray; border-radius: 5px;margin: 5px" class="col-md-4 col-sm-6 col-lg-3 well">
+            <div class="col-md-12">
+                <div class="img-thumbnail" >
+                    <a ng-href="{{artwork.image}}" target="_blank"><img style="width: 250px;height: 250px" class="img-responsive" ng-src="{{artwork.image}}"></a>
+                </div>
+            </div>
+            <div class="caption" >
+                <p><strong>Name: </strong> {{artwork.name}}</p>
+                <p><strong>Price: </strong> {{artwork.price| currency}}</p>              
+            </div>
+            </div>
+        </div>
+    </div>    
+</div>
