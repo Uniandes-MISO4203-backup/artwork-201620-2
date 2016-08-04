@@ -21,13 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package co.edu.uniandes.csw.artwork.tests;
+package co.edu.uniandes.csw.artwork.tests.rest;
 
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
-import co.edu.uniandes.csw.artwork.entities.ProductEntity;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ProductDTO;
-import co.edu.uniandes.csw.artwork.resources.ProductResource;
+import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
+import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
+import co.edu.uniandes.csw.artwork.resources.ArtworkResource;
+import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -61,10 +63,10 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /*
- * Testing URI: products/
+ * Testing URI: artists/{artworksId: \\d+}/artworks/
  */
 @RunWith(Arquillian.class)
-public class ProductTest {
+public class ArtworkTest {
 
     private WebTarget target;
     private final String apiPath = Utils.apiPath;
@@ -76,10 +78,12 @@ public class ProductTest {
     private final int Created = Status.CREATED.getStatusCode();
     private final int OkWithoutContent = Status.NO_CONTENT.getStatusCode();
 
-    private final static List<ProductEntity> oraculo = new ArrayList<>();
+    private final static List<ArtworkEntity> oraculo = new ArrayList<>();
 
-    private final String productPath = "products";
+    private final String artistPath = "artists";
+    private final String artworkPath = "artworks";
 
+    ArtistEntity fatherArtistEntity;
 
     @ArquillianResource
     private URL deploymentURL;
@@ -92,7 +96,7 @@ public class ProductTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ProductResource.class.getPackage())
+                .addPackage(ArtworkResource.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -114,7 +118,8 @@ public class ProductTest {
     private UserTransaction utx;
 
     private void clearData() {
-        em.createQuery("delete from ProductEntity").executeUpdate();
+        em.createQuery("delete from ArtworkEntity").executeUpdate();
+        em.createQuery("delete from ArtistEntity").executeUpdate();
         oraculo.clear();
     }
 
@@ -124,11 +129,16 @@ public class ProductTest {
      * @generated
      */
     public void insertData() {
+        fatherArtistEntity = factory.manufacturePojo(ArtistEntity.class);
+        fatherArtistEntity.setId(1L);
+        em.persist(fatherArtistEntity);
+
         for (int i = 0; i < 3; i++) {            
-            ProductEntity product = factory.manufacturePojo(ProductEntity.class);
-            product.setId(i + 1L);
-            em.persist(product);
-            oraculo.add(product);
+            ArtworkEntity artwork = factory.manufacturePojo(ArtworkEntity.class);
+            artwork.setId(i + 1L);
+            artwork.setArtist(fatherArtistEntity);
+            em.persist(artwork);
+            oraculo.add(artwork);
         }
     }
 
@@ -153,7 +163,9 @@ public class ProductTest {
             }
         }
         target = createWebTarget()
-                .path(productPath);
+                .path(artistPath)
+                .path(fatherArtistEntity.getId().toString())
+                .path(artworkPath);
     }
 
     /**
@@ -179,104 +191,108 @@ public class ProductTest {
     }
 
     /**
-     * Prueba para crear un Product
+     * Prueba para crear un Artwork
      *
      * @generated
      */
     @Test
-    public void createProductTest() throws IOException {
-        ProductDTO product = factory.manufacturePojo(ProductDTO.class);
+    public void createArtworkTest() throws IOException {
+        ArtworkDTO artwork = factory.manufacturePojo(ArtworkDTO.class);
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId)
-            .post(Entity.entity(product, MediaType.APPLICATION_JSON));
+            .post(Entity.entity(artwork, MediaType.APPLICATION_JSON));
 
-        ProductDTO  productTest = (ProductDTO) response.readEntity(ProductDTO.class);
+        ArtworkDTO  artworkTest = (ArtworkDTO) response.readEntity(ArtworkDTO.class);
 
         Assert.assertEquals(Created, response.getStatus());
 
-        Assert.assertEquals(product.getName(), productTest.getName());
-        Assert.assertEquals(product.getPrice(), productTest.getPrice());
+        Assert.assertEquals(artwork.getName(), artworkTest.getName());
+        Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
+        Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
 
-        ProductEntity entity = em.find(ProductEntity.class, productTest.getId());
+        ArtworkEntity entity = em.find(ArtworkEntity.class, artworkTest.getId());
         Assert.assertNotNull(entity);
     }
 
     /**
-     * Prueba para consultar un Product
+     * Prueba para consultar un Artwork
      *
      * @generated
      */
     @Test
-    public void getProductByIdTest() {
+    public void getArtworkByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
-        ProductDTO productTest = target
+        ArtworkDTO artworkTest = target
             .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(ProductDTO.class);
+            .request().cookie(cookieSessionId).get(ArtworkDTO.class);
         
-        Assert.assertEquals(productTest.getId(), oraculo.get(0).getId());
-        Assert.assertEquals(productTest.getName(), oraculo.get(0).getName());
-        Assert.assertEquals(productTest.getPrice(), oraculo.get(0).getPrice());
+        Assert.assertEquals(artworkTest.getId(), oraculo.get(0).getId());
+        Assert.assertEquals(artworkTest.getName(), oraculo.get(0).getName());
+        Assert.assertEquals(artworkTest.getImage(), oraculo.get(0).getImage());
+        Assert.assertEquals(artworkTest.getPrice(), oraculo.get(0).getPrice());
     }
 
     /**
-     * Prueba para consultar la lista de Products
+     * Prueba para consultar la lista de Artworks
      *
      * @generated
      */
     @Test
-    public void listProductTest() throws IOException {
+    public void listArtworkTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId).get();
 
-        String listProduct = response.readEntity(String.class);
-        List<ProductDTO> listProductTest = new ObjectMapper().readValue(listProduct, List.class);
+        String listArtwork = response.readEntity(String.class);
+        List<ArtworkDTO> listArtworkTest = new ObjectMapper().readValue(listArtwork, List.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(3, listProductTest.size());
+        Assert.assertEquals(3, listArtworkTest.size());
     }
 
     /**
-     * Prueba para actualizar un Product
+     * Prueba para actualizar un Artwork
      *
      * @generated
      */
     @Test
-    public void updateProductTest() throws IOException {
+    public void updateArtworkTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
-        ProductDTO product = new ProductDTO(oraculo.get(0));
+        ArtworkDTO artwork = new ArtworkDTO(oraculo.get(0));
 
-        ProductDTO productChanged = factory.manufacturePojo(ProductDTO.class);
+        ArtworkDTO artworkChanged = factory.manufacturePojo(ArtworkDTO.class);
 
-        product.setName(productChanged.getName());
-        product.setPrice(productChanged.getPrice());
+        artwork.setName(artworkChanged.getName());
+        artwork.setImage(artworkChanged.getImage());
+        artwork.setPrice(artworkChanged.getPrice());
 
         Response response = target
-            .path(product.getId().toString())
+            .path(artwork.getId().toString())
             .request().cookie(cookieSessionId)
-            .put(Entity.entity(product, MediaType.APPLICATION_JSON));
+            .put(Entity.entity(artwork, MediaType.APPLICATION_JSON));
 
-        ProductDTO productTest = (ProductDTO) response.readEntity(ProductDTO.class);
+        ArtworkDTO artworkTest = (ArtworkDTO) response.readEntity(ArtworkDTO.class);
 
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(product.getName(), productTest.getName());
-        Assert.assertEquals(product.getPrice(), productTest.getPrice());
+        Assert.assertEquals(artwork.getName(), artworkTest.getName());
+        Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
+        Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
     }
 
     /**
-     * Prueba para eliminar un Product
+     * Prueba para eliminar un Artwork
      *
      * @generated
      */
     @Test
-    public void deleteProductTest() {
+    public void deleteArtworkTest() {
         Cookie cookieSessionId = login(username, password);
-        ProductDTO product = new ProductDTO(oraculo.get(0));
+        ArtworkDTO artwork = new ArtworkDTO(oraculo.get(0));
         Response response = target
-            .path(product.getId().toString())
+            .path(artwork.getId().toString())
             .request().cookie(cookieSessionId).delete();
 
         Assert.assertEquals(OkWithoutContent, response.getStatus());

@@ -1,4 +1,4 @@
-<!--
+/*
 The MIT License (MIT)
 
 Copyright (c) 2015 Los Andes University
@@ -20,20 +20,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
--->
-<header>
-    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
-</header>
-<div  class="container-fluid well">
-    <div class="col-md-12">
-        <p>
-        <label><strong>Name: </strong></label><span id="name"> {{currentRecord.name}}</span>
-        </p>
-        <p>
-        <label><strong>Qty: </strong></label><span id="qty"> {{currentRecord.qty}}</span>
-        </p>
-        <p><label><strong>Artwork: </strong></label><span id="artwork"> {{currentRecord.artwork.name}}</span></p>
-        <p><label><strong>Product: </strong></label><span id="product"> {{currentRecord.product.name}}</span></p>
-    </div>
-</div>
-<!-- TODO -->
+*/
+package co.edu.uniandes.csw.artwork.tests.selenium.pages.artist;
+
+import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistDTO;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class ArtistEditPage {
+
+    @FindBy(id = "name")
+    private WebElement nameInput;
+
+    @FindBy(id = "save-artist")
+    private WebElement saveBtn;
+
+    @FindBy(id = "cancel-artist")
+    private WebElement cancelBtn;
+
+    public void saveArtist(ArtistDTO artist) {
+         waitGui().until().element(nameInput).is().visible();
+         nameInput.clear();
+         nameInput.sendKeys(artist.getName());
+        guardAjax(saveBtn).click();
+    }
+}

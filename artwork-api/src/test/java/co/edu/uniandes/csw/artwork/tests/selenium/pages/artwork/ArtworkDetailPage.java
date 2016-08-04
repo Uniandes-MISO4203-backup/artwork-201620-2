@@ -1,4 +1,4 @@
-<!--
+/*
 The MIT License (MIT)
 
 Copyright (c) 2015 Los Andes University
@@ -20,20 +20,49 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
--->
-<header>
-    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
-</header>
-<div  class="container-fluid well">
-    <div class="col-md-12">
-        <p>
-        <label><strong>Name: </strong></label><span id="name"> {{currentRecord.name}}</span>
-        </p>
-        <p>
-        <label><strong>Qty: </strong></label><span id="qty"> {{currentRecord.qty}}</span>
-        </p>
-        <p><label><strong>Artwork: </strong></label><span id="artwork"> {{currentRecord.artwork.name}}</span></p>
-        <p><label><strong>Product: </strong></label><span id="product"> {{currentRecord.product.name}}</span></p>
-    </div>
-</div>
-<!-- TODO -->
+*/
+package co.edu.uniandes.csw.artwork.tests.selenium.pages.artwork;
+
+import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class ArtworkDetailPage {
+
+    @FindBy(id = "delete-artwork")
+    private WebElement deleteBtn;
+
+    @FindBy(id = "edit-artwork")
+    private WebElement editBtn;
+
+    @FindBy(id = "list-artwork")
+    private WebElement listBtn;
+
+    
+    @FindBy(id = "name")
+    private WebElement name;
+    @FindBy(id = "image")
+    private WebElement image;
+    @FindBy(id = "price")
+    private WebElement price;
+
+    public void list() {
+        listBtn.click();
+    }
+
+    public void edit() {
+        editBtn.click();
+    }
+
+    public void delete() {
+        deleteBtn.click();
+    }
+
+    public ArtworkDTO getData() {
+        ArtworkDTO artwork = new ArtworkDTO();        
+        artwork.setName(name.getText());
+        artwork.setImage(image.getText());
+        artwork.setPrice(Long.parseLong(price.getText()));
+        return artwork;
+    }
+}

@@ -21,13 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package co.edu.uniandes.csw.artwork.tests;
+package co.edu.uniandes.csw.artwork.tests.rest;
 
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
-import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistDTO;
-import co.edu.uniandes.csw.artwork.resources.ArtistResource;
+import co.edu.uniandes.csw.artwork.entities.CategoryEntity;
+import co.edu.uniandes.csw.artwork.dtos.minimum.CategoryDTO;
+import co.edu.uniandes.csw.artwork.resources.CategoryResource;
+import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -61,10 +62,10 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /*
- * Testing URI: artists/
+ * Testing URI: categorys/
  */
 @RunWith(Arquillian.class)
-public class ArtistTest {
+public class CategoryTest {
 
     private WebTarget target;
     private final String apiPath = Utils.apiPath;
@@ -76,9 +77,9 @@ public class ArtistTest {
     private final int Created = Status.CREATED.getStatusCode();
     private final int OkWithoutContent = Status.NO_CONTENT.getStatusCode();
 
-    private final static List<ArtistEntity> oraculo = new ArrayList<>();
+    private final static List<CategoryEntity> oraculo = new ArrayList<>();
 
-    private final String artistPath = "artists";
+    private final String categoryPath = "categorys";
 
 
     @ArquillianResource
@@ -92,7 +93,7 @@ public class ArtistTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ArtistResource.class.getPackage())
+                .addPackage(CategoryResource.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -114,7 +115,7 @@ public class ArtistTest {
     private UserTransaction utx;
 
     private void clearData() {
-        em.createQuery("delete from ArtistEntity").executeUpdate();
+        em.createQuery("delete from CategoryEntity").executeUpdate();
         oraculo.clear();
     }
 
@@ -125,10 +126,10 @@ public class ArtistTest {
      */
     public void insertData() {
         for (int i = 0; i < 3; i++) {            
-            ArtistEntity artist = factory.manufacturePojo(ArtistEntity.class);
-            artist.setId(i + 1L);
-            em.persist(artist);
-            oraculo.add(artist);
+            CategoryEntity category = factory.manufacturePojo(CategoryEntity.class);
+            category.setId(i + 1L);
+            em.persist(category);
+            oraculo.add(category);
         }
     }
 
@@ -153,7 +154,7 @@ public class ArtistTest {
             }
         }
         target = createWebTarget()
-                .path(artistPath);
+                .path(categoryPath);
     }
 
     /**
@@ -179,100 +180,100 @@ public class ArtistTest {
     }
 
     /**
-     * Prueba para crear un Artist
+     * Prueba para crear un Category
      *
      * @generated
      */
     @Test
-    public void createArtistTest() throws IOException {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
+    public void createCategoryTest() throws IOException {
+        CategoryDTO category = factory.manufacturePojo(CategoryDTO.class);
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId)
-            .post(Entity.entity(artist, MediaType.APPLICATION_JSON));
+            .post(Entity.entity(category, MediaType.APPLICATION_JSON));
 
-        ArtistDTO  artistTest = (ArtistDTO) response.readEntity(ArtistDTO.class);
+        CategoryDTO  categoryTest = (CategoryDTO) response.readEntity(CategoryDTO.class);
 
         Assert.assertEquals(Created, response.getStatus());
 
-        Assert.assertEquals(artist.getName(), artistTest.getName());
+        Assert.assertEquals(category.getName(), categoryTest.getName());
 
-        ArtistEntity entity = em.find(ArtistEntity.class, artistTest.getId());
+        CategoryEntity entity = em.find(CategoryEntity.class, categoryTest.getId());
         Assert.assertNotNull(entity);
     }
 
     /**
-     * Prueba para consultar un Artist
+     * Prueba para consultar un Category
      *
      * @generated
      */
     @Test
-    public void getArtistByIdTest() {
+    public void getCategoryByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
-        ArtistDTO artistTest = target
+        CategoryDTO categoryTest = target
             .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(ArtistDTO.class);
+            .request().cookie(cookieSessionId).get(CategoryDTO.class);
         
-        Assert.assertEquals(artistTest.getId(), oraculo.get(0).getId());
-        Assert.assertEquals(artistTest.getName(), oraculo.get(0).getName());
+        Assert.assertEquals(categoryTest.getId(), oraculo.get(0).getId());
+        Assert.assertEquals(categoryTest.getName(), oraculo.get(0).getName());
     }
 
     /**
-     * Prueba para consultar la lista de Artists
+     * Prueba para consultar la lista de Categorys
      *
      * @generated
      */
     @Test
-    public void listArtistTest() throws IOException {
+    public void listCategoryTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId).get();
 
-        String listArtist = response.readEntity(String.class);
-        List<ArtistDTO> listArtistTest = new ObjectMapper().readValue(listArtist, List.class);
+        String listCategory = response.readEntity(String.class);
+        List<CategoryDTO> listCategoryTest = new ObjectMapper().readValue(listCategory, List.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(3, listArtistTest.size());
+        Assert.assertEquals(3, listCategoryTest.size());
     }
 
     /**
-     * Prueba para actualizar un Artist
+     * Prueba para actualizar un Category
      *
      * @generated
      */
     @Test
-    public void updateArtistTest() throws IOException {
+    public void updateCategoryTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
-        ArtistDTO artist = new ArtistDTO(oraculo.get(0));
+        CategoryDTO category = new CategoryDTO(oraculo.get(0));
 
-        ArtistDTO artistChanged = factory.manufacturePojo(ArtistDTO.class);
+        CategoryDTO categoryChanged = factory.manufacturePojo(CategoryDTO.class);
 
-        artist.setName(artistChanged.getName());
+        category.setName(categoryChanged.getName());
 
         Response response = target
-            .path(artist.getId().toString())
+            .path(category.getId().toString())
             .request().cookie(cookieSessionId)
-            .put(Entity.entity(artist, MediaType.APPLICATION_JSON));
+            .put(Entity.entity(category, MediaType.APPLICATION_JSON));
 
-        ArtistDTO artistTest = (ArtistDTO) response.readEntity(ArtistDTO.class);
+        CategoryDTO categoryTest = (CategoryDTO) response.readEntity(CategoryDTO.class);
 
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(artist.getName(), artistTest.getName());
+        Assert.assertEquals(category.getName(), categoryTest.getName());
     }
 
     /**
-     * Prueba para eliminar un Artist
+     * Prueba para eliminar un Category
      *
      * @generated
      */
     @Test
-    public void deleteArtistTest() {
+    public void deleteCategoryTest() {
         Cookie cookieSessionId = login(username, password);
-        ArtistDTO artist = new ArtistDTO(oraculo.get(0));
+        CategoryDTO category = new CategoryDTO(oraculo.get(0));
         Response response = target
-            .path(artist.getId().toString())
+            .path(category.getId().toString())
             .request().cookie(cookieSessionId).delete();
 
         Assert.assertEquals(OkWithoutContent, response.getStatus());

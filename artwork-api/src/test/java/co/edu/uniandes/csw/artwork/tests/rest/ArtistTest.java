@@ -21,14 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package co.edu.uniandes.csw.artwork.tests;
+package co.edu.uniandes.csw.artwork.tests.rest;
 
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
-import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
-import co.edu.uniandes.csw.artwork.resources.ArtworkResource;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistDTO;
+import co.edu.uniandes.csw.artwork.resources.ArtistResource;
+import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -62,10 +62,10 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /*
- * Testing URI: artists/{artworksId: \\d+}/artworks/
+ * Testing URI: artists/
  */
 @RunWith(Arquillian.class)
-public class ArtworkTest {
+public class ArtistTest {
 
     private WebTarget target;
     private final String apiPath = Utils.apiPath;
@@ -77,12 +77,10 @@ public class ArtworkTest {
     private final int Created = Status.CREATED.getStatusCode();
     private final int OkWithoutContent = Status.NO_CONTENT.getStatusCode();
 
-    private final static List<ArtworkEntity> oraculo = new ArrayList<>();
+    private final static List<ArtistEntity> oraculo = new ArrayList<>();
 
     private final String artistPath = "artists";
-    private final String artworkPath = "artworks";
 
-    ArtistEntity fatherArtistEntity;
 
     @ArquillianResource
     private URL deploymentURL;
@@ -95,7 +93,7 @@ public class ArtworkTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ArtworkResource.class.getPackage())
+                .addPackage(ArtistResource.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -117,7 +115,6 @@ public class ArtworkTest {
     private UserTransaction utx;
 
     private void clearData() {
-        em.createQuery("delete from ArtworkEntity").executeUpdate();
         em.createQuery("delete from ArtistEntity").executeUpdate();
         oraculo.clear();
     }
@@ -128,16 +125,11 @@ public class ArtworkTest {
      * @generated
      */
     public void insertData() {
-        fatherArtistEntity = factory.manufacturePojo(ArtistEntity.class);
-        fatherArtistEntity.setId(1L);
-        em.persist(fatherArtistEntity);
-
         for (int i = 0; i < 3; i++) {            
-            ArtworkEntity artwork = factory.manufacturePojo(ArtworkEntity.class);
-            artwork.setId(i + 1L);
-            artwork.setArtist(fatherArtistEntity);
-            em.persist(artwork);
-            oraculo.add(artwork);
+            ArtistEntity artist = factory.manufacturePojo(ArtistEntity.class);
+            artist.setId(i + 1L);
+            em.persist(artist);
+            oraculo.add(artist);
         }
     }
 
@@ -162,9 +154,7 @@ public class ArtworkTest {
             }
         }
         target = createWebTarget()
-                .path(artistPath)
-                .path(fatherArtistEntity.getId().toString())
-                .path(artworkPath);
+                .path(artistPath);
     }
 
     /**
@@ -190,108 +180,100 @@ public class ArtworkTest {
     }
 
     /**
-     * Prueba para crear un Artwork
+     * Prueba para crear un Artist
      *
      * @generated
      */
     @Test
-    public void createArtworkTest() throws IOException {
-        ArtworkDTO artwork = factory.manufacturePojo(ArtworkDTO.class);
+    public void createArtistTest() throws IOException {
+        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId)
-            .post(Entity.entity(artwork, MediaType.APPLICATION_JSON));
+            .post(Entity.entity(artist, MediaType.APPLICATION_JSON));
 
-        ArtworkDTO  artworkTest = (ArtworkDTO) response.readEntity(ArtworkDTO.class);
+        ArtistDTO  artistTest = (ArtistDTO) response.readEntity(ArtistDTO.class);
 
         Assert.assertEquals(Created, response.getStatus());
 
-        Assert.assertEquals(artwork.getName(), artworkTest.getName());
-        Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
-        Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
+        Assert.assertEquals(artist.getName(), artistTest.getName());
 
-        ArtworkEntity entity = em.find(ArtworkEntity.class, artworkTest.getId());
+        ArtistEntity entity = em.find(ArtistEntity.class, artistTest.getId());
         Assert.assertNotNull(entity);
     }
 
     /**
-     * Prueba para consultar un Artwork
+     * Prueba para consultar un Artist
      *
      * @generated
      */
     @Test
-    public void getArtworkByIdTest() {
+    public void getArtistByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
-        ArtworkDTO artworkTest = target
+        ArtistDTO artistTest = target
             .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(ArtworkDTO.class);
+            .request().cookie(cookieSessionId).get(ArtistDTO.class);
         
-        Assert.assertEquals(artworkTest.getId(), oraculo.get(0).getId());
-        Assert.assertEquals(artworkTest.getName(), oraculo.get(0).getName());
-        Assert.assertEquals(artworkTest.getImage(), oraculo.get(0).getImage());
-        Assert.assertEquals(artworkTest.getPrice(), oraculo.get(0).getPrice());
+        Assert.assertEquals(artistTest.getId(), oraculo.get(0).getId());
+        Assert.assertEquals(artistTest.getName(), oraculo.get(0).getName());
     }
 
     /**
-     * Prueba para consultar la lista de Artworks
+     * Prueba para consultar la lista de Artists
      *
      * @generated
      */
     @Test
-    public void listArtworkTest() throws IOException {
+    public void listArtistTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId).get();
 
-        String listArtwork = response.readEntity(String.class);
-        List<ArtworkDTO> listArtworkTest = new ObjectMapper().readValue(listArtwork, List.class);
+        String listArtist = response.readEntity(String.class);
+        List<ArtistDTO> listArtistTest = new ObjectMapper().readValue(listArtist, List.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(3, listArtworkTest.size());
+        Assert.assertEquals(3, listArtistTest.size());
     }
 
     /**
-     * Prueba para actualizar un Artwork
+     * Prueba para actualizar un Artist
      *
      * @generated
      */
     @Test
-    public void updateArtworkTest() throws IOException {
+    public void updateArtistTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
-        ArtworkDTO artwork = new ArtworkDTO(oraculo.get(0));
+        ArtistDTO artist = new ArtistDTO(oraculo.get(0));
 
-        ArtworkDTO artworkChanged = factory.manufacturePojo(ArtworkDTO.class);
+        ArtistDTO artistChanged = factory.manufacturePojo(ArtistDTO.class);
 
-        artwork.setName(artworkChanged.getName());
-        artwork.setImage(artworkChanged.getImage());
-        artwork.setPrice(artworkChanged.getPrice());
+        artist.setName(artistChanged.getName());
 
         Response response = target
-            .path(artwork.getId().toString())
+            .path(artist.getId().toString())
             .request().cookie(cookieSessionId)
-            .put(Entity.entity(artwork, MediaType.APPLICATION_JSON));
+            .put(Entity.entity(artist, MediaType.APPLICATION_JSON));
 
-        ArtworkDTO artworkTest = (ArtworkDTO) response.readEntity(ArtworkDTO.class);
+        ArtistDTO artistTest = (ArtistDTO) response.readEntity(ArtistDTO.class);
 
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(artwork.getName(), artworkTest.getName());
-        Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
-        Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
+        Assert.assertEquals(artist.getName(), artistTest.getName());
     }
 
     /**
-     * Prueba para eliminar un Artwork
+     * Prueba para eliminar un Artist
      *
      * @generated
      */
     @Test
-    public void deleteArtworkTest() {
+    public void deleteArtistTest() {
         Cookie cookieSessionId = login(username, password);
-        ArtworkDTO artwork = new ArtworkDTO(oraculo.get(0));
+        ArtistDTO artist = new ArtistDTO(oraculo.get(0));
         Response response = target
-            .path(artwork.getId().toString())
+            .path(artist.getId().toString())
             .request().cookie(cookieSessionId).delete();
 
         Assert.assertEquals(OkWithoutContent, response.getStatus());
