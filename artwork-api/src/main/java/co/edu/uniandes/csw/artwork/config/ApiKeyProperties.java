@@ -36,8 +36,8 @@ public class ApiKeyProperties extends Properties {
     private static final String SECRET_PROP = "apiKey.secret";
 
     public ApiKeyProperties() {
-        super.put(ID_PROP, System.getenv("STORMPATH_API_KEY_ID"));
-        super.put(SECRET_PROP, System.getenv("STORMPATH_API_KEY_SECRET"));
+        super.put(ID_PROP, System.getenv("ARTWORK_STORMPATH_API_KEY_ID"));
+        super.put(SECRET_PROP, System.getenv("ARTWORK_STORMPATH_API_KEY_SECRET"));
     }
     
     public String getApiKeyId(){
