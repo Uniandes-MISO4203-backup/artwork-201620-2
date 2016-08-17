@@ -60,7 +60,7 @@
         <dependency>
             <groupId>co.edu.uniandes.csw</groupId>
             <artifactId>auth-utils</artifactId>
-            <version>0.1.4</version>
+            <version>0.1.5</version>
         </dependency>
         <dependency>
             <groupId>co.edu.uniandes.csw.artwork</groupId>
