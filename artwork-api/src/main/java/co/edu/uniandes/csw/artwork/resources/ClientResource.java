@@ -57,8 +57,8 @@ import javax.ws.rs.WebApplicationException;
 @Produces(MediaType.APPLICATION_JSON)
 public class ClientResource {
 
-    private static final String CLIENT_HREF = "https://api.stormpath.com/v1/groups/TEiGX5NsUPpWZaInLhstx";
-    private static final String ADMIN_HREF = "https://api.stormpath.com/v1/groups/6wNTcmVEvZjd9j7SE84HHx";    
+    private static final String CLIENT_HREF = "https://api.stormpath.com/v1/groups/5xJfg140VZoCF2Ny36Y7k1";
+    private static final String ADMIN_HREF = "https://api.stormpath.com/v1/groups/G6wKFbwsYpo7yFR3ziC4v";    
 
     @Inject private IClientLogic clientLogic;
     @Context private HttpServletResponse response;
