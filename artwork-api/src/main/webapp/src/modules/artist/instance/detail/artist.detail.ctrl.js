@@ -71,11 +71,11 @@ SOFTWARE.
                         $state.go('artistList');
                     }
                 },
-                stamps: {
-                    displayName: 'Stamps',
+                artworks: {
+                    displayName: 'Artworks',
                     icon: 'link',
                     fn: function () {
-                        $state.go('stampList');
+                        $state.go('artworkList');
                     }
                 }
             };

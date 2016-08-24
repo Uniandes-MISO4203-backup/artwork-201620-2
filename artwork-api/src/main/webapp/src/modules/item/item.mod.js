@@ -50,7 +50,7 @@ SOFTWARE.
                 type: 'Reference',
                 model: 'productModel',
                 options: [],
-                required: true
+                required: false
             }        }
     });
 
