@@ -42,6 +42,8 @@ public class ClientEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemEntity> wishList = new ArrayList<>();
 
+    private int age;
+    
     /**
      * Obtiene la colección de wishList.
      *
@@ -60,5 +62,13 @@ public class ClientEntity extends BaseEntity implements Serializable {
      */
     public void setWishList(List<ItemEntity> wishlist) {
         this.wishList = wishlist;
+    }
+    
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
