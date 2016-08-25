@@ -28,11 +28,19 @@ SOFTWARE.
         name: 'artist',
         displayName: 'Artist',
 		url: 'artists',
-        fields: {            name: {
+        fields: {            
+            name: {
                 displayName: 'Name',
                 type: 'String',
                 required: true
-            }        }
+            },nationality: {
+                displayName: 'Nationality',
+                type: 'Reference',
+                url: 'nationalityModel',
+                options: [],
+                required: false        
+            }
+        }
     });
 
     mod.config(['$stateProvider',
@@ -51,12 +59,18 @@ SOFTWARE.
                     }
                 },
                 resolve: {
+                    references: ['$q', 'Restangular', function ($q, r) {
+                        return $q.all({
+                            nationality: r.all('nationalitys').getList()
+                        });
+                    }],
                     model: 'artistModel',
                     artists: ['Restangular', 'model', '$stateParams', function (r, model, $params) {
                             return r.all(model.url).getList($params);
                         }]
                 }
             });
+			
             $sp.state('artistList', {
                 url: '/list',
                 parent: 'artist',

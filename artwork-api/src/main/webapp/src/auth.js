@@ -9,6 +9,7 @@
                         $rootScope.artist = false;
                         $rootScope.client = false;
                         $rootScope.product = false;
+                        $rootScope.nationality = false;
                     } else {
                         var roles = $rootScope.roles = response.roles;
                         if (roles.indexOf("client") !== -1) {
@@ -16,18 +17,21 @@
                             $rootScope.artist = false;
                             $rootScope.client = true;
                             $rootScope.product = false;
+                            $rootScope.nationality = false;
                         }
                         if (roles.indexOf("artist") !== -1) {
                             $rootScope.category = false;
                             $rootScope.artist = true;
                             $rootScope.client = false;
                             $rootScope.product = false;
+                            $rootScope.nationality = false;
                         }
                         if (roles.indexOf("admin") !== -1) {
                             $rootScope.category = true;
                             $rootScope.artist = true;
                             $rootScope.client = true;
                             $rootScope.product = true;
+                            $rootScope.nationality = true;
                         }
                     }
                 });

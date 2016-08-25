@@ -22,37 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 (function (ng) {
-    var mod = ng.module('artistModule');
 
-    mod.controller('artistCtrl', ['$scope', 'model', 'references',
-        function ($scope, model, references) {
-			$scope.references = references;
-            $scope.model = model;
-            //Alertas
-            $scope.alerts = [];
-            this.closeAlert = function (index) {
-                $scope.alerts.splice(index, 1);
+    var mod = ng.module("nationalityModule");
+
+    mod.controller("nationalityDeleteCtrl", ["$state", "nationality", function ($state, nationality) {
+            this.confirmDelete = function () {
+                nationality.remove().then(function () {
+                    $state.go('nationalityList', null, {reload: true});
+                });
             };
-
-            /* Función showMessage: Recibe el mensaje en String y
-             * su tipo con el fin de almacenarlo en el array $scope.alerts.
-             */
-            function showMessage(msg, type) {
-                var types = ["info", "danger", "warning", "success"];
-                if (types.some(function (rc) {
-                    return type === rc;
-                })) {
-                    $scope.alerts.push({type: type, msg: msg});
-                }
-            }
-
-            $scope.showError = function (msg) {
-                showMessage(msg, "danger");
-            };
-
-            $scope.showSuccess = function (msg) {
-                showMessage(msg, "success");
-            };            
         }]);
-
 })(window.angular);

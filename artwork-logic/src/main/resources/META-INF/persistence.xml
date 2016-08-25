@@ -9,10 +9,11 @@
     <class>co.edu.uniandes.csw.artwork.entities.ArtistEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.ProductEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.CategoryEntity</class>
+    <class>co.edu.uniandes.csw.artwork.entities.NationalityEntity</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
-      <property name="eclipselink.cache.type.default" value="NONE" />
+      <property name="eclipselink.cache.type.default" value="NONE"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -24,8 +24,10 @@ SOFTWARE.
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
+import co.edu.uniandes.csw.artwork.resources.NationalityResources;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * @generated
@@ -35,6 +37,8 @@ public class ArtistDTO implements Serializable{
 
     private Long id;
     private String name;
+    @PodamExclude
+    private NationalityDTO nationality;
 
     /**
      * @generated
@@ -52,6 +56,7 @@ public class ArtistDTO implements Serializable{
 	   if (entity!=null){
         this.id=entity.getId();
         this.name=entity.getName();
+        this.nationality = NationalityResources.refEntity2DTO(entity.getNationality());
        }
     }
 
@@ -65,6 +70,7 @@ public class ArtistDTO implements Serializable{
         ArtistEntity entity = new ArtistEntity();
         entity.setId(this.getId());
         entity.setName(this.getName());
+        entity.setNationality(NationalityResources.basicDTO2Entity(this.getNationality()));
     return entity;
     }
 
@@ -108,4 +114,17 @@ public class ArtistDTO implements Serializable{
         this.name = name;
     }
 
+    /**
+     * @return the nationality
+     */
+    public NationalityDTO getNationality() {
+        return nationality;
+    }
+
+    /**
+     * @param nationality the nationality to set
+     */
+    public void setNationality(NationalityDTO nationality) {
+        this.nationality = nationality;
+    }
 }
