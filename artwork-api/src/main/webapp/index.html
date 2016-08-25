@@ -69,6 +69,7 @@ SOFTWARE.
         <script src="src/modules/artist/artist.mod.js"></script>
         <script src="src/modules/product/product.mod.js"></script>
         <script src="src/modules/category/category.mod.js"></script>
+        <script src="src/modules/nationality/nationality.mod.js"></script>
         <script src="src/modules/client/client.ctrl.js"></script>
         <script src="src/modules/client/instance/delete/client.delete.ctrl.js"></script>
         <script src="src/modules/client/instance/detail/client.detail.ctrl.js"></script>
@@ -107,6 +108,12 @@ SOFTWARE.
         <script src="src/modules/category/instance/edit/category.edit.ctrl.js"></script>
         <script src="src/modules/category/list/category.list.ctrl.js"></script>
         <script src="src/modules/category/new/category.new.ctrl.js"></script>
+        <script src="src/modules/nationality/nationality.ctrl.js"></script>
+        <script src="src/modules/nationality/instance/delete/nationality.delete.ctrl.js"></script>
+        <script src="src/modules/nationality/instance/detail/nationality.detail.ctrl.js"></script>
+        <script src="src/modules/nationality/instance/edit/nationality.edit.ctrl.js"></script>
+        <script src="src/modules/nationality/list/nationality.list.ctrl.js"></script>
+        <script src="src/modules/nationality/new/nationality.new.ctrl.js"></script>
         <!-- /include -->
         <!-- endbuild -->
 
@@ -134,6 +141,7 @@ SOFTWARE.
                                 <li ng-if="artist"><a ui-sref="artistList">Artist</a></li>
                                 <li ng-if="product"><a ui-sref="productList">Product</a></li>
                                 <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
+                                <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <login-button></login-button>

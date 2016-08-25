@@ -33,7 +33,8 @@ SOFTWARE.
         'productModule',
         'categoryModule',
         'authModule',
-        'roleModule'
+        'roleModule',
+        'nationalityModule'
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {
@@ -98,6 +99,11 @@ SOFTWARE.
                         label: 'Product',
                         icon: 'list-alt',
                         state: 'productList'                    
+                    },{
+                        id: 'nationality',
+                        label: 'Nationality',
+                        icon: 'list-alt',
+                        state: 'nationalityList'                    
                     }]
             });
         }]);

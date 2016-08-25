@@ -31,6 +31,7 @@ import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.CascadeType;
+import javax.persistence.ManyToOne;
 
 /**
  * @generated
@@ -41,6 +42,10 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ArtworkEntity> artworks = new ArrayList<>();
+    
+    @PodamExclude
+    @ManyToOne
+    private NationalityEntity nationality;
 
     /**
      * Obtiene la colección de artworks.
@@ -60,5 +65,19 @@ public class ArtistEntity extends BaseEntity implements Serializable {
      */
     public void setArtworks(List<ArtworkEntity> artworks) {
         this.artworks = artworks;
+    }
+    
+        /**
+     * @return the nationality
+     */
+    public NationalityEntity getNationality() {
+        return nationality;
+    }
+
+    /**
+     * @param nationality the nationality to set
+     */
+    public void setNationality(NationalityEntity nationality) {
+        this.nationality = nationality;
     }
 }

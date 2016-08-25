@@ -21,17 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
+<div ng-messages="nationalityForm.$error" multiple>
+    <ng-message when="required">
+        <alert type="warning">Please, Fill the required fields!</alert>
+    </ng-message>
+    <ng-message when="url">
+        <alert type="warning">Image field must be a URL</alert>
+    </ng-message>
+</div>
 <header>
     <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
 </header>
-<div  class="container-fluid well">
-    <div class="col-md-12">
-        <p>
-        <label><strong>Name: </strong></label><span id="name"> {{currentRecord.name}}</span>
-        </p>
-        <p><label><strong>Nationality: </strong></label><span id="nationality"> {{currentRecord.nationality.name}}</span>
-        </p>
-    </div>
-</div>
-<div ui-view="artistChieldView"></div>
-<!-- TODO -->
+<form novalidate name="nationalityForm" role="form">
+    <fieldset>
+        <crud-form fields='model.fields' record='currentRecord' lists-of-values="references"></crud-form>
+    </fieldset>
+</form>
