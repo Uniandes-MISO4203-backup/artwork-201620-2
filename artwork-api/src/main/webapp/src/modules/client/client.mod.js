@@ -28,11 +28,18 @@ SOFTWARE.
         name: 'client',
         displayName: 'Client',
 		url: 'clients',
-        fields: {            name: {
+        fields: {            
+            name: {
                 displayName: 'Name',
                 type: 'String',
                 required: true
-            }        }
+            },
+            age:{
+                displayName: 'Age',
+                type: 'Long',
+                required: true
+            }
+        }
     });
 
     mod.config(['$stateProvider',

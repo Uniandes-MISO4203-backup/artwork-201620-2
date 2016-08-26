@@ -35,7 +35,8 @@ public class ClientDTO implements Serializable{
 
     private Long id;
     private String name;
-
+    private int age;
+            
     /**
      * @generated
      */
@@ -49,10 +50,11 @@ public class ClientDTO implements Serializable{
      * @generated
      */
     public ClientDTO(ClientEntity entity) {
-	   if (entity!=null){
-        this.id=entity.getId();
-        this.name=entity.getName();
-       }
+        if (entity!=null){
+            this.id=entity.getId();
+            this.name=entity.getName();
+            this.age=entity.getAge();
+        }
     }
 
     /**
@@ -65,6 +67,7 @@ public class ClientDTO implements Serializable{
         ClientEntity entity = new ClientEntity();
         entity.setId(this.getId());
         entity.setName(this.getName());
+        entity.setAge(this.getAge());
     return entity;
     }
 
@@ -107,5 +110,15 @@ public class ClientDTO implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+    
+    
 
 }
