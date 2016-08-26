@@ -28,6 +28,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.crud.spi.persistence.CrudPersistence;
+import java.util.List;
+import javax.persistence.TypedQuery;
 
 /**
  * @generated
@@ -46,6 +48,12 @@ public class ArtistPersistence extends CrudPersistence<ArtistEntity> {
         return em;
     }
 
+    public List<ArtistEntity> findArtistsByName(String name) {
+        TypedQuery query = em.createQuery("SELECT a FROM ArtistEntity a WHERE a.name LIKE :name", ArtistEntity.class);
+        query.setParameter("name", "%"+name+"%");
+        return query.getResultList();
+    }
+    
     /**
      * @generated
      */
@@ -53,5 +61,4 @@ public class ArtistPersistence extends CrudPersistence<ArtistEntity> {
     protected Class<ArtistEntity> getEntityClass() {
         return ArtistEntity.class;
     }
-
 }

@@ -25,8 +25,9 @@ SOFTWARE.
 
     var mod = ng.module("artistModule");
 
-    mod.controller("artistListCtrl", ["$scope", '$state', 'artists', '$stateParams','$rootScope',
-        function ($scope, $state, artists, $params,$rootScope) {
+    mod.controller("artistListCtrl", ["$scope", '$state', 'artists', '$stateParams','$rootScope', 'Restangular', 'model',
+        function ($scope, $state, artists, $params, $rootScope, r, model) {
+            $scope.name=null;
             $scope.records = artists;
             var roles = $rootScope.roles;
 
@@ -56,7 +57,22 @@ SOFTWARE.
                     fn: function () {
                         $state.reload();
                     }
-                }            };
+                }
+            };
+
+            $scope.findArtistsByName = function() {
+                var name = $scope.name;
+                if(name) {
+                    r.all(model.url).customGET("byName/"+name).then(function(data) {
+                        $scope.records = data;
+                    });
+                }
+                else {
+                    $state.reload();
+                }
+                $scope.name = null;
+            };
+            
             $scope.recordActions = {
                 detail: {
                     displayName: 'Detail',

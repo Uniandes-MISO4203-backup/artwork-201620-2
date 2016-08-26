@@ -26,7 +26,7 @@ SOFTWARE.
 
     mod.controller('artistCtrl', ['$scope', 'model', 'references',
         function ($scope, model, references) {
-			$scope.references = references;
+            $scope.references = references;
             $scope.model = model;
             //Alertas
             $scope.alerts = [];

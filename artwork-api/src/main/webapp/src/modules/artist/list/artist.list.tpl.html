@@ -23,8 +23,16 @@ SOFTWARE.
 -->
 <header>
     <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
+    <div class="input-group">
+        <input ng-model="name" type="text" class="form-control" placeholder="Search by name...">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="findArtistsByName()"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+    </div>
 </header>
+<br>
 <list-records fields="model.fields" records="records" actions="recordActions"></list-records>
+<!--<search-bar name="model.name" fields="model.fields" record="records" submit-fn="findArtistsByName"></search-bar>-->
 <pagination ng-if="ctrl.itemsPerPage < ctrl.totalItems"
             total-items="ctrl.totalItems"
             max-size="5"
