@@ -172,6 +172,21 @@ public class ArtistPersistenceTest {
             Assert.assertTrue(found);
         }
     }
+    
+    @Test
+    public void findArtistsByNameTest() {
+        for(ArtistEntity ent : data) {
+            List<ArtistEntity> list = artistPersistence.findArtistsByName(ent.getName());
+            Assert.assertTrue(list.size()>0);
+            boolean found = false;
+            for (ArtistEntity entity : list) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
 
     /**
      * Prueba para consultar un Artist.
