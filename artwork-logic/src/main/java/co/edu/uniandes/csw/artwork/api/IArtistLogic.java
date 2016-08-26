@@ -31,6 +31,7 @@ public interface IArtistLogic {
     public List<ArtistEntity> getArtists();
     public List<ArtistEntity> getArtists(Integer page, Integer maxRecords);
     public ArtistEntity getArtist(Long id);
+    public List<ArtistEntity> findArtistsByName(String name);
     public ArtistEntity createArtist(ArtistEntity entity); 
     public ArtistEntity updateArtist(ArtistEntity entity);
     public void deleteArtist(Long id);

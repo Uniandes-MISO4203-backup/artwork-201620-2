@@ -65,7 +65,6 @@ public class ArtistResource {
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
 
-   
     /**
      * Convierte una lista de ArtistEntity a una lista de ArtistDetailDTO.
      *
@@ -124,6 +123,12 @@ public class ArtistResource {
     @Path("{id: \\d+}")
     public ArtistDetailDTO getArtist(@PathParam("id") Long id) {
         return new ArtistDetailDTO(artistLogic.getArtist(id));
+    }
+    
+    @GET
+    @Path("/byName/{name: \\d+}")
+    public List<ArtistDetailDTO> findArtistsByName(@PathParam("name") String name) {
+        return listEntity2DTO(artistLogic.findArtistsByName(name));
     }
 
     /**
