@@ -77,6 +77,13 @@ SOFTWARE.
                     fn: function () {
                         $state.go('itemList');
                     }
+                },
+                creditCardList: {
+                    displayName: 'Credit Card List',
+                    icon: 'link',
+                    fn: function () {
+                        $state.go('creditCardList');
+                    }
                 }
             };
         }]);

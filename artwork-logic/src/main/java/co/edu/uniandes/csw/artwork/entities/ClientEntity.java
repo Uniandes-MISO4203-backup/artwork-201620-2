@@ -71,4 +71,16 @@ public class ClientEntity extends BaseEntity implements Serializable {
     public void setAge(int age) {
         this.age = age;
     }
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CreditCardEntity> creditCards = new ArrayList<>();
+
+    public List<CreditCardEntity> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(List<CreditCardEntity> creditCards) {
+        this.creditCards = creditCards;
+    }    
 }
