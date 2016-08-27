@@ -27,7 +27,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
+import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
 import co.edu.uniandes.csw.crud.spi.persistence.CrudPersistence;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * @generated
@@ -53,5 +59,16 @@ public class ClientPersistence extends CrudPersistence<ClientEntity> {
     protected Class<ClientEntity> getEntityClass() {
         return ClientEntity.class;
     }
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "creditcard", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CreditCardEntity> creditCards = new ArrayList<>();
 
+    public List<CreditCardEntity> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(List<CreditCardEntity> creditCards) {
+        this.creditCards = creditCards;
+    }    
 }

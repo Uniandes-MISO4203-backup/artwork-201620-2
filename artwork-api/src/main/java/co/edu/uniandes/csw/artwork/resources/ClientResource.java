@@ -181,5 +181,10 @@ public class ClientResource {
         existsClient(clientsId);
         return ItemResource.class;
     }
-    
+
+    @Path("{clientsId: \\d+}/creditCard")
+    public Class<CreditCardResource> getCreditCardResource(@PathParam("clientsId") Long clientsId){
+        existsClient(clientsId);
+        return CreditCardResource.class;
+    } 
 }
