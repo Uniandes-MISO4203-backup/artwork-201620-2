@@ -147,7 +147,7 @@ public class ArtworkPersistenceTest {
      */
     @Test
     public void createArtworkTest() {
-		PodamFactory factory = new PodamFactoryImpl();
+        PodamFactory factory = new PodamFactoryImpl();
         ArtworkEntity newEntity = factory.manufacturePojo(ArtworkEntity.class);
         newEntity.setArtist(fatherEntity);
         ArtworkEntity result = artworkPersistence.create(newEntity);

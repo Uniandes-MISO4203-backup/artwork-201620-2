@@ -23,7 +23,6 @@ SOFTWARE.
 */
 package co.edu.uniandes.csw.artwork.test.persistence;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
-import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.persistence.ArtistPersistence;
 import java.util.ArrayList;
 import java.util.List;
