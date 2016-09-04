@@ -156,7 +156,6 @@ public class ClientLogicTest {
         ClientEntity entity = em.find(ClientEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
-        Assert.assertEquals(newEntity.getAge(), entity.getAge());
     }
 
     /**
@@ -192,7 +191,6 @@ public class ClientLogicTest {
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getName(), resultEntity.getName());
-        Assert.assertEquals(entity.getAge(), resultEntity.getAge());
     }
 
     /**
@@ -226,7 +224,6 @@ public class ClientLogicTest {
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getName(), resp.getName());
-        Assert.assertEquals(pojoEntity.getAge(), resp.getAge());
     }
 }
 
