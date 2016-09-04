@@ -47,7 +47,7 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private NationalityEntity nationality;
     
-    private Long Score;
+    private Long score;
 
     /**
      * Obtiene la colección de artworks.
@@ -84,11 +84,11 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     }
 
     public Long getScore() {
-        return Score;
+        return score;
     }
 
     public void setScore(Long Score) {
-        this.Score = Score;
+        this.score = Score;
     }
     
     
