@@ -39,6 +39,10 @@ SOFTWARE.
                 url: 'nationalityModel',
                 options: [],
                 required: false        
+            },score:{
+                displayName: 'Score',
+                type: 'Reference',
+                required: false
             }
         }
     });

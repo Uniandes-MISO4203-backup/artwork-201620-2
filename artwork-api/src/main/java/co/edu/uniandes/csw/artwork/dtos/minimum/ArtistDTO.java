@@ -39,6 +39,7 @@ public class ArtistDTO implements Serializable{
     private String name;
     @PodamExclude
     private NationalityDTO nationality;
+    private Long score;
 
     /**
      * @generated
@@ -57,6 +58,7 @@ public class ArtistDTO implements Serializable{
         this.id=entity.getId();
         this.name=entity.getName();
         this.nationality = NationalityResources.refEntity2DTO(entity.getNationality());
+        this.score = entity.getScore();
        }
     }
 
@@ -71,6 +73,7 @@ public class ArtistDTO implements Serializable{
         entity.setId(this.getId());
         entity.setName(this.getName());
         entity.setNationality(NationalityResources.basicDTO2Entity(this.getNationality()));
+        entity.setScore(this.score);
     return entity;
     }
 
@@ -127,4 +130,14 @@ public class ArtistDTO implements Serializable{
     public void setNationality(NationalityDTO nationality) {
         this.nationality = nationality;
     }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
+    }
+    
+    
 }
