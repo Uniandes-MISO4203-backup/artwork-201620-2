@@ -24,7 +24,9 @@ public class MessageDTO {
     private String body;
     
     private Date sentDate;
-
+    
+    private String clientName;
+    
     @PodamExclude
     private ClientDTO client;    
 
@@ -36,6 +38,10 @@ public class MessageDTO {
         this.body = entity.getBody();
         this.sentDate = entity.getSentDate();
         this.id = entity.getId();
+        
+        if (entity.getClient() != null) {
+            this.setClient(new ClientDTO(entity.getClient()));
+        }
     }    
     
     public Long getId() {
@@ -76,6 +82,14 @@ public class MessageDTO {
 
     public void setClient(ClientDTO client) {
         this.client = client;
+        
+        if (this.client != null) {
+            this.clientName = this.client.getName();
+        }
+    }
+
+    public String getClientName() {
+        return this.clientName;
     }
     
     public MessageEntity toEntity() {

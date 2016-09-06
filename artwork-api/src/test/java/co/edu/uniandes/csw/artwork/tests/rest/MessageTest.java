@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
+import co.edu.uniandes.csw.artwork.dtos.minimum.CreditCardDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.MessageDTO;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.MessageEntity;
@@ -208,4 +209,49 @@ public class MessageTest {
         Assert.assertEquals(itemTest.getSubject(), oraculo.get(0).getSubject());
         Assert.assertEquals(itemTest.getBody(), oraculo.get(0).getBody());  
     }    
+    
+    /**
+     * Prueba para actualizar un Item
+     *
+     * @generated
+     */
+    @Test
+    public void updateMessageTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+        MessageDTO item = new MessageDTO(oraculo.get(0));
+
+        MessageDTO itemChanged = factory.manufacturePojo(MessageDTO.class);
+
+        item.setBody(itemChanged.getBody());
+        item.setSentDate(itemChanged.getSentDate());
+        item.setSubject(itemChanged.getSubject());
+
+        Response response = target
+            .path(item.getId().toString())
+            .request().cookie(cookieSessionId)
+            .put(Entity.entity(item, MediaType.APPLICATION_JSON));
+
+        MessageDTO itemTest = (MessageDTO)response.readEntity(MessageDTO.class);
+
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(item.getId(), itemTest.getId());
+        Assert.assertEquals(item.getSubject(), itemTest.getSubject());
+        Assert.assertEquals(item.getBody(), itemTest.getBody());  
+    }       
+    
+    /**
+     * Prueba para eliminar un Item
+     *
+     * @generated
+     */
+    @Test
+    public void deleteMessageTest() {
+        Cookie cookieSessionId = login(username, password);
+        MessageDTO item = new MessageDTO(oraculo.get(0));
+        Response response = target
+            .path(item.getId().toString())
+            .request().cookie(cookieSessionId).delete();
+
+        Assert.assertEquals(OkWithoutContent, response.getStatus());
+    }      
 }

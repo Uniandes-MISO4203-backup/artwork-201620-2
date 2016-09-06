@@ -7,6 +7,12 @@
         displayName: 'Message',
 	url: 'messages',
         fields: {
+            clientName : {
+                name: 'clientName',
+                displayName: 'From',
+                type: 'String',
+                required: false
+            },                          
             subject : { 
                 name: 'subject',
                 displayName: 'Subject',
@@ -24,7 +30,7 @@
                 displayName: 'Sent Date',
                 type: 'Date',
                 required: false
-            }            
+            }
         },
         editFields: {
             subject : { 
