@@ -11,6 +11,7 @@
     <class>co.edu.uniandes.csw.artwork.entities.CategoryEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.NationalityEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.CreditCardEntity</class>
+    <class>co.edu.uniandes.csw.artwork.entities.QualifyEntity</class>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
