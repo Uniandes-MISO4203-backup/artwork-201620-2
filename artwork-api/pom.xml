@@ -6,7 +6,7 @@
     <packaging>war</packaging>
     <parent>
         <groupId>co.edu.uniandes.csw.artwork</groupId>
-        <artifactId>artwork</artifactId>
+        <artifactId>artwork2</artifactId>
         <version>0.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
