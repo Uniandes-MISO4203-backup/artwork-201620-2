@@ -71,6 +71,7 @@ SOFTWARE.
         <script src="src/modules/category/category.mod.js"></script>
         <script src="src/modules/nationality/nationality.mod.js"></script>
         <script src="src/modules/creditcard/creditcard.mod.js"></script>        
+        <script src="src/modules/message/message.mod.js"></script>
         <script src="src/modules/client/client.ctrl.js"></script>
         <script src="src/modules/client/instance/delete/client.delete.ctrl.js"></script>
         <script src="src/modules/client/instance/detail/client.detail.ctrl.js"></script>
@@ -121,6 +122,12 @@ SOFTWARE.
         <script src="src/modules/creditcard/instance/edit/creditcard.edit.ctrl.js"></script>
         <script src="src/modules/creditcard/list/creditcard.list.ctrl.js"></script>
         <script src="src/modules/creditcard/new/creditcard.new.ctrl.js"></script>        
+        <script src="src/modules/message/message.ctrl.js"></script>        
+        <script src="src/modules/message/list/message.list.ctrl.js"></script>
+        <script src="src/modules/message/new/message.new.ctrl.js"></script>                
+        <script src="src/modules/message/instance/detail/message.detail.ctrl.js"></script>
+        <script src="src/modules/message/instance/edit/message.edit.ctrl.js"></script>
+        <script src="src/modules/message/instance/delete/message.delete.ctrl.js"></script>
         <!-- /include -->
         <!-- endbuild -->
 
@@ -149,6 +156,7 @@ SOFTWARE.
                                 <li ng-if="product"><a ui-sref="productList">Product</a></li>
                                 <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
                                 <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
+                                <li ng-if="message"><a ui-sref="messageList">Messages</a></li>                                
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <login-button></login-button>
