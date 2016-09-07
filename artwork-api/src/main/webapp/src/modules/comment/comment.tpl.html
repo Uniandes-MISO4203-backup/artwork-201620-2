@@ -1,1 +1,24 @@
-<h1>SOY UNA DIRECTIVA</h1>
+<div class="detailBox well well-sm">
+    <div class="titleBox">
+        <label>Comments</label>
+    </div>
+    <div class="actionBox">
+        <ul class="commentList" ng-repeat="comment in comments">
+            <li>
+                <div class="commentText">
+                    <p>{{comment.message}}</p> 
+                    <span class="date sub-text">on March 5th, 2014</span>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Write a comment" />
+            </div>
+            <br>
+            <div class="form-group">
+                <button class="btn btn-default">Publish</button>
+            </div>
+        </form>
+    </div>
+</div>

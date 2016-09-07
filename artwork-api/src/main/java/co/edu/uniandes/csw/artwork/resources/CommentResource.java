@@ -33,7 +33,6 @@ public class CommentResource {
     @Context private HttpServletResponse response;
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
-    @PathParam("artworkId") private Long artworkId;
     
     private List<CommentDetailDTO> listEntity2DTO(List<CommentEntity> entityList){
         List<CommentDetailDTO> list = new ArrayList<>();
@@ -44,7 +43,8 @@ public class CommentResource {
     }
     
     @GET
-    public List<CommentDetailDTO> getComments() {
+    @Path("/artworks/{artworkId: \\d+}/comments")
+    public List<CommentDetailDTO> getComments(@PathParam("artworkId") Long artworkId) {
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", commentLogic.countComments());
             return listEntity2DTO(commentLogic.getComments(page, maxRecords, artworkId));
@@ -53,8 +53,8 @@ public class CommentResource {
     }
     
     @GET
-    @Path("{commentId: \\d+}")
-    public CommentDetailDTO getComment(@PathParam("commentId") Long commentId) {
+    @Path("/artworks/{artworkId: \\d+}/comments/{commentId: \\d+}")
+    public CommentDetailDTO getComment(@PathParam("artworkId") Long artworkId, @PathParam("commentId") Long commentId) {
         CommentEntity entity = commentLogic.getComment(commentId);
         if (entity.getArtwork()!= null && !artworkId.equals(entity.getArtwork().getId())) {
             throw new WebApplicationException(404);
@@ -64,20 +64,14 @@ public class CommentResource {
     
     @POST
     @StatusCreated
-    public CommentDetailDTO createComment(CommentDetailDTO dto) {
+    @Path("/artworks/{artworkId: \\d+}/comments")
+    public CommentDetailDTO createComment(@PathParam("artworkId") Long artworkId, CommentDetailDTO dto) {
         return new CommentDetailDTO(commentLogic.createComment(artworkId, dto.toEntity()));
     }
     
     @DELETE
-    @Path("{commentId: \\d+}")
+    @Path("/comments/{commentId: \\d+}")
     public void deleteComment(@PathParam("commentId") Long commentId) {
         commentLogic.deleteComment(commentId);
-    }
-    
-    public void existsComment(Long commentId){
-        CommentDetailDTO comment = getComment(commentId);
-        if (comment== null) {
-            throw new WebApplicationException(404);
-        }
     }
 }
