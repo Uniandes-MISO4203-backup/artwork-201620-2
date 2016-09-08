@@ -25,6 +25,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+@Path("/comments")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
@@ -43,7 +44,7 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/artworks/{artworkId: \\d+}/comments")
+    @Path("{artworkId: \\d+}")
     public List<CommentDetailDTO> getComments(@PathParam("artworkId") Long artworkId) {
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", commentLogic.countComments());
@@ -53,24 +54,20 @@ public class CommentResource {
     }
     
     @GET
-    @Path("/artworks/{artworkId: \\d+}/comments/{commentId: \\d+}")
-    public CommentDetailDTO getComment(@PathParam("artworkId") Long artworkId, @PathParam("commentId") Long commentId) {
+    public CommentDetailDTO getComment(@PathParam("commentId") Long commentId) {
         CommentEntity entity = commentLogic.getComment(commentId);
-        if (entity.getArtwork()!= null && !artworkId.equals(entity.getArtwork().getId())) {
-            throw new WebApplicationException(404);
-        }
         return new CommentDetailDTO(entity);
     }
     
     @POST
     @StatusCreated
-    @Path("/artworks/{artworkId: \\d+}/comments")
+    @Path("{artworkId: \\d+}")
     public CommentDetailDTO createComment(@PathParam("artworkId") Long artworkId, CommentDetailDTO dto) {
         return new CommentDetailDTO(commentLogic.createComment(artworkId, dto.toEntity()));
     }
     
     @DELETE
-    @Path("/comments/{commentId: \\d+}")
+    @Path("{commentId: \\d+}")
     public void deleteComment(@PathParam("commentId") Long commentId) {
         commentLogic.deleteComment(commentId);
     }

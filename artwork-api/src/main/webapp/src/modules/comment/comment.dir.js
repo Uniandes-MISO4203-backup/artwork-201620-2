@@ -13,7 +13,6 @@
 
     function controller($scope, Restangular) {
         console.log("artwork",$scope.artwork);
-        Restangular.all('artworks/'+$scope.artwork.id+'/comments').getList().then(function (data) {
             console.log("Resultado",data);
         });
         $scope.comments=[{"message":"a"},{"message":"b"},{"message":"c"}];
