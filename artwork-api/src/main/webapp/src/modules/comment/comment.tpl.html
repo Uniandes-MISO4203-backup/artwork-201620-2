@@ -1,24 +1,24 @@
-<div class="detailBox well well-sm">
-    <div class="titleBox">
-        <label>Comments</label>
-    </div>
-    <div class="actionBox">
-        <ul class="commentList" ng-repeat="comment in comments">
-            <li>
-                <div class="commentText">
-                    <p>{{comment.message}}</p> 
-                    <span class="date sub-text">on March 5th, 2014</span>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Write a comment" />
-            </div>
-            <br>
-            <div class="form-group">
-                <button class="btn btn-default">Publish</button>
-            </div>
-        </form>
-    </div>
+<div class="titleBox">
+    <label>Comments</label>
 </div>
+<div class="actionBox">
+    <ul class="commentList" ng-repeat="comment in comments">
+        <li>
+            <div class="commentText">
+                <p ng-if='empty'>There are no messages</p>
+                <p>{{comment.message}}</p> 
+                <!--<span class="date sub-text">on March 5th, 2014</span>-->
+            </div>
+        </li>
+    </ul>
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <input class="form-control" ng-model='comment.message' type="text" placeholder="Write a comment" />
+        </div>
+        <br>
+        <div class="form-group">
+            <button ng-click='postComment()' class="btn btn-default">Post</button>
+        </div>
+    </form>
+</div>
+

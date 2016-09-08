@@ -21,7 +21,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -53,18 +52,10 @@ public class CommentResource {
         return listEntity2DTO(commentLogic.getComments(artworkId));
     }
     
-    @GET
-    @Path("/comment/{commentId: \\d+}")
-    public CommentDetailDTO getComment(@PathParam("commentId") Long commentId) {
-        CommentEntity entity = commentLogic.getComment(commentId);
-        return new CommentDetailDTO(entity);
-    }
-    
     @POST
     @StatusCreated
-    @Path("{artworkId: \\d+}")
-    public CommentDetailDTO createComment(@PathParam("artworkId") Long artworkId, CommentDetailDTO dto) {
-        return new CommentDetailDTO(commentLogic.createComment(artworkId, dto.toEntity()));
+    public CommentDetailDTO createComment(CommentDetailDTO dto) {
+        return new CommentDetailDTO(commentLogic.createComment(dto.getArtwork().getId(), dto.toEntity()));
     }
     
     @DELETE

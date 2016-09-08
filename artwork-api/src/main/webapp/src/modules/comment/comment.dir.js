@@ -12,11 +12,27 @@
     });
 
     function controller($scope, Restangular) {
-        console.log("artwork",$scope.artwork);
+        $scope.comment = null;
+        $scope.empty = true;
+        $scope.comments = [];
         Restangular.all('comments').customGET($scope.artwork.id).then(function (data) {
-            console.log("Resultado",data);
+            $scope.comments=data;
+            if(data.length!==0) {
+                $scope.empty = false;
+            }
         });
-        $scope.comments=[{"message":"a"},{"message":"b"},{"message":"c"}];
+        $scope.postComment = function() {
+            var comment = $scope.comment;
+            if(comment) {
+               comment.name = comment.message;
+                comment.artwork = $scope.artwork;
+                console.log("comment",comment);
+                Restangular.all('comments/'+$scope.artwork.id).post(comment).then(function(data) {
+                    $scope.empty = false;
+                    $scope.comments.push(comment);
+                }); 
+            }  
+        };
     }
     
 })(window.angular);
