@@ -54,6 +54,7 @@ public class CommentResource {
     }
     
     @GET
+    @Path("/comment/{commentId: \\d+}")
     public CommentDetailDTO getComment(@PathParam("commentId") Long commentId) {
         CommentEntity entity = commentLogic.getComment(commentId);
         return new CommentDetailDTO(entity);

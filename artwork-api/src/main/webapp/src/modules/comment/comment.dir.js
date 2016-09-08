@@ -13,6 +13,7 @@
 
     function controller($scope, Restangular) {
         console.log("artwork",$scope.artwork);
+        Restangular.all('comments').customGET($scope.artwork.id).then(function (data) {
             console.log("Resultado",data);
         });
         $scope.comments=[{"message":"a"},{"message":"b"},{"message":"c"}];
