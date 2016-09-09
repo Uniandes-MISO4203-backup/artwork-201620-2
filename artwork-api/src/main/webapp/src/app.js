@@ -36,7 +36,8 @@ SOFTWARE.
         'roleModule',
         'nationalityModule',
         'creditCardModule',
-        'commentModule'
+        'commentModule',
+        'messageModule'        
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {
@@ -74,6 +75,11 @@ SOFTWARE.
                         label: 'Client',
                         icon: 'list-alt',
                         state: 'clientList'
+                    },{
+                        id: 'message',
+                        label: 'Messages',
+                        icon: 'list-alt',
+                        state: 'messageList'                    
                     }],
                 'artist': [{
                         id: 'artist',
@@ -106,7 +112,12 @@ SOFTWARE.
                         label: 'Nationality',
                         icon: 'list-alt',
                         state: 'nationalityList'                    
-                    }]
+                    },{
+                        id: 'message',
+                        label: 'Messages',
+                        icon: 'list-alt',
+                        state: 'messageList'                    
+                    }],
             });
         }]);
 

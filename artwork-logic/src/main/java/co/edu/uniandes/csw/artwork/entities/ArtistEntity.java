@@ -46,6 +46,8 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private NationalityEntity nationality;
+    
+    private Long score;
 
     /**
      * Obtiene la colección de artworks.
@@ -80,4 +82,14 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     public void setNationality(NationalityEntity nationality) {
         this.nationality = nationality;
     }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long Score) {
+        this.score = Score;
+    }
+    
+    
 }

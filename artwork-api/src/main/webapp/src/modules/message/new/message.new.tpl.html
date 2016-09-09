@@ -1,0 +1,16 @@
+<div ng-messages="messageForm.$error" multiple>
+    <ng-message when="required">
+        <alert type="warning">Please, Fill the required fields!</alert>
+    </ng-message>
+    <ng-message when="url">
+        <alert type="warning">Image field must be a URL</alert>
+    </ng-message>
+</div>
+<header>
+    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
+</header>
+<form novalidate name="messageForm" role="form">
+    <fieldset>
+        <crud-form fields='model.editFields' record='currentRecord' lists-of-values="references"></crud-form>
+    </fieldset>
+</form>

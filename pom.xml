@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>co.edu.uniandes.csw.artwork</groupId>
-    <artifactId>artwork</artifactId>
+    <artifactId>artwork2</artifactId>
     <name>Artwork</name>
     <packaging>pom</packaging>
     <version>0.1.0</version>

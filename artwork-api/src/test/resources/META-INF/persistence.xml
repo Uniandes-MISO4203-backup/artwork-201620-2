@@ -11,6 +11,7 @@
     <class>co.edu.uniandes.csw.artwork.entities.CreditCardEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.NationalityEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.CommentEntity</class>
+    <class>co.edu.uniandes.csw.artwork.entities.MessageEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
