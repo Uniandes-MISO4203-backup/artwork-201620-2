@@ -126,7 +126,7 @@ public class ArtistResource {
     }
     
     @GET
-    @Path("/byName/{name: \\d+}")
+    @Path("/byName/{name}")
     public List<ArtistDetailDTO> findArtistsByName(@PathParam("name") String name) {
         return listEntity2DTO(artistLogic.findArtistsByName(name));
     }

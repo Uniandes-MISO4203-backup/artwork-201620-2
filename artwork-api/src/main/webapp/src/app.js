@@ -36,6 +36,7 @@ SOFTWARE.
         'roleModule',
         'nationalityModule',
         'creditCardModule',
+        'commentModule',
         'messageModule'        
     ]);
 
