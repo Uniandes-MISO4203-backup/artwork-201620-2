@@ -26,10 +26,10 @@
             if(comment) {
                 comment.name = comment.message;
                 comment.artwork = $scope.artwork;
-                console.log("comment",comment);
                 Restangular.all('comments').post(comment).then(function(data) {
                     $scope.empty = false;
                     $scope.comments.push(comment);
+                    $scope.comment = null;
                 }); 
             }  
         };
