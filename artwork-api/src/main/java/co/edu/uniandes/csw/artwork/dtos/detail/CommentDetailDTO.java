@@ -8,12 +8,14 @@ package co.edu.uniandes.csw.artwork.dtos.detail;
 import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.CommentDTO;
 import co.edu.uniandes.csw.artwork.entities.CommentEntity;
+import javax.xml.bind.annotation.XmlRootElement;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
  * @author cf.agudelo12
  */
+@XmlRootElement
 public class CommentDetailDTO extends CommentDTO {
     @PodamExclude
     private ArtworkDTO artwork;

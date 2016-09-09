@@ -24,10 +24,10 @@
         $scope.postComment = function() {
             var comment = $scope.comment;
             if(comment) {
-               comment.name = comment.message;
+                comment.name = comment.message;
                 comment.artwork = $scope.artwork;
                 console.log("comment",comment);
-                Restangular.all('comments/'+$scope.artwork.id).post(comment).then(function(data) {
+                Restangular.all('comments').post(comment).then(function(data) {
                     $scope.empty = false;
                     $scope.comments.push(comment);
                 }); 
