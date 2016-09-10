@@ -105,8 +105,8 @@ public class ArtistLikeLogicTest {
      * @generated
      */
     private void clearData() {
-        em.createQuery("delete from ArtistEntity").executeUpdate();
         em.createQuery("delete from ArtistLikeEntity").executeUpdate();
+        em.createQuery("delete from ArtistEntity").executeUpdate();
         em.createQuery("delete from ClientEntity").executeUpdate();
     }
 

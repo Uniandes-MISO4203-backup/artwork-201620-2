@@ -37,7 +37,7 @@ public class ArtistLikePersistance extends CrudPersistence<ArtistLikeEntity>{
     }
 
     public List<ArtistLikeEntity> findAll(Long artistid) {
-        TypedQuery<ArtistLikeEntity> q = em.createQuery("select p from ArtistLikeEntity p where (p.artwork.id = :artistid)", ArtistLikeEntity.class);
+        TypedQuery<ArtistLikeEntity> q = em.createQuery("select p from ArtistLikeEntity p where (p.artist.id = :artistid)", ArtistLikeEntity.class);
         q.setParameter("artistid", artistid);
         return q.getResultList();
     }
