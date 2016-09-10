@@ -49,6 +49,11 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     
     private Long score;
 
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ArtistLikeEntity> likes = new ArrayList<>();
+    
     /**
      * Obtiene la colección de artworks.
      *
@@ -90,6 +95,13 @@ public class ArtistEntity extends BaseEntity implements Serializable {
     public void setScore(Long Score) {
         this.score = Score;
     }
-    
+
+    public List<ArtistLikeEntity> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<ArtistLikeEntity> likes) {
+        this.likes = likes;
+    }
     
 }
