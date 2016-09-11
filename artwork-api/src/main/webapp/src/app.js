@@ -117,7 +117,7 @@ SOFTWARE.
                         label: 'Messages',
                         icon: 'list-alt',
                         state: 'messageList'                    
-                    }],
+                    }]
             });
         }]);
 
