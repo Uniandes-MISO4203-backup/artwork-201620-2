@@ -63,7 +63,7 @@ public class MessageLogic implements IMessageLogic{
         try {
             return persistence.find(itemid);
         }catch(NoResultException e){
-            throw new IllegalArgumentException("El Mensaje no existe");
+            throw new IllegalArgumentException("El Mensaje no existe", e);
         }
     }    
     
