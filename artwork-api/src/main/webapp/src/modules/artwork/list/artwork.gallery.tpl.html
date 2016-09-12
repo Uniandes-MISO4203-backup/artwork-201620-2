@@ -17,11 +17,19 @@
                 </div>
                 <div class="caption" >
                     <p><strong>Name: </strong> {{artwork.name}}</p>
-                    <p><strong>Price: </strong> {{artwork.price| currency}}</p>              
+                    <p><strong>Price: </strong> {{artwork.price| currency}}</p>  
+                    <div class="pull-right">
+                        <span class="badge"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Artist 4</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Artist
+                    </button>
                     <comment artwork="artwork"></comment>
                 </div>
+                
+                
             </div>
         </div>
     </div>    
