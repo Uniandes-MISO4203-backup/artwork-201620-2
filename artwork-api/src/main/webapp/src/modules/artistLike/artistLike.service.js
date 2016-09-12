@@ -4,4 +4,12 @@
  * and open the template in the editor.
  */
 
+(function (ng) {
+    var mod = ng.module('artistLikeModule', []);
 
+    mod.factory('artistLikeService', ['Restangular',
+        function (Restangular) {
+           return {a:1};             
+        }]);
+
+})(window.angular);

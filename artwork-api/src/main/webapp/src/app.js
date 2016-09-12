@@ -37,7 +37,8 @@ SOFTWARE.
         'nationalityModule',
         'creditCardModule',
         'commentModule',
-        'messageModule'        
+        'messageModule',
+        'artistLikeModule'
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {
