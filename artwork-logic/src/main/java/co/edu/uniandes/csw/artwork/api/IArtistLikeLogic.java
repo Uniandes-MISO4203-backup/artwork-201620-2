@@ -14,6 +14,6 @@ import co.edu.uniandes.csw.artwork.entities.ArtistLikeEntity;
 public interface IArtistLikeLogic {
     
     public Long getNumberOfLikes(Long artistId);
-    public ArtistLikeEntity addArtistLike(Long artistId, Long clientId, ArtistLikeEntity entity);
+    public ArtistLikeEntity addArtistLike(Long artistId, ArtistLikeEntity entity);
     
 }

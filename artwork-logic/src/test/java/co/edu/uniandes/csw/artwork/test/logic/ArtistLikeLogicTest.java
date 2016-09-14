@@ -72,8 +72,6 @@ public class ArtistLikeLogicTest {
     @Inject
     UserTransaction utx;
 
-    
-    private ClientEntity clientEntity1;
     private ArtistEntity artistEntity1;
     
     /**
@@ -107,7 +105,6 @@ public class ArtistLikeLogicTest {
     private void clearData() {
         em.createQuery("delete from ArtistLikeEntity").executeUpdate();
         em.createQuery("delete from ArtistEntity").executeUpdate();
-        em.createQuery("delete from ClientEntity").executeUpdate();
     }
 
     /**
@@ -122,16 +119,12 @@ public class ArtistLikeLogicTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        clientEntity1 = factory.manufacturePojo(ClientEntity.class);
-        clientEntity1.setId(1L);
-        em.persist(clientEntity1);
         
         artistEntity1 = factory.manufacturePojo(ArtistEntity.class);
         artistEntity1.setId(2L);
         em.persist(artistEntity1);
         for (int i = 0; i < 3; i++) {
             ArtistLikeEntity entity = factory.manufacturePojo(ArtistLikeEntity.class);
-            entity.setClient(clientEntity1);
             entity.setArtist(artistEntity1);
             em.persist(entity);
             data.add(entity);
@@ -148,7 +141,7 @@ public class ArtistLikeLogicTest {
     public void createArtistLikeTest() {
         ArtistLikeEntity newEntity = factory.manufacturePojo(ArtistLikeEntity.class);
         ArtistLikeEntity result = artistLikeLogic.addArtistLike(artistEntity1.getId(), 
-                clientEntity1.getId(), newEntity);
+                newEntity);
         Assert.assertNotNull(result);
         ArtistLikeEntity entity = em.find(ArtistLikeEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
@@ -162,7 +155,7 @@ public class ArtistLikeLogicTest {
      */
     @Test
     public void getQualifiesTest() {
-        Long score = artistLikeLogic.getNumberOfLikes(clientEntity1.getId());
+        Long score = artistLikeLogic.getNumberOfLikes(artistEntity1.getId());
         Assert.assertNotEquals(0, score.longValue());
     }
 }

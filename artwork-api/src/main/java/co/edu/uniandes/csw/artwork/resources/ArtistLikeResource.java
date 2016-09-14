@@ -39,9 +39,9 @@ public class ArtistLikeResource {
     @StatusCreated
     public ArtistLikeDetailDTO createLike(ArtistLikeDetailDTO dto) {
         ArtistLikeEntity entity =  artistLikeLogic.addArtistLike(
-                dto.getArtist().getId(), 
-                dto.getClient().getId(),
+                dto.getArtist().getId(),
                 dto.toEntity());
+        
         return new ArtistLikeDetailDTO(entity);    
     } 
     

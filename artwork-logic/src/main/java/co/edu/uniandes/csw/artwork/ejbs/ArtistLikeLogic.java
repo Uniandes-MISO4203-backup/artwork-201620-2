@@ -27,9 +27,6 @@ public class ArtistLikeLogic implements IArtistLikeLogic{
     private ArtistLikePersistance persistance;
     
     @Inject
-    private IClientLogic clientLogic;
-    
-    @Inject
     private IArtistLogic artistLogic;
     
     @Override
@@ -39,11 +36,9 @@ public class ArtistLikeLogic implements IArtistLikeLogic{
     }
 
     @Override
-    public ArtistLikeEntity addArtistLike(Long artistId, Long clientId, ArtistLikeEntity entity) {
-        ClientEntity client = clientLogic.getClient(clientId);
+    public ArtistLikeEntity addArtistLike(Long artistId, ArtistLikeEntity entity) {
         ArtistEntity artist = artistLogic.getArtist(artistId);
         entity.setArtist(artist);
-        entity.setClient(client);
         return persistance.create(entity);
     }
     

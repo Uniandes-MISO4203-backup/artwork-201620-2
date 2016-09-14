@@ -25,11 +25,9 @@ SOFTWARE.
 
     var mod = ng.module("artworkModule");
 
-    mod.controller("artworkListCtrl", ["$scope", '$state', 'artworks', '$stateParams','Restangular', 'artistLikeService',
-        function ($scope, $state, artworks, $params,Restangular, artistLikeService) {
+    mod.controller("artworkListCtrl", ["$scope", '$state', 'artworks', '$stateParams','Restangular',
+        function ($scope, $state, artworks, $params,Restangular) {
             $scope.records = artworks;
-            console.log("hello");
-            console.log(artworks[0]);
             //Paginación
             this.itemsPerPage = $params.limit;
             this.currentPage = $params.page;
@@ -112,5 +110,7 @@ SOFTWARE.
                     }
                 }
             };
+            
+           
         }]);
 })(window.angular);

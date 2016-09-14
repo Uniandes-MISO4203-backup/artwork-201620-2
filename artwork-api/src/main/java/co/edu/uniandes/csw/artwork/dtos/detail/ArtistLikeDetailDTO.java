@@ -18,8 +18,6 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @XmlRootElement
 public class ArtistLikeDetailDTO extends ArtistLikeDTO{
-    @PodamExclude
-    private ClientDTO client;
     
     @PodamExclude
     private ArtistDTO artist;
@@ -31,9 +29,6 @@ public class ArtistLikeDetailDTO extends ArtistLikeDTO{
     
     public ArtistLikeDetailDTO(ArtistLikeEntity entity){
         super(entity);
-        if(entity.getClient() != null){
-            this.client = new ClientDTO(entity.getClient());
-        }
         if(entity.getArtist()!= null){
             this.artist = new ArtistDTO(entity.getArtist());
         }
@@ -42,21 +37,10 @@ public class ArtistLikeDetailDTO extends ArtistLikeDTO{
     @Override
     public ArtistLikeEntity toEntity(){
         ArtistLikeEntity entity = super.toEntity();
-        if(this.getClient() != null){
-            entity.setClient(this.getClient().toEntity());
-        }
         if(this.getArtist()!= null){
             entity.setArtist(this.getArtist().toEntity());
         }
         return entity;
-    }
-
-    public ClientDTO getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDTO client) {
-        this.client = client;
     }
 
     public ArtistDTO getArtist() {
