@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 
+import co.edu.uniandes.csw.artwork.entities.NationalityEntity;
+
 /**
  *
  * @author am.osorio
@@ -13,6 +15,16 @@ public class NationalityDTO {
        private Long id;
     private String name;
     private String description;
+    
+    public NationalityDTO() {
+    }
+    public NationalityDTO(NationalityEntity entity) {
+	   if (entity!=null){
+        this.id=entity.getId();
+        this.name=entity.getName();
+        this.description=entity.getDescription();
+       }
+    }
 
     /**
      * @return the id

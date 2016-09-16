@@ -38,7 +38,8 @@ SOFTWARE.
         'creditCardModule',
         'commentModule',
         'messageModule',
-        'artistLikeModule'
+        'artistLikeModule',
+		'qualifyModule'
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {

@@ -36,11 +36,14 @@ SOFTWARE.
         <!-- endbuild -->
 
         <link rel="stylesheet" href="src/assets/css/css.css" />
-        
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+              
+
         <!-- build:css(<%= meta.src %>) styles/main.css -->
         <!-- include: "type": "css", "files": "<%= meta.includeCssFiles %>" -->
         <!-- /include -->
         <!-- endbuild -->
+       
 
         <!-- build:js(<%= meta.src %>) scripts/vendor.js -->
         <!-- bower:js -->
@@ -60,7 +63,7 @@ SOFTWARE.
         <script src="bower_components/csw-ng-auth/dist/csw-ng-auth.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
-
+ 
         <!-- build:js(<%= meta.src %>) scripts/scripts.js -->
         <!-- include: "type": "js", "files": "<%= meta.includeJsFiles %>" -->
         <script src="src/app.js"></script>
@@ -125,6 +128,7 @@ SOFTWARE.
         <script src="src/modules/creditcard/list/creditcard.list.ctrl.js"></script>
         <script src="src/modules/creditcard/new/creditcard.new.ctrl.js"></script>
         <script src="src/modules/comment/comment.dir.js"></script>
+        <script src="src/modules/qualify/qualify.dir.js"></script>
         <script src="src/modules/creditcard/new/creditcard.new.ctrl.js"></script>        
         <script src="src/modules/message/message.ctrl.js"></script>        
         <script src="src/modules/message/list/message.list.ctrl.js"></script>
@@ -132,13 +136,15 @@ SOFTWARE.
         <script src="src/modules/message/instance/detail/message.detail.ctrl.js"></script>
         <script src="src/modules/message/instance/edit/message.edit.ctrl.js"></script>
         <script src="src/modules/message/instance/delete/message.delete.ctrl.js"></script>
-        
         <script src="src/modules/artistLike/artistLike.dir.js"></script>
+	
         <!-- /include -->
         <!-- endbuild -->
 
     </head>
     <body style="padding-top: 60px;">
+
+        
         <div class="container-fluid">
             <div class="col-md-12">
                 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
