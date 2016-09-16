@@ -41,9 +41,6 @@ public class QualifyEntity extends BaseEntity implements Serializable {
     private ArtworkEntity artwork;
     
     
-    @PodamExclude
-    @ManyToOne
-    private ClientEntity client;
     
     private Long score;
 
@@ -67,19 +64,6 @@ public class QualifyEntity extends BaseEntity implements Serializable {
         this.artwork = artwork;
     }
     
-    /**
-     * @return the client
-     */
-    public ClientEntity getClient() {
-        return client;
-    }
-
-    /**
-     * @param client the client to set
-     */
-    public void setClient(ClientEntity client) {
-        this.client = client;
-    }
 
     /**
      * @return the score

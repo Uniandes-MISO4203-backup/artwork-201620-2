@@ -24,11 +24,9 @@ SOFTWARE.
 package co.edu.uniandes.csw.artwork.ejbs;
 
 import co.edu.uniandes.csw.artwork.api.IArtworkLogic;
-import co.edu.uniandes.csw.artwork.api.ICategoryLogic;
 import co.edu.uniandes.csw.artwork.api.IClientLogic;
 import co.edu.uniandes.csw.artwork.api.IQualifyLogic;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
-import co.edu.uniandes.csw.artwork.entities.CategoryEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
 import co.edu.uniandes.csw.artwork.persistence.QualifyPersistence;
@@ -46,30 +44,19 @@ public class QualifyLogic implements IQualifyLogic {
     private QualifyPersistence persistence;
     @Inject
     private IArtworkLogic artwork;
-    @Inject
-    private IClientLogic client;
     
 
     @Override
-    public Long getQualifys(Long artworkId) {
-        Long fullScore=0l;
+    public List<QualifyEntity> getQualifys(Long artworkId) {
         List<QualifyEntity> scores = persistence.findAll(artworkId);
-        for (QualifyEntity qualify : scores) {
-            fullScore+=qualify.getScore();
-        }
-        if(fullScore != 0l){
-            fullScore = fullScore/scores.size();
-        }
-        return fullScore;
+        return scores;
     }
 
     @Override
-    public QualifyEntity addQualify(Long artworkId, Long clientId,  QualifyEntity entity) {
+    public QualifyEntity addQualify(Long artworkId, QualifyEntity entity) {
         ArtworkEntity artworkEntity = artwork.getArtwork(artworkId);
-        ClientEntity clientEntity = client.getClient(clientId);
-
+       
         entity.setArtwork(artworkEntity);
-        entity.setClient(clientEntity);
         persistence.create(entity);
         return entity;
     }

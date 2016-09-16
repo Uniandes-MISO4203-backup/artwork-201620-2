@@ -44,10 +44,6 @@ public class ClientEntity extends BaseEntity implements Serializable {
 
     private int age;
     
-    @PodamExclude
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<QualifyEntity> qualify = new ArrayList<>();
-    
     /**
      * Obtiene la colección de wishList.
      *
@@ -87,18 +83,4 @@ public class ClientEntity extends BaseEntity implements Serializable {
     public void setCreditCards(List<CreditCardEntity> creditCards) {
         this.creditCards = creditCards;
     }    
-
-    /**
-     * @return the qualify
-     */
-    public List<QualifyEntity> getQualify() {
-        return qualify;
-    }
-
-    /**
-     * @param qualify the qualify to set
-     */
-    public void setQualify(List<QualifyEntity> qualify) {
-        this.qualify = qualify;
-    }
 }

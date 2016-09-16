@@ -54,7 +54,6 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class QualifyLogicTest {
 
     ArtworkEntity fatherEntity1;
-    ClientEntity fatherEntity2;
 
     /**
      * @generated
@@ -140,14 +139,10 @@ public class QualifyLogicTest {
         fatherEntity1.setId(1L);
         em.persist(fatherEntity1);
         
-        fatherEntity2 = factory.manufacturePojo(ClientEntity.class);
-        fatherEntity2.setId(1L);
-        em.persist(fatherEntity2);
-        
+              
         for (int i = 0; i < 3; i++) {
             QualifyEntity entity = factory.manufacturePojo(QualifyEntity.class);
             entity.setArtwork(fatherEntity1);
-            entity.setClient(fatherEntity2);
             em.persist(entity);
             data.add(entity);
         }
@@ -160,7 +155,7 @@ public class QualifyLogicTest {
     @Test
     public void createQualifyTest() {
         QualifyEntity newEntity = factory.manufacturePojo(QualifyEntity.class);
-        QualifyEntity result = qualifyLogic.addQualify(fatherEntity1.getId(), fatherEntity2.getId(), newEntity);
+        QualifyEntity result = qualifyLogic.addQualify(fatherEntity1.getId(), newEntity);
         Assert.assertNotNull(result);
         QualifyEntity entity = em.find(QualifyEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
@@ -169,14 +164,14 @@ public class QualifyLogicTest {
     }
 
     /**
-     * Prueba para consultar la lista de Nationalities
+     * Prueba para consultar la lista de Calificaciones
      *
      * @generated
      */
     @Test
     public void getQualifiesTest() {
-        Long score = qualifyLogic.getQualifys(fatherEntity1.getId());
-        Assert.assertNotEquals(0l, score.longValue());
+        List<QualifyEntity> score = qualifyLogic.getQualifys(fatherEntity1.getId());
+        Assert.assertNotNull(score);
         
     }
 }

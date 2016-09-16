@@ -24,8 +24,9 @@ SOFTWARE.
 package co.edu.uniandes.csw.artwork.api;
 
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
+import java.util.List;
 
 public interface IQualifyLogic {
-    public Long getQualifys(Long artworkId);
-    public QualifyEntity addQualify(Long artworkId, Long clientId, QualifyEntity entity);
+    public List<QualifyEntity> getQualifys(Long artworkId);
+    public QualifyEntity addQualify(Long artworkId, QualifyEntity entity);
 }
