@@ -64,7 +64,7 @@
         </dependency>
         <dependency>
             <groupId>co.edu.uniandes.csw.artwork</groupId>
-            <artifactId>artwork-logic2</artifactId>
+            <artifactId>artwork-logic</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>
