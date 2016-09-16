@@ -35,10 +35,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class QualifyDetailDTO extends QualifyDTO{
 
 
-    @PodamExclude
     private ArtworkDTO artwork;
-    @PodamExclude
-    private ClientDTO client;
     /**
      * @generated
      */
@@ -57,10 +54,7 @@ public class QualifyDetailDTO extends QualifyDTO{
         if (entity.getArtwork()!=null){
         this.artwork = new ArtworkDTO(entity.getArtwork());
         }
-        if (entity.getClient()!=null){
-        this.client = new ClientDTO(entity.getClient());
-        }
-        
+                
     }
 
     /**
@@ -75,9 +69,7 @@ public class QualifyDetailDTO extends QualifyDTO{
         if (this.getArtwork()!=null){
         entity.setArtwork(this.getArtwork().toEntity());
         }
-        if (this.getClient()!=null){
-        entity.setClient(this.getClient().toEntity());
-        }
+       
         return entity;
     }
 
@@ -94,20 +86,6 @@ public class QualifyDetailDTO extends QualifyDTO{
      */
     public void setArtwork(ArtworkDTO artwork) {
         this.artwork = artwork;
-    }
-
-    /**
-     * @return the client
-     */
-    public ClientDTO getClient() {
-        return client;
-    }
-
-    /**
-     * @param client the client to set
-     */
-    public void setClient(ClientDTO client) {
-        this.client = client;
     }
 
 }

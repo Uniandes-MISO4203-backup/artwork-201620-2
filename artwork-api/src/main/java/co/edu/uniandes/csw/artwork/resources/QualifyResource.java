@@ -37,6 +37,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import co.edu.uniandes.csw.artwork.api.IQualifyLogic;
 import co.edu.uniandes.csw.artwork.dtos.detail.QualifyDetailDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
+import java.util.ArrayList;
+import java.util.List;
+import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
 
 /**
  * URI: artworks/{artwork: \\d+}/qualify/
@@ -57,28 +61,85 @@ public class QualifyResource {
      */
     public QualifyResource() {
     }
+    
+     public static QualifyDetailDTO basicEntity2DTO(QualifyEntity entity) {
+        if (entity != null) {
+            QualifyDetailDTO dto = new QualifyDetailDTO();
+            dto.setId(entity.getId());
+            dto.setName(entity.getName());
+            dto.setArtwork(new ArtworkDTO(entity.getArtwork()));
+            dto.setScore(entity.getScore());
+            return dto;
+        } else {
+            return null;
+        }
+    }
 
+      public static QualifyEntity basicDTO2Entity(QualifyDetailDTO dto) {
+        if (dto != null) {
+            QualifyEntity entity = new QualifyEntity();
+            entity.setId(dto.getId());
+            entity.setName(dto.getName());
+            entity.setScore(dto.getScore());
+
+            return entity;
+        } else {
+            return null;
+        }
+    }
+     public static List<QualifyDetailDTO> listEntity2DTO(List<QualifyEntity> entities) {
+        List<QualifyDetailDTO> dtos = new ArrayList<>();
+        if (entities != null) {
+            for (QualifyEntity entity : entities) {
+                dtos.add(basicEntity2DTO(entity));
+            }
+        }
+        return dtos;
+    }
+
+    public static List<QualifyEntity> listDTO2Entity(List<QualifyDetailDTO> dtos) {
+        List<QualifyEntity> entities = new ArrayList<>();
+        if (dtos != null) {
+            for (QualifyDetailDTO dto : dtos) {
+                entities.add(basicDTO2Entity(dto));
+            }
+        }
+        return entities;
+    }
     /**
      * Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
      * @param artworksId
      * @return an instance of Long
      */
-    @GET
-    @Path("{artworkId: \\d+}")
-    public Long getQualifys(@PathParam("artworksId") Long artworksId) {
-        Long score = qualifyLogic.getQualifys(artworksId);
-        return score;
+    
+    public List<QualifyDetailDTO>getQualifys(Long artworksId) {
+        List<QualifyDetailDTO> qualifies= listEntity2DTO(qualifyLogic.getQualifys(artworksId));
+        return qualifies;
     } 
     
+     /* Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
+     * @param artworksId
+     * @return an instance of Long
+     */
     @GET
-    public String getQualifys() {
-        return "Hola";
+    @Path("{artworksId: \\d+}")
+    public String getScore(@PathParam("artworksId") Long artworksId) {
+        
+        Long fullScore=0l;
+        List<QualifyDetailDTO> scores = getQualifys(artworksId);
+        for (QualifyDetailDTO qualify : scores) {
+            fullScore+=qualify.getScore();
+        }
+        if(fullScore != 0l){
+            fullScore = fullScore/scores.size();
+        }
+        return fullScore.toString();
     } 
    
     @POST
     @StatusCreated
     public QualifyDetailDTO createItem(QualifyDetailDTO dto) {
        
-        return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getClient().getId(),dto.getArtwork().getId(), dto.toEntity()));
+        return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), dto.toEntity()));
     }        
 }

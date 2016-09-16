@@ -35,7 +35,8 @@ SOFTWARE.
         'authModule',
         'roleModule',
         'nationalityModule',
-        'creditCardModule'        
+        'creditCardModule',
+        'qualifyModule'
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {
