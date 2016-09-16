@@ -48,7 +48,7 @@ public class CreditCardLogic implements ICreditCardLogic {
         try {
             return persistence.find(itemid);
         }catch(NoResultException e){
-            throw new IllegalArgumentException("El Item no existe");
+            throw new IllegalArgumentException("El Item no existe", e);
         }
     }
     

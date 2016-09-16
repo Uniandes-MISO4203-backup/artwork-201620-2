@@ -55,6 +55,10 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QualifyEntity> qualify = new ArrayList<>();
 
+	@OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentEntity> comments = new ArrayList<>();
+
+
     /**
      * Obtiene el atributo image.
      *
@@ -135,6 +139,7 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
         this.category = category;
     }
 
+
     /**
      * @return the qualify
      */
@@ -147,5 +152,13 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
      */
     public void setQualify(List<QualifyEntity> qualify) {
         this.qualify = qualify;
+    }
+		
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
     }
 }

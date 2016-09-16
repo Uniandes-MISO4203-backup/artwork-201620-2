@@ -127,6 +127,7 @@ public class QualifyResource {
         
         Long fullScore=0l;
         List<QualifyDetailDTO> scores = getQualifys(artworksId);
+        
         for (QualifyDetailDTO qualify : scores) {
             fullScore+=qualify.getScore();
         }
