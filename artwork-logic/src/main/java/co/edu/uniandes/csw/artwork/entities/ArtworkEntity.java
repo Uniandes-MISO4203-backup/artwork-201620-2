@@ -55,7 +55,8 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QualifyEntity> qualify = new ArrayList<>();
 
-	@OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
+    @PodamExclude
+    @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentEntity> comments = new ArrayList<>();
 
 
