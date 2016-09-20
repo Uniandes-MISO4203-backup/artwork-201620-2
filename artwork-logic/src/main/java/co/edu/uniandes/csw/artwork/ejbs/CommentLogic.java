@@ -45,11 +45,7 @@ public class CommentLogic implements ICommentLogic {
 
     @Override
     public CommentEntity getComment(Long id) {
-        try {
-            return persistence.find(id);
-        }catch(NoResultException e){
-            throw new IllegalArgumentException("El Artwork no existe");
-        }
+        return persistence.find(id);
     }
 
     @Override
