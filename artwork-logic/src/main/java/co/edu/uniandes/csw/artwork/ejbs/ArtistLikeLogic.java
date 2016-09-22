@@ -7,10 +7,8 @@ package co.edu.uniandes.csw.artwork.ejbs;
 
 import co.edu.uniandes.csw.artwork.api.IArtistLikeLogic;
 import co.edu.uniandes.csw.artwork.api.IArtistLogic;
-import co.edu.uniandes.csw.artwork.api.IClientLogic;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.artwork.entities.ArtistLikeEntity;
-import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.persistence.ArtistLikePersistance;
 import java.util.List;
 import javax.ejb.Stateless;
