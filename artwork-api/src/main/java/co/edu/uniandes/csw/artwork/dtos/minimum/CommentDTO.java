@@ -16,6 +16,7 @@ public class CommentDTO implements Serializable {
     private String message;
     
     public CommentDTO() {
+        //Constructor vacio
     }
     
     public CommentDTO(CommentEntity entity) {

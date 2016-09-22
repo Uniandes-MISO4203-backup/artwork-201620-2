@@ -13,7 +13,6 @@ import co.edu.uniandes.csw.artwork.persistence.CommentPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 @Stateless
 public class CommentLogic implements ICommentLogic {
@@ -52,8 +51,8 @@ public class CommentLogic implements ICommentLogic {
     public CommentEntity createComment(Long artworkId, CommentEntity entity) {
         ArtworkEntity artwork = artworkLogic.getArtwork(artworkId);
         entity.setArtwork(artwork);
-        entity = persistence.create(entity);
-        return entity;
+        CommentEntity entity2 = persistence.create(entity);
+        return entity2;
     }
 
     @Override
