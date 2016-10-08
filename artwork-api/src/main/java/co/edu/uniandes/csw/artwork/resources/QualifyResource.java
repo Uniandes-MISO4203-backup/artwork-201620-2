@@ -69,6 +69,7 @@ public class QualifyResource {
             dto.setName(entity.getName());
             dto.setArtwork(new ArtworkDTO(entity.getArtwork()));
             dto.setScore(entity.getScore());
+            dto.setMessage(entity.getMessage());
             return dto;
         } else {
             return null;
@@ -81,6 +82,7 @@ public class QualifyResource {
             entity.setId(dto.getId());
             entity.setName(dto.getName());
             entity.setScore(dto.getScore());
+            entity.setMessage(dto.getMessage());
 
             return entity;
         } else {
@@ -113,7 +115,7 @@ public class QualifyResource {
      */
     
     public List<QualifyDetailDTO>getQualifys(Long artworksId) {
-        List<QualifyDetailDTO> qualifies= listEntity2DTO(qualifyLogic.getQualifys(artworksId));
+        List<QualifyDetailDTO> qualifies = listEntity2DTO(qualifyLogic.getQualifys(artworksId));
         return qualifies;
     } 
     
@@ -140,7 +142,6 @@ public class QualifyResource {
     @POST
     @StatusCreated
     public QualifyDetailDTO createItem(QualifyDetailDTO dto) {
-       
         return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), dto.toEntity()));
     }        
 }

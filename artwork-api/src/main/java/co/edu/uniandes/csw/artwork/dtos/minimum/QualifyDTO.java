@@ -15,6 +15,7 @@ public class QualifyDTO {
     private Long id;
     private String name;
     private Long score;
+    private String message;
     
     
     public QualifyDTO() {
@@ -24,6 +25,7 @@ public class QualifyDTO {
             this.id=entity.getId();
             this.name=entity.getName();
             this.score=entity.getScore();
+            this.message=entity.getMessage();
        }
     }
 
@@ -38,7 +40,8 @@ public class QualifyDTO {
         entity.setId(this.getId());
         entity.setName(this.getName());
         entity.setScore(this.getScore());
-    return entity;
+        entity.setMessage(this.getMessage());
+        return entity;
     }
 
     
@@ -83,6 +86,14 @@ public class QualifyDTO {
      */
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

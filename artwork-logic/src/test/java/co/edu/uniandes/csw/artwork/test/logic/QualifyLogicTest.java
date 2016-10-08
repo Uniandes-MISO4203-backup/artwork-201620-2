@@ -161,6 +161,7 @@ public class QualifyLogicTest {
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getScore(), entity.getScore());
+        Assert.assertEquals(newEntity.getMessage(), entity.getMessage());
     }
 
     /**

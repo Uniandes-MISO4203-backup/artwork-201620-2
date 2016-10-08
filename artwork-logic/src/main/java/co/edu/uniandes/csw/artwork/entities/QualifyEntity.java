@@ -34,15 +34,13 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class QualifyEntity extends BaseEntity implements Serializable {
-
-        
+    
     @PodamExclude
     @ManyToOne
     private ArtworkEntity artwork;
     
-    
-    
     private Long score;
+    private String message;
 
     /**
      * Obtiene el objeto de artworks.
@@ -78,6 +76,13 @@ public class QualifyEntity extends BaseEntity implements Serializable {
     public void setScore(Long score) {
         this.score = score;
     }
-    
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
     
 }

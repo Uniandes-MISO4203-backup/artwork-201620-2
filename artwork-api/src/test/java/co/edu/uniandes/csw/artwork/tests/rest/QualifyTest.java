@@ -207,6 +207,7 @@ public class QualifyTest {
         Assert.assertEquals(Created, response.getStatus());
 
         Assert.assertEquals(qualify.getScore(), qualifyTest.getScore());
+        Assert.assertEquals(qualify.getMessage(), qualifyTest.getMessage());
 
         QualifyEntity entity = em.find(QualifyEntity.class, qualifyTest.getId());
         Assert.assertNotNull(entity);
@@ -229,7 +230,4 @@ public class QualifyTest {
         Assert.assertTrue(new Long(qualify) >0);
     }
 
-    
-  
-       
 }

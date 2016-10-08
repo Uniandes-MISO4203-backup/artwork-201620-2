@@ -52,7 +52,7 @@ public class QualifyDetailDTO extends QualifyDTO{
     public QualifyDetailDTO(QualifyEntity entity) {
         super(entity);
         if (entity.getArtwork()!=null){
-        this.artwork = new ArtworkDTO(entity.getArtwork());
+            this.artwork = new ArtworkDTO(entity.getArtwork());
         }
                 
     }
