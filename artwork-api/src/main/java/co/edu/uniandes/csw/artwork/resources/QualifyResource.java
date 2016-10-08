@@ -119,12 +119,24 @@ public class QualifyResource {
         return qualifies;
     } 
     
-     /* Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
+    /* Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
      * @param artworksId
      * @return an instance of Long
      */
     @GET
     @Path("{artworksId: \\d+}")
+    public List<QualifyDetailDTO> getQualifies(@PathParam("artworksId") Long artworksId) {  
+        Long fullScore=0l;
+        List<QualifyDetailDTO> qualiefies = getQualifys(artworksId);
+        return qualiefies;
+    } 
+    
+     /* Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
+     * @param artworksId
+     * @return an instance of Long
+     */
+    @GET
+    @Path("{artworksId: \\d+}/score")
     public String getScore(@PathParam("artworksId") Long artworksId) {
         
         Long fullScore=0l;

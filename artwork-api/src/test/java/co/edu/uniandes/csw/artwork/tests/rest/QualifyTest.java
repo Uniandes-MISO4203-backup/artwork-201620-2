@@ -220,14 +220,33 @@ public class QualifyTest {
      * @generated
      */
     @Test
-    public void listQualifyTest() throws IOException {
+    public void qualifyScoreTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
   
-        String qualify = target
+        String score = target
             .path(oraculo.get(0).getArtwork().getId().toString())
+            .path("score")
             .request().cookie(cookieSessionId).get(String.class);
 
-        Assert.assertTrue(new Long(qualify) >0);
+        Assert.assertTrue(new Long(score) >0);
+    }
+    
+    /**
+     * Prueba para consultar la lista de Qualiefies
+     *
+     */
+    @Test
+    public void listQualifyTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+
+        Response response = target
+            .path(oraculo.get(0).getArtwork().getId().toString())
+            .request().cookie(cookieSessionId).get();
+
+        String listQualiefies = response.readEntity(String.class);
+        List<QualifyDTO> listTest = new ObjectMapper().readValue(listQualiefies, List.class);
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(3, listTest.size());
     }
 
 }

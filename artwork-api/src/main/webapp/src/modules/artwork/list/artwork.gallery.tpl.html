@@ -20,14 +20,17 @@
                 <p><strong>Name: </strong> {{artwork.name}}</p>
                 <p><strong>Prices: </strong> {{artwork.price| currency}}</p>              
             </div>
+            <hr />
+            <div class="col-md-12">
+                
+                <artist-like artist="artwork.artist"></artist-like>
+                <!--<comment artwork="artwork"></comment>-->
+            </div>
+            <br>
             <div class="caption">
                 <qualify artwork="artwork"></qualify>
             </div>
-            <div class="col-md-12">
-                    <artist-like artist="artwork.artist"></artist-like>
-
-                    <comment artwork="artwork"></comment>
-            </div>
+            
             </div>
         </div>
     </div>    
