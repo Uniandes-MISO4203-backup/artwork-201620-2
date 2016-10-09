@@ -53,7 +53,9 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class QualifyLogicTest {
 
-    ArtworkEntity fatherEntity1;
+    private ArtworkEntity fatherEntity1;
+    private ClientEntity fatherClient;
+    private List<ClientEntity> clients = new ArrayList<ClientEntity>();
 
     /**
      * @generated
@@ -126,6 +128,8 @@ public class QualifyLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from QualifyEntity").executeUpdate();
+        em.createQuery("delete from ClientEntity").executeUpdate();
+        em.createQuery("delete from ArtworkEntity").executeUpdate();
     }
 
     /**
@@ -139,12 +143,21 @@ public class QualifyLogicTest {
         fatherEntity1.setId(1L);
         em.persist(fatherEntity1);
         
+        fatherClient = factory.manufacturePojo(ClientEntity.class);
+        fatherClient.setId(10L);
+        em.persist(fatherClient);
               
         for (int i = 0; i < 3; i++) {
+            ClientEntity client = factory.manufacturePojo(ClientEntity.class);
+            client.setId(new Long(i+1));
+            em.persist(client);
+            
             QualifyEntity entity = factory.manufacturePojo(QualifyEntity.class);
             entity.setArtwork(fatherEntity1);
+            entity.setClient(client);
             em.persist(entity);
             data.add(entity);
+            clients.add(client);
         }
     }
     /**
@@ -155,7 +168,7 @@ public class QualifyLogicTest {
     @Test
     public void createQualifyTest() {
         QualifyEntity newEntity = factory.manufacturePojo(QualifyEntity.class);
-        QualifyEntity result = qualifyLogic.addQualify(fatherEntity1.getId(), newEntity);
+        QualifyEntity result = qualifyLogic.addQualify(fatherEntity1.getId(), fatherClient.getId(), newEntity);
         Assert.assertNotNull(result);
         QualifyEntity entity = em.find(QualifyEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());

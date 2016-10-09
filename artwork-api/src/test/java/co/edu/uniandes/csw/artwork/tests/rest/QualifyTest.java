@@ -30,6 +30,7 @@ import co.edu.uniandes.csw.auth.security.JWT;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
 import co.edu.uniandes.csw.artwork.dtos.minimum.QualifyDTO;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
+import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.resources.QualifyResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
@@ -81,7 +82,9 @@ public class QualifyTest {
     private final static List<QualifyEntity> oraculo = new ArrayList<>();
 
     private final String qualifyPath = "qualifys";
-    ArtworkEntity fatherEntity1;
+    private ArtworkEntity fatherEntity1;
+    private ClientEntity fatherClientEntity;
+    private List<ClientEntity> clients = new ArrayList<ClientEntity>();
 
     @ArquillianResource
     private URL deploymentURL;
@@ -117,6 +120,8 @@ public class QualifyTest {
 
     private void clearData() {
         em.createQuery("delete from QualifyEntity").executeUpdate();
+        em.createQuery("delete from ClientEntity").executeUpdate();
+        em.createQuery("delete from ArtworkEntity").executeUpdate();
         oraculo.clear();
     }
 
@@ -130,10 +135,18 @@ public class QualifyTest {
         fatherEntity1.setId(1L);
         em.persist(fatherEntity1);
         
+        fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
+        fatherClientEntity.setId(9997L);
+        em.persist(fatherClientEntity);
               
         for (int i = 0; i < 3; i++) {
+            ClientEntity client = factory.manufacturePojo(ClientEntity.class);
+            client.setId(new Long(i+88888));
+            em.persist(client);
+            
             QualifyEntity entity = factory.manufacturePojo(QualifyEntity.class);
             entity.setArtwork(fatherEntity1);
+            entity.setClient(client);
             em.persist(entity);
             oraculo.add(entity);
         }

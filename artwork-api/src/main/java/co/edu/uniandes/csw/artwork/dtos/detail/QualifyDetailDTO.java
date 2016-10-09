@@ -36,6 +36,8 @@ public class QualifyDetailDTO extends QualifyDTO{
 
 
     private ArtworkDTO artwork;
+    private ClientDTO client;
+    
     /**
      * @generated
      */
@@ -53,6 +55,7 @@ public class QualifyDetailDTO extends QualifyDTO{
         super(entity);
         if (entity.getArtwork()!=null){
             this.artwork = new ArtworkDTO(entity.getArtwork());
+            this.client = new ClientDTO(entity.getClient());
         }
                 
     }
@@ -66,10 +69,12 @@ public class QualifyDetailDTO extends QualifyDTO{
     @Override
     public QualifyEntity toEntity() {
         QualifyEntity entity = super.toEntity();
-        if (this.getArtwork()!=null){
-        entity.setArtwork(this.getArtwork().toEntity());
+        if(this.getArtwork()!= null){
+            entity.setArtwork(this.getArtwork().toEntity());
         }
-       
+        if(this.getClient()!= null){
+            entity.setClient(this.getClient().toEntity());
+        }   
         return entity;
     }
 
@@ -88,4 +93,13 @@ public class QualifyDetailDTO extends QualifyDTO{
         this.artwork = artwork;
     }
 
+    public ClientDTO getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDTO client) {
+        this.client = client;
+    }
+
+    
 }

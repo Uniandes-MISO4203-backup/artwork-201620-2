@@ -5,12 +5,14 @@
  */
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author am.osorio
  */
+@XmlRootElement
 public class QualifyDTO {
     private Long id;
     private String name;

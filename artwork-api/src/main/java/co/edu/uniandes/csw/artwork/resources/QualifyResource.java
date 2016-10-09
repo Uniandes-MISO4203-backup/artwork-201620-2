@@ -41,6 +41,9 @@ import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
 import java.util.ArrayList;
 import java.util.List;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
+import co.edu.uniandes.csw.auth.stormpath.Utils;
+import com.stormpath.sdk.account.Account;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * URI: artworks/{artwork: \\d+}/qualify/
@@ -56,6 +59,7 @@ public class QualifyResource {
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
 
+    @Context private HttpServletRequest req;
     /**
      * Creates a new instance of CreditCardResource
      */
@@ -154,6 +158,15 @@ public class QualifyResource {
     @POST
     @StatusCreated
     public QualifyDetailDTO createItem(QualifyDetailDTO dto) {
-        return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), dto.toEntity()));
+        
+        String accountHref = req.getRemoteUser();
+        if (accountHref == null) {
+            return null;
+        }        
+       
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        Integer client_id = (int) account.getCustomData().get("client_id");
+        
+        return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), client_id.longValue(), dto.toEntity()));
     }        
 }
