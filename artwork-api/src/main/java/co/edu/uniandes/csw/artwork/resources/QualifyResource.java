@@ -67,7 +67,7 @@ public class QualifyResource {
     }
     
      public static QualifyDetailDTO basicEntity2DTO(QualifyEntity entity) {
-        if (entity != null) {
+         if (entity != null) {
             QualifyDetailDTO dto = new QualifyDetailDTO();
             dto.setId(entity.getId());
             dto.setName(entity.getName());
@@ -97,7 +97,7 @@ public class QualifyResource {
         List<QualifyDetailDTO> dtos = new ArrayList<>();
         if (entities != null) {
             for (QualifyEntity entity : entities) {
-                dtos.add(basicEntity2DTO(entity));
+                dtos.add(new QualifyDetailDTO(entity));
             }
         }
         return dtos;
@@ -166,7 +166,6 @@ public class QualifyResource {
        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
         Integer client_id = (int) account.getCustomData().get("client_id");
-        
         return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), client_id.longValue(), dto.toEntity()));
     }        
 }

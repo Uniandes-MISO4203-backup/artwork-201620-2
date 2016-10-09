@@ -34,6 +34,9 @@
     <button type="button" data-toggle="modal" data-target="#{{modalId}}" class="btn btn-success">Qualify Artwork</button>
     </span>
     <hr />
+    <div class="alert alert-danger" role="alert" ng-show="alreadyQualifiedError">
+        <p class="bg-danger" >Ya se califico anteriormente</p>    
+    </div>
     <div class="titleBox">
         <label>Comments</label>
     </div>
@@ -41,7 +44,7 @@
         <ul class="commentList" ng-repeat="comment in comments">
             <li>
                 <div class="commentText">
-                    <p>{{comment.message}}</p> 
+                    <p><b>{{comment.client.name}}: </b>{{comment.message}}</p> 
                 </div>
             </li>
         </ul>

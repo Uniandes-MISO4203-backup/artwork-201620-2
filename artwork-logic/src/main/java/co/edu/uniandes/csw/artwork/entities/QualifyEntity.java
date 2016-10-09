@@ -28,11 +28,14 @@ import javax.persistence.Entity;
 import co.edu.uniandes.csw.crud.spi.entity.BaseEntity;
 import uk.co.jemos.podam.common.PodamExclude;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @generated
  */
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"ARTWORK_ID" , "CLIENT_ID"})})
 public class QualifyEntity extends BaseEntity implements Serializable {
     
     @PodamExclude

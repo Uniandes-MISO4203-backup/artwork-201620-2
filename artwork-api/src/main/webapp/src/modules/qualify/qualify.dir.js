@@ -24,6 +24,9 @@
         
         $scope.empty = true;
         $scope.score = null;
+        
+        $scope.alreadyQualifiedError = false;
+        
         Restangular.one('qualifys', $scope.artwork.id).customGET('score').then(function (data) {
             if(data!==null) {
                 $scope.score= data;
@@ -32,16 +35,25 @@
         });
         
         $scope.comments = [];
-        Restangular.one('qualifys', $scope.artwork.id).get().then(function (data) {
-            var com = [];
+        
+        function mapSimplify(data){
+            var res = [];
             for(var n = 0; n < data.length ;n++){
                 var elem = {
                     message: data[n].message,
-                    score: data[n].score
+                    score: data[n].score,
+                    client: {
+                        name: data[n].client.name,
+                        id: data[n].client.id
+                    }
                 };
-                com.push(elem);
+                res.push(elem);
             }
-            $scope.comments = com;
+            return res;
+        }
+        
+        Restangular.one('qualifys', $scope.artwork.id).get().then(function (data) {
+            $scope.comments = mapSimplify(data);
         });
         
         $scope.postQualify = function() {
@@ -56,16 +68,10 @@
                         $scope.score= data;
                     });
                     Restangular.one('qualifys', $scope.artwork.id).get().then(function (data) {
-                        var com = [];
-                        for(var n = 0; n < data.length ;n++){
-                            var elem = {
-                                message: data[n].message,
-                                score: data[n].score
-                            };
-                            com.push(elem);
-                        }
-                        $scope.comments = com;
+                        $scope.comments = mapSimplify(data);
                     });
+                }, function(err){
+                    $scope.alreadyQualifiedError = true;
                 });
             }  
         };
