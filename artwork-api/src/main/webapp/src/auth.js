@@ -11,7 +11,9 @@
                         $rootScope.product = false;
                         $rootScope.nationality = false;
                         $rootScope.message = false;
+                        $rootScope.authenticated = false;
                     } else {
+                        $rootScope.authenticated = true;
                         var roles = $rootScope.roles = response.roles;
                         if (roles.indexOf("client") !== -1) {
                             $rootScope.category = false;
