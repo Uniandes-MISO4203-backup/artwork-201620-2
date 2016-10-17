@@ -45,6 +45,7 @@ public class ArtistDTO implements Serializable{
      * @generated
      */
     public ArtistDTO() {
+        /// Constructor vacio usado por el serializador
     }
 
     /**

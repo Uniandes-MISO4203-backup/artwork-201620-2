@@ -21,6 +21,7 @@ public class QualifyDTO {
     
     
     public QualifyDTO() {
+        /// Constructor vacio usado por el serializador        
     }
     public QualifyDTO(QualifyEntity entity) {
 	if (entity!=null){

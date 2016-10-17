@@ -5,9 +5,7 @@
  */
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 
-import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
-import co.edu.uniandes.csw.artwork.entities.ItemEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -31,8 +29,9 @@ public class CreditCardDTO {
     @PodamExclude
     private ClientDTO client;    
 
-    public CreditCardDTO() {
-    }
+    public CreditCardDTO(){
+        /// Constructor vacio usado por el serializador
+    }    
     
     public CreditCardDTO(CreditCardEntity entity) {
         this.expirationMonth = entity.getExpirationMonth();

@@ -6,9 +6,7 @@
 package co.edu.uniandes.csw.artwork.resources;
 
 import co.edu.uniandes.csw.artwork.api.IMessageLogic;
-import co.edu.uniandes.csw.artwork.dtos.detail.ClientDetailDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.MessageDTO;
-import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.MessageEntity;
 import co.edu.uniandes.csw.auth.provider.StatusCreated;
 import co.edu.uniandes.csw.auth.stormpath.Utils;
@@ -48,12 +46,6 @@ public class MessageResource {
     @QueryParam("limit") private Integer maxRecords;
     @Context private HttpServletRequest req;
 
-    /**
-     * Creates a new instance of CreditCardResource
-     */
-    public MessageResource() {
-    }
-
     private List<MessageDTO> listEntity2DTO(List<MessageEntity> entityList){
         List<MessageDTO> list = new ArrayList<>();
         for (MessageEntity entity : entityList) {
@@ -71,7 +63,7 @@ public class MessageResource {
     public List<MessageDTO> getMessages() {
         String accountHref = req.getRemoteUser();
         if (accountHref == null) {
-            return null;
+            return new ArrayList<>();
         }
         
         Account account = Utils.getClient().getResource(accountHref, Account.class);
@@ -92,11 +84,14 @@ public class MessageResource {
                         return listEntity2DTO(messageLogic.getMessages(page, maxRecords, id.longValue()));
                     }
                     
-                    return listEntity2DTO(messageLogic.getMessages(id.longValue()));                    
+                    return listEntity2DTO(messageLogic.getMessages(id.longValue()));
+
+                default:
+                    return new ArrayList<>();
             }
         }        
 
-        return null;
+        return new ArrayList<>();
     }
    
     @POST
@@ -132,7 +127,7 @@ public class MessageResource {
                     return new MessageDTO(entity);
                     
                 case CLIENT_HREF:
-                    Long clientId = new Long(((int) account.getCustomData().get("client_id")));
+                    Long clientId = new Long((int) account.getCustomData().get("client_id"));
                     if (entity.getClient() != null && !clientId.equals(entity.getClient().getId())) {
                         throw new WebApplicationException(404);
                     }                   

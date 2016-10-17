@@ -41,6 +41,7 @@ public class ClientDTO implements Serializable{
      * @generated
      */
     public ClientDTO() {
+        /// Constructor vacio usado por el serializador        
     }
 
     /**

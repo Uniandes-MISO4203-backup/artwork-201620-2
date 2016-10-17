@@ -42,6 +42,7 @@ public class ArtworkDTO implements Serializable{
      * @generated
      */
     public ArtworkDTO() {
+        /// Constructor vacio usado por el serializador        
     }
 
     /**
