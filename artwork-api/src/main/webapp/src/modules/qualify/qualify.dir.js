@@ -11,7 +11,7 @@
         };
     });
 
-    function controller($scope, Restangular) {
+    function controller($scope, Restangular, $rootScope) {
         $scope.qualify = {
             score:3
         };
@@ -56,6 +56,10 @@
             $scope.comments = mapSimplify(data);
         });
         
+        $scope.CheckAuthenticated = function() {
+            $rootScope.CheckAuthenticated();
+        };        
+
         $scope.postQualify = function() {
             var qualify = $scope.qualify;
             if(qualify) {
