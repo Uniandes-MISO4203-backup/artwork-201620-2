@@ -38,6 +38,7 @@ import co.edu.uniandes.csw.artwork.api.IArtworkLogic;
 import co.edu.uniandes.csw.artwork.dtos.detail.ArtworkDetailDTO;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import java.util.ArrayList;
+import javax.ws.rs.DefaultValue;
 
 /**
  * @generated
@@ -93,7 +94,9 @@ public class RootArtworkResource {
      */
     @GET
     @Path("{categoryid: \\d+}")
-    public List<ArtworkDetailDTO> getArtworkByCategory(@PathParam("categoryid") Long categoryid) {
+    public List<ArtworkDetailDTO> getArtworkByCategory(@PathParam("categoryid") Long categoryid,
+             @DefaultValue("") @QueryParam("artistName") String artistName) 
+    {
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", ArtworkLogic.countArtworks());
             return listEntity2DTO(ArtworkLogic.getArtworkByCategory(page, maxRecords,categoryid));
