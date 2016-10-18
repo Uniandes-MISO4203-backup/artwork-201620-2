@@ -1,7 +1,7 @@
 {
     "name": "Artwork",
     "license": "MIT",
-    "dependencies": {"angular-material": "1.1.1",
+    "dependencies": {
         "ng-crud": "^0.2.0",
         "csw-ng-auth": "^0.1.0",
         "angular-ui-router": "~0.2.15"

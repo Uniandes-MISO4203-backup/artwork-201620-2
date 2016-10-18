@@ -25,7 +25,6 @@ SOFTWARE.
     var mod = ng.module('mainApp', [
         //'ngCrudMock',
         'ngCrud',
-        'ngMaterial',
         'ui.router',
         'clientModule',
         'itemModule',
@@ -40,12 +39,8 @@ SOFTWARE.
         'commentModule',
         'messageModule',
         'artistLikeModule',
-        'qualifyModule'
+		'qualifyModule'
     ]);
-
-    mod.config(['$mdThemingProvider', function($mdThemingProvider) {
-            $mdThemingProvider.theme('default').primaryPalette('brown').accentPalette('deep-orange').backgroundPalette('amber');
-    }]);
 
     mod.config(['$logProvider', function ($logProvider) {
             $logProvider.debugEnabled(true);

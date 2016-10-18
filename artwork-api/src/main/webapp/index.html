@@ -1,8 +1,33 @@
+<!DOCTYPE html>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015 Los Andes University
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
 <html ng-app="mainApp">
     <head>
         <title>Artwork</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Artwork | Froba</title>
         
@@ -14,6 +39,14 @@
 	<link href="src/assets/css/main.css" rel="stylesheet">
 	<link href="src/assets/css/responsive.css" rel="stylesheet">
 
+        <!-- build:css(<%= meta.src %>) styles/main.css -->
+        <!-- include: "type": "css", "files": "<%= meta.includeCssFiles %>" -->
+        <!-- /include -->
+        <!-- endbuild -->
+       
+
+        <!-- build:js(<%= meta.src %>) scripts/vendor.js -->
+        <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -28,11 +61,11 @@
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/csw-ng-auth/dist/csw-ng-auth.js"></script>
-        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-        <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-        <script src="bower_components/angular-material/angular-material.min.js"></script>
-        <script src="bower_components/angular-messages/angular-messages.min.js"></script>
-        
+        <!-- endbower -->
+        <!-- endbuild -->
+ 
+        <!-- build:js(<%= meta.src %>) scripts/scripts.js -->
+        <!-- include: "type": "js", "files": "<%= meta.includeJsFiles %>" -->
         <script src="src/app.js"></script>
         <script src="src/auth.js"></script>
         <script src="src/modules/client/client.mod.js"></script>
@@ -104,26 +137,47 @@
         <script src="src/modules/message/instance/edit/message.edit.ctrl.js"></script>
         <script src="src/modules/message/instance/delete/message.delete.ctrl.js"></script>
         <script src="src/modules/artistLike/artistLike.dir.js"></script>
+	
+        <!-- /include -->
+        <!-- endbuild -->
 
     </head>
-    <body>
-        <md-content class="md-padding" style="height: 100%;">
-            <div ng-controller="roleCtrl">
-                <md-nav-bar nav-bar-aria-label="navigation links">
-                    <md-nav-item md-nav-sref="artworkGallery" name="artworkGallery">Artwork</md-nav-item>
-                    <md-nav-item ng-if="client" md-nav-sref="clientList" name="clientList">Client</md-nav-item>
-                    <md-nav-item ng-if="artist" md-nav-sref="artistList" name="artistList">Artist</md-nav-item>
-                    <md-nav-item ng-if="product" md-nav-sref="productList" name="productList">Product</md-nav-item>
-                    <md-nav-item ng-if="category" md-nav-sref="categoryList" name="categoryList">Category</md-nav-item>
-                    <md-nav-item ng-if="nationality" md-nav-sref="nationalityList" name="nationalityList">Nationality</md-nav-item>
-                    <md-nav-item ng-if="message" md-nav-sref="messageList" name="messageList">Messages</md-nav-item>
-                    <span flex></span>
-                    <login-button style="margin-right: 100px;"></login-button>
-                </md-nav-bar>
+    <body style="padding-top: 60px;">
+
+        
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-bar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" ui-sref="artworkGallery">Artwork</a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="main-bar">
+                            <ul ng-controller="roleCtrl"  class="nav navbar-nav">
+                                <li ng-if="client"><a ui-sref="clientList">Client</a></li>
+                                <li ng-if="artist"><a ui-sref="artistList">Artist</a></li>
+                                <li ng-if="product"><a ui-sref="productList">Product</a></li>
+                                <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
+                                <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
+                                <li ng-if="message"><a ui-sref="messageList">Messages</a></li>                                
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <login-button></login-button>
+                            </ul>
+                        </div> <!-- /.navbar-collapse -->
+                    </div> <!-- /.container-fluid -->
+                </nav>
             </div>
-            <div class="ext-content">
-                <div ui-view="mainView"></div>
-            </div>
-        </md-content>
+            <div ui-view="mainView"></div>
+        </div>
     </body>
 </html>
