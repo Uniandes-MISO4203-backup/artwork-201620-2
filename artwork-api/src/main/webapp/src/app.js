@@ -27,7 +27,6 @@ SOFTWARE.
         'ngCrud',
         'ui.router',
         'clientModule',
-        'itemModule',
         'artworkModule',
         'artistModule',
         'productModule',
@@ -39,7 +38,8 @@ SOFTWARE.
         'commentModule',
         'messageModule',
         'artistLikeModule',
-		'qualifyModule'
+        'qualifyModule',
+        'wishListModule'
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {

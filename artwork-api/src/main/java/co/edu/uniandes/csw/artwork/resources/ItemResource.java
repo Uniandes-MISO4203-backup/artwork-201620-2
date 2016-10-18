@@ -41,13 +41,17 @@ import javax.ws.rs.core.MediaType;
 import co.edu.uniandes.csw.artwork.api.IItemLogic;
 import co.edu.uniandes.csw.artwork.dtos.detail.ItemDetailDTO;
 import co.edu.uniandes.csw.artwork.entities.ItemEntity;
+import co.edu.uniandes.csw.auth.stormpath.Utils;
+import com.stormpath.sdk.account.Account;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 
 /**
  * URI: clients/{wishListId: \\d+}/wishList/
  * @generated
  */
+@Path("/wishList")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ItemResource {
@@ -56,7 +60,7 @@ public class ItemResource {
     @Context private HttpServletResponse response;
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
-    @PathParam("clientsId") private Long clientsId;
+    @Context private HttpServletRequest request;
 
    
     /**
@@ -83,6 +87,13 @@ public class ItemResource {
      */
     @GET
     public List<ItemDetailDTO> getItems() {
+        String accountHref = request.getRemoteUser();
+        if (accountHref == null) {
+            return null;
+        }        
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        int clientId = (int) account.getCustomData().get("client_id");
+        Long clientsId = new Long(clientId);
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", itemLogic.countItems());
             return listEntity2DTO(itemLogic.getItems(page, maxRecords, clientsId));
@@ -100,6 +111,13 @@ public class ItemResource {
     @GET
     @Path("{itemId: \\d+}")
     public ItemDetailDTO getItem(@PathParam("itemId") Long itemId) {
+        String accountHref = request.getRemoteUser();
+        if (accountHref == null) {
+            return null;
+        }        
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        int clientId = (int) account.getCustomData().get("client_id");
+        Long clientsId = new Long(clientId);
         ItemEntity entity = itemLogic.getItem(itemId);
         if (entity.getClient() != null && !clientsId.equals(entity.getClient().getId())) {
             throw new WebApplicationException(404);
@@ -117,6 +135,13 @@ public class ItemResource {
     @POST
     @StatusCreated
     public ItemDetailDTO createItem(ItemDetailDTO dto) {
+        String accountHref = request.getRemoteUser();
+        if (accountHref == null) {
+            return null;
+        }        
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        int clientId = (int) account.getCustomData().get("client_id");
+        Long clientsId = new Long(clientId);
         return new ItemDetailDTO(itemLogic.createItem(clientsId, dto.toEntity()));
     }
 
@@ -131,6 +156,13 @@ public class ItemResource {
     @PUT
     @Path("{itemId: \\d+}")
     public ItemDetailDTO updateItem(@PathParam("itemId") Long itemId, ItemDetailDTO dto) {
+        String accountHref = request.getRemoteUser();
+        if (accountHref == null) {
+            return null;
+        }        
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        int clientId = (int) account.getCustomData().get("client_id");
+        Long clientsId = new Long(clientId);
         ItemEntity entity = dto.toEntity();
         entity.setId(itemId);
         return new ItemDetailDTO(itemLogic.updateItem(clientsId, entity));

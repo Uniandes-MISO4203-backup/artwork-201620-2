@@ -11,6 +11,7 @@
                         $rootScope.product = false;
                         $rootScope.nationality = false;
                         $rootScope.message = false;
+                        $rootScope.item = false;
                     } else {
                         var roles = $rootScope.roles = response.roles;
                         if (roles.indexOf("client") !== -1) {
@@ -19,7 +20,8 @@
                             $rootScope.client = true;
                             $rootScope.product = false;
                             $rootScope.nationality = false;
-                            $rootScope.message = true;                            
+                            $rootScope.message = true;
+                            $rootScope.item = true;
                         }
                         if (roles.indexOf("artist") !== -1) {
                             $rootScope.category = false;
@@ -34,7 +36,7 @@
                             $rootScope.client = true;
                             $rootScope.product = true;
                             $rootScope.nationality = true;
-                            $rootScope.message = true;                            
+                            $rootScope.message = true;
                         }
                     }
                 });
