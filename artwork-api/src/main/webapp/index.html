@@ -138,15 +138,15 @@ SOFTWARE.
         <!-- endbuild -->
 
     </head>
-    <body style="padding-top: 60px;">
-
-        
+    <body style="padding-top: 170px;">  
         <div class="container-fluid">
             <div class="col-md-12">
                 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-                    <div class="container-fluid">
+                    <div class="panel-header">
+                    </div>
+                    <div class="container-fluid">                          
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
+                        <div class="navbar-header"> 
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-bar">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="icon-bar"></span>
@@ -158,6 +158,9 @@ SOFTWARE.
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="main-bar">
+                            
+                            
+                            
                             <ul ng-controller="roleCtrl"  class="nav navbar-nav">
                                 <li ng-if="client"><a ui-sref="clientList">Client</a></li>
                                 <li ng-if="artist"><a ui-sref="artistList">Artist</a></li>
@@ -167,14 +170,28 @@ SOFTWARE.
                                 <li ng-if="message"><a ui-sref="messageList">Messages</a></li>
                                 <li ng-if="item"><a ui-sref="wishList">Wishlist</a></li>                                    
                             </ul>
+                            
                             <ul class="nav navbar-nav navbar-right">
+                                
                                 <login-button></login-button>
                             </ul>
                         </div> <!-- /.navbar-collapse -->
                     </div> <!-- /.container-fluid -->
                 </nav>
             </div>
-            <div ui-view="mainView"></div>
+            <div ui-view="mainView" style="min-height: 410px"></div>
         </div>
+        
+        <footer>
+            <div class="panel-footer">
+
+                <div class="col-xs-12" id="copyright">
+                    <span>© Copyright 2016 Artwork By Froba All right reserved.</span><br>
+                    <span>Grupo 1 - Gestión de Proyectos de Software</span><br>
+                    <span>Universidad de los Andes</span>          
+                </div>
+            </div>
+        </footer>
+        
     </body>
 </html>

@@ -41,6 +41,9 @@ import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
 import java.util.ArrayList;
 import java.util.List;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
+import co.edu.uniandes.csw.auth.stormpath.Utils;
+import com.stormpath.sdk.account.Account;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * URI: artworks/{artwork: \\d+}/qualify/
@@ -56,6 +59,7 @@ public class QualifyResource {
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
 
+    @Context private HttpServletRequest req;
     /**
      * Creates a new instance of CreditCardResource
      */
@@ -63,12 +67,13 @@ public class QualifyResource {
     }
     
      public static QualifyDetailDTO basicEntity2DTO(QualifyEntity entity) {
-        if (entity != null) {
+         if (entity != null) {
             QualifyDetailDTO dto = new QualifyDetailDTO();
             dto.setId(entity.getId());
             dto.setName(entity.getName());
             dto.setArtwork(new ArtworkDTO(entity.getArtwork()));
             dto.setScore(entity.getScore());
+            dto.setMessage(entity.getMessage());
             return dto;
         } else {
             return null;
@@ -81,6 +86,7 @@ public class QualifyResource {
             entity.setId(dto.getId());
             entity.setName(dto.getName());
             entity.setScore(dto.getScore());
+            entity.setMessage(dto.getMessage());
 
             return entity;
         } else {
@@ -91,7 +97,7 @@ public class QualifyResource {
         List<QualifyDetailDTO> dtos = new ArrayList<>();
         if (entities != null) {
             for (QualifyEntity entity : entities) {
-                dtos.add(basicEntity2DTO(entity));
+                dtos.add(new QualifyDetailDTO(entity));
             }
         }
         return dtos;
@@ -113,8 +119,20 @@ public class QualifyResource {
      */
     
     public List<QualifyDetailDTO>getQualifys(Long artworksId) {
-        List<QualifyDetailDTO> qualifies= listEntity2DTO(qualifyLogic.getQualifys(artworksId));
+        List<QualifyDetailDTO> qualifies = listEntity2DTO(qualifyLogic.getQualifys(artworksId));
         return qualifies;
+    } 
+    
+    /* Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
+     * @param artworksId
+     * @return an instance of Long
+     */
+    @GET
+    @Path("{artworksId: \\d+}")
+    public List<QualifyDetailDTO> getQualifies(@PathParam("artworksId") Long artworksId) {  
+        Long fullScore=0l;
+        List<QualifyDetailDTO> qualiefies = getQualifys(artworksId);
+        return qualiefies;
     } 
     
      /* Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
@@ -122,7 +140,7 @@ public class QualifyResource {
      * @return an instance of Long
      */
     @GET
-    @Path("{artworksId: \\d+}")
+    @Path("{artworksId: \\d+}/score")
     public String getScore(@PathParam("artworksId") Long artworksId) {
         
         Long fullScore=0l;
@@ -140,7 +158,14 @@ public class QualifyResource {
     @POST
     @StatusCreated
     public QualifyDetailDTO createItem(QualifyDetailDTO dto) {
+        
+        String accountHref = req.getRemoteUser();
+        if (accountHref == null) {
+            return null;
+        }        
        
-        return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), dto.toEntity()));
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        Integer client_id = (int) account.getCustomData().get("client_id");
+        return new QualifyDetailDTO(qualifyLogic.addQualify(dto.getArtwork().getId(), client_id.longValue(), dto.toEntity()));
     }        
 }

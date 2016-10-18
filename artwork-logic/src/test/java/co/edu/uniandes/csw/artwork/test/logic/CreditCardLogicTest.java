@@ -9,8 +9,6 @@ import co.edu.uniandes.csw.artwork.api.ICreditCardLogic;
 import co.edu.uniandes.csw.artwork.ejbs.CreditCardLogic;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
-import co.edu.uniandes.csw.artwork.entities.ItemEntity;
-import co.edu.uniandes.csw.artwork.entities.MessageEntity;
 import co.edu.uniandes.csw.artwork.persistence.CreditCardPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +143,27 @@ public class CreditCardLogicTest {
     }    
     
     /**
+     * Prueba para consultar la lista
+     *
+     * @generated
+     */
+    @Test
+    public void getCreditCardsPaginatedTest() {
+        List<CreditCardEntity> list = creditCardLogic.getItems(1, 10, fatherEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (CreditCardEntity entity : list) {
+            boolean found = false;
+            for (CreditCardEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }      
+    
+    
+    /**
      * Prueba para consultar un Item
      *
      * @generated
@@ -182,7 +201,7 @@ public class CreditCardLogicTest {
      * @generated
      */
     @Test
-    public void updateMessageTest() {
+    public void updateCreditCardTest() {
         CreditCardEntity entity = data.get(0);
         CreditCardEntity pojoEntity = factory.manufacturePojo(CreditCardEntity.class);
 
@@ -198,4 +217,13 @@ public class CreditCardLogicTest {
         Assert.assertEquals(pojoEntity.getNumber(), resp.getNumber());                
         Assert.assertEquals(pojoEntity.getType(), resp.getType());   
     }       
+    
+    /**
+     * Prueba para contar items.
+     */
+    @Test
+    public void countCreditCardsTest() {
+        int countRecords = creditCardLogic.countItems();
+        Assert.assertEquals(countRecords, data.size());
+    }         
 }

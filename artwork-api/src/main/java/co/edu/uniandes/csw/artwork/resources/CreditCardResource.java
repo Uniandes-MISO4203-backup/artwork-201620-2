@@ -6,22 +6,17 @@
 package co.edu.uniandes.csw.artwork.resources;
 
 import co.edu.uniandes.csw.artwork.api.ICreditCardLogic;
-import co.edu.uniandes.csw.artwork.api.IItemLogic;
-import co.edu.uniandes.csw.artwork.dtos.detail.ItemDetailDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.CreditCardDTO;
 import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
-import co.edu.uniandes.csw.artwork.entities.ItemEntity;
 import co.edu.uniandes.csw.auth.provider.StatusCreated;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
@@ -43,12 +38,6 @@ public class CreditCardResource {
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
     @PathParam("clientsId") private Long clientsId;
-
-    /**
-     * Creates a new instance of CreditCardResource
-     */
-    public CreditCardResource() {
-    }
 
     /**
      * Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.CreditCardResource

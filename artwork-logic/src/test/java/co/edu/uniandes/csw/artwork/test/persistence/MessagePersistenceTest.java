@@ -5,12 +5,8 @@
  */
 package co.edu.uniandes.csw.artwork.test.persistence;
 
-import co.edu.uniandes.csw.artwork.api.IMessageLogic;
-import co.edu.uniandes.csw.artwork.ejbs.MessageLogic;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
-import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
 import co.edu.uniandes.csw.artwork.entities.MessageEntity;
-import co.edu.uniandes.csw.artwork.persistence.CreditCardPersistence;
 import co.edu.uniandes.csw.artwork.persistence.MessagePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +139,24 @@ public class MessagePersistenceTest {
     }    
     
     /**
+     * Prueba para consultar la lista de Items paginada.
+     */
+    @Test
+    public void getMessagesPaginatedTest() {
+        List<MessageEntity> list = itemPersistence.findAll(1, 10, fatherEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (MessageEntity ent : list) {
+            boolean found = false;
+            for (MessageEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }      
+    
+    /**
      * Prueba para consultar un Item.
      */
     @Test
@@ -185,4 +199,13 @@ public class MessagePersistenceTest {
         Assert.assertEquals(newEntity.getSubject(), resp.getSubject());
         Assert.assertEquals(newEntity.getBody(), resp.getBody());
     }        
+    
+    /**
+     * Prueba para contar items.
+     */
+    @Test
+    public void countMessagesTest() {
+        int countRecords = itemPersistence.count(fatherEntity.getId());
+        Assert.assertEquals(countRecords, data.size());
+    }         
 }

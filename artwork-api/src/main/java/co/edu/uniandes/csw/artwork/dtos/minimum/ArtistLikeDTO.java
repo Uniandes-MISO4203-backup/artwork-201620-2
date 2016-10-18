@@ -17,7 +17,7 @@ public class ArtistLikeDTO implements Serializable{
     private String name;
     
     public ArtistLikeDTO(){
-        
+        //Constructor vacio
     }
     
     public ArtistLikeDTO(ArtistLikeEntity entity){

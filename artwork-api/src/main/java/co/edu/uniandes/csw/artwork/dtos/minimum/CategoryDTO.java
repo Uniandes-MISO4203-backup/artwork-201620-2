@@ -40,6 +40,7 @@ public class CategoryDTO implements Serializable{
      * @generated
      */
     public CategoryDTO() {
+        /// Constructor vacio usado por el serializador        
     }
 
     /**

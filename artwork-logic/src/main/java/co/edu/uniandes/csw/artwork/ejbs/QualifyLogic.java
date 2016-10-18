@@ -44,6 +44,8 @@ public class QualifyLogic implements IQualifyLogic {
     private QualifyPersistence persistence;
     @Inject
     private IArtworkLogic artwork;
+    @Inject
+    private IClientLogic client;
     
 
     @Override
@@ -53,10 +55,11 @@ public class QualifyLogic implements IQualifyLogic {
     }
 
     @Override
-    public QualifyEntity addQualify(Long artworkId, QualifyEntity entity) {
+    public QualifyEntity addQualify(Long artworkId, Long clientId, QualifyEntity entity) {
         ArtworkEntity artworkEntity = artwork.getArtwork(artworkId);
-       
+        ClientEntity clientEntity = client.getClient(clientId);
         entity.setArtwork(artworkEntity);
+        entity.setClient(clientEntity);
         persistence.create(entity);
         return entity;
     }

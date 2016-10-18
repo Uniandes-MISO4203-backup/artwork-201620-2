@@ -41,6 +41,7 @@ public class ProductDTO implements Serializable{
      * @generated
      */
     public ProductDTO() {
+        /// Constructor vacio usado por el serializador        
     }
 
     /**

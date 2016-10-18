@@ -28,5 +28,5 @@ import java.util.List;
 
 public interface IQualifyLogic {
     public List<QualifyEntity> getQualifys(Long artworkId);
-    public QualifyEntity addQualify(Long artworkId, QualifyEntity entity);
+    public QualifyEntity addQualify(Long artworkId, Long clientId, QualifyEntity entity);
 }

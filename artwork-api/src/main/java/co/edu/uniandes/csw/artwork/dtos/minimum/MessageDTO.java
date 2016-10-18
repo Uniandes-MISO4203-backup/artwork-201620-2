@@ -31,6 +31,7 @@ public class MessageDTO {
     private ClientDTO client;    
 
     public MessageDTO() {
+        /// Constructor vacio usado por el serializador        
     }    
 
     public MessageDTO(MessageEntity entity) {

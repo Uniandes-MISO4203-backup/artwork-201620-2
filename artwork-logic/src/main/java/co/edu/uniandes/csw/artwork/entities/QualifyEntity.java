@@ -28,21 +28,26 @@ import javax.persistence.Entity;
 import co.edu.uniandes.csw.crud.spi.entity.BaseEntity;
 import uk.co.jemos.podam.common.PodamExclude;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @generated
  */
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"ARTWORK_ID" , "CLIENT_ID"})})
 public class QualifyEntity extends BaseEntity implements Serializable {
-
-        
+    
     @PodamExclude
     @ManyToOne
     private ArtworkEntity artwork;
     
-    
+    @PodamExclude
+    @ManyToOne    
+    private ClientEntity client;
     
     private Long score;
+    private String message;
 
     /**
      * Obtiene el objeto de artworks.
@@ -78,6 +83,21 @@ public class QualifyEntity extends BaseEntity implements Serializable {
     public void setScore(Long score) {
         this.score = score;
     }
-    
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public ClientEntity getClient() {
+        return client;
+    }
+
+    public void setClient(ClientEntity client) {
+        this.client = client;
+    }
     
 }

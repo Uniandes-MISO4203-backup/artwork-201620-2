@@ -5,25 +5,30 @@
  */
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author am.osorio
  */
+@XmlRootElement
 public class QualifyDTO {
     private Long id;
     private String name;
     private Long score;
+    private String message;
     
     
     public QualifyDTO() {
+        /// Constructor vacio usado por el serializador        
     }
     public QualifyDTO(QualifyEntity entity) {
 	if (entity!=null){
             this.id=entity.getId();
             this.name=entity.getName();
             this.score=entity.getScore();
+            this.message=entity.getMessage();
        }
     }
 
@@ -38,7 +43,8 @@ public class QualifyDTO {
         entity.setId(this.getId());
         entity.setName(this.getName());
         entity.setScore(this.getScore());
-    return entity;
+        entity.setMessage(this.getMessage());
+        return entity;
     }
 
     
@@ -83,6 +89,14 @@ public class QualifyDTO {
      */
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

@@ -6,18 +6,21 @@
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 
 import co.edu.uniandes.csw.artwork.entities.NationalityEntity;
+import java.io.Serializable;
 
 /**
  *
  * @author am.osorio
  */
-public class NationalityDTO {
+public class NationalityDTO implements Serializable{
        private Long id;
     private String name;
     private String description;
     
     public NationalityDTO() {
+        /// Constructor vacio usado por el serializador        
     }
+    
     public NationalityDTO(NationalityEntity entity) {
 	   if (entity!=null){
         this.id=entity.getId();

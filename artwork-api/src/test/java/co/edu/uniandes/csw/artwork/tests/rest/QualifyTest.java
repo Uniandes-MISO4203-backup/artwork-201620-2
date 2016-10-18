@@ -30,6 +30,7 @@ import co.edu.uniandes.csw.auth.security.JWT;
 import co.edu.uniandes.csw.artwork.entities.QualifyEntity;
 import co.edu.uniandes.csw.artwork.dtos.minimum.QualifyDTO;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
+import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.resources.QualifyResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
@@ -81,7 +82,9 @@ public class QualifyTest {
     private final static List<QualifyEntity> oraculo = new ArrayList<>();
 
     private final String qualifyPath = "qualifys";
-    ArtworkEntity fatherEntity1;
+    private ArtworkEntity fatherEntity1;
+    private ClientEntity fatherClientEntity;
+    private List<ClientEntity> clients = new ArrayList<ClientEntity>();
 
     @ArquillianResource
     private URL deploymentURL;
@@ -117,6 +120,8 @@ public class QualifyTest {
 
     private void clearData() {
         em.createQuery("delete from QualifyEntity").executeUpdate();
+        em.createQuery("delete from ClientEntity").executeUpdate();
+        em.createQuery("delete from ArtworkEntity").executeUpdate();
         oraculo.clear();
     }
 
@@ -130,10 +135,18 @@ public class QualifyTest {
         fatherEntity1.setId(1L);
         em.persist(fatherEntity1);
         
+        fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
+        fatherClientEntity.setId(9997L);
+        em.persist(fatherClientEntity);
               
         for (int i = 0; i < 3; i++) {
+            ClientEntity client = factory.manufacturePojo(ClientEntity.class);
+            client.setId(new Long(i+88888));
+            em.persist(client);
+            
             QualifyEntity entity = factory.manufacturePojo(QualifyEntity.class);
             entity.setArtwork(fatherEntity1);
+            entity.setClient(client);
             em.persist(entity);
             oraculo.add(entity);
         }
@@ -207,6 +220,7 @@ public class QualifyTest {
         Assert.assertEquals(Created, response.getStatus());
 
         Assert.assertEquals(qualify.getScore(), qualifyTest.getScore());
+        Assert.assertEquals(qualify.getMessage(), qualifyTest.getMessage());
 
         QualifyEntity entity = em.find(QualifyEntity.class, qualifyTest.getId());
         Assert.assertNotNull(entity);
@@ -219,17 +233,33 @@ public class QualifyTest {
      * @generated
      */
     @Test
-    public void listQualifyTest() throws IOException {
+    public void qualifyScoreTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
   
-        String qualify = target
+        String score = target
             .path(oraculo.get(0).getArtwork().getId().toString())
+            .path("score")
             .request().cookie(cookieSessionId).get(String.class);
 
-        Assert.assertTrue(new Long(qualify) >0);
+        Assert.assertTrue(new Long(score) >0);
+    }
+    
+    /**
+     * Prueba para consultar la lista de Qualiefies
+     *
+     */
+    @Test
+    public void listQualifyTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+
+        Response response = target
+            .path(oraculo.get(0).getArtwork().getId().toString())
+            .request().cookie(cookieSessionId).get();
+
+        String listQualiefies = response.readEntity(String.class);
+        List<QualifyDTO> listTest = new ObjectMapper().readValue(listQualiefies, List.class);
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(3, listTest.size());
     }
 
-    
-  
-       
 }

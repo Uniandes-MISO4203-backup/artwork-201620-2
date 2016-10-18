@@ -151,6 +151,8 @@ public class QualifyPersistenceTest {
         QualifyEntity entity = em.find(QualifyEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getName(), entity.getName());
+        Assert.assertEquals(newEntity.getScore(), entity.getScore());
+        Assert.assertEquals(newEntity.getMessage(), entity.getMessage());
     }
 
     /**
@@ -185,6 +187,7 @@ public class QualifyPersistenceTest {
         QualifyEntity newEntity = qualifyPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getScore(), newEntity.getScore());
+        Assert.assertEquals(entity.getMessage(), newEntity.getMessage());
     }
 
     /**
@@ -218,5 +221,7 @@ public class QualifyPersistenceTest {
         QualifyEntity resp = em.find(QualifyEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getName(), resp.getName());
+        Assert.assertEquals(newEntity.getScore(), resp.getScore());
+        Assert.assertEquals(newEntity.getMessage(), resp.getMessage());
     }
 }
