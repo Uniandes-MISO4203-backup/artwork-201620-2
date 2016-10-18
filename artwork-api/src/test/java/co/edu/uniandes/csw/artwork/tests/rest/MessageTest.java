@@ -50,8 +50,8 @@ public class MessageTest {
     
     private WebTarget target;
     private final String apiPath = Utils.apiPath;
-    private final String username = Utils.username;
-    private final String password = Utils.password;    
+    private final String username = "clienteprueba";
+    private final String password = "Password1";    
     
     @ArquillianResource
     private URL deploymentURL;    
@@ -199,15 +199,22 @@ public class MessageTest {
      */
     @Test
     public void getMessageByIdTest() {
+        MessageDTO item = factory.manufacturePojo(MessageDTO.class);
         Cookie cookieSessionId = login(username, password);
 
+        Response response = target
+            .request().cookie(cookieSessionId)
+            .post(Entity.entity(item, MediaType.APPLICATION_JSON));
+
+        MessageDTO itemTes = (MessageDTO)response.readEntity(MessageDTO.class);
+
         MessageDTO itemTest = target
-            .path(oraculo.get(0).getId().toString())
+            .path(itemTes.getId().toString())
             .request().cookie(cookieSessionId).get(MessageDTO.class);
         
-        Assert.assertEquals(itemTest.getId(), oraculo.get(0).getId());
-        Assert.assertEquals(itemTest.getSubject(), oraculo.get(0).getSubject());
-        Assert.assertEquals(itemTest.getBody(), oraculo.get(0).getBody());  
+        Assert.assertEquals(itemTest.getId(), itemTes.getId());
+        Assert.assertEquals(itemTest.getSubject(), itemTes.getSubject());
+        Assert.assertEquals(itemTest.getBody(), itemTes.getBody());  
     }    
     
     /**
