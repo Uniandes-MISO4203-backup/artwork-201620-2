@@ -31,10 +31,26 @@
         <input class="star star-6 ng-untouched ng-valid ng-dirty ng-valid-parse" id="star-6" type="radio" value="2" checked="checked"/><label class="star star-6" for="star-6"></label>
     </div>
     <span >
-    <button type="button" data-toggle="modal" data-target="#ratingModal" class="btn btn-success">Qualify Artwork</button>
+    <button type="button" ng-click='CheckAuthenticated()' data-toggle="modal" data-target="#{{modalId}}" class="btn btn-success">Qualify Artwork</button>
     </span>
+    <hr />
+    <div class="alert alert-danger" role="alert" ng-show="alreadyQualifiedError">
+        <p class="bg-danger" >Ya se califico anteriormente</p>    
+    </div>
+    <div class="titleBox">
+        <label>Comments</label>
+    </div>
+    <div class="actionBox">
+        <ul class="commentList" ng-repeat="comment in comments">
+            <li>
+                <div class="commentText">
+                    <p><b>{{comment.client.name}}: </b>{{comment.message}}</p> 
+                </div>
+            </li>
+        </ul>
+    </div>
     
-    <div class="modal fade" id="ratingModal" role="dialog">
+    <div class="modal fade" id="{{modalId}}" role="dialog">
     <!-- Definicion del espacio del modal -->
     <div class="modal-dialog">
         <!-- Contenido definido para el Modal -->  
@@ -44,25 +60,29 @@
                 <!-- Boton de cerrado -->
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <!-- Titulo del Modal -->
-                <h4 class="modal-title" id = "titleModal">Qualify the Artwork</h4>
+                <h4 class="modal-title" id = "titleModal">Qualify the Artwork: {{artwork.name}}</h4>
             </div>
             <!-- Definicion del formulario para el rating -->
             <form class="form-inline" role="form" id="ratingModal">
                 <div class="form-group">
                     <div class="stars">
-                        <input class="star star-5" id="star-5" type="radio" name="rating" value="5" ng-model='qualify.score'/><label class="star star-5" for="star-5"></label>
-                        <input class="star star-4" id="star-4" type="radio" name="rating" value="4" ng-model='qualify.score'/><label class="star star-4" for="star-4"></label>
-                        <input class="star star-3" id="star-3" type="radio" name="rating" value="3" ng-model='qualify.score'/><label class="star star-3" for="star-3"></label>
-                        <input class="star star-2" id="star-2" type="radio" name="rating" value="2" ng-model='qualify.score'/><label class="star star-2" for="star-2"></label>
-                        <input class="star star-1" id="star-1" type="radio" name="rating" value="1" ng-model='qualify.score'/><label class="star star-1" for="star-1"></label>
+                        <input class="star star-5" id="{{star5id}}" type="radio" name="rating" value="5" ng-model="qualify.score"/><label class="star star-5" for="{{star5id}}"></label>
+                        <input class="star star-4" id="{{star4id}}" type="radio" name="rating" value="4" ng-model="qualify.score"/><label class="star star-4" for="{{star4id}}"></label>
+                        <input class="star star-3" id="{{star3id}}" type="radio" name="rating" value="3" ng-model="qualify.score"/><label class="star star-3" for="{{star3id}}"></label>
+                        <input class="star star-2" id="{{star2id}}" type="radio" name="rating" value="2" ng-model="qualify.score"/><label class="star star-2" for="{{star2id}}"></label>
+                        <input class="star star-1" id="{{star1id}}" type="radio" name="rating" value="1" ng-model="qualify.score"/><label class="star star-1" for="{{star1id}}"></label>
                     </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <textarea class="form-control" rows="4" cols="50" id="comentario" placeholder="comentario" ng-model="qualify.message"></textarea>
                 </div>
                 <!-- Footer del formulario de envio del rating -->
                 <div class="modal-footer">
                     <!-- Boton de Close para cancelar el envio de la Rating -->
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <!-- Boton de Send, para hacer envio de la Rating -->
-                    <button ng-click='postQualify()' class="btn btn-success" data-dismiss="modal">Add</button>
+                    <button ng-click='postQualify()' class="btn btn-success" data-dismiss="modal">Post</button>
                 </div>
             </form>
         </div>

@@ -114,7 +114,7 @@ public class ArtworkLogic implements IArtworkLogic {
         try {
             return persistence.find(artworkid);
         }catch(NoResultException e){
-            throw new IllegalArgumentException("El Artwork no existe");
+            throw new IllegalArgumentException("El Artwork no existe", e);
         }
     }
 

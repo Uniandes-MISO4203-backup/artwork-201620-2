@@ -129,7 +129,47 @@ public class MessageLogicTest {
      */
     @Test
     public void getMessagesTest() {
-        List<MessageEntity> list = messageLogic.getMessages(fatherEntity.getId());
+        List<MessageEntity> list = messageLogic.getMessages();
+        Assert.assertEquals(data.size(), list.size());
+        for (MessageEntity entity : list) {
+            boolean found = false;
+            for (MessageEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }      
+    
+    /**
+     * Prueba para consultar la lista
+     *
+     * @generated
+     */
+    @Test
+    public void getMessagesPaginatedTest() {
+        List<MessageEntity> list = messageLogic.getMessages(1, 10);
+        Assert.assertEquals(data.size(), list.size());
+        for (MessageEntity entity : list) {
+            boolean found = false;
+            for (MessageEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }       
+    
+    /**
+     * Prueba para consultar la lista
+     *
+     * @generated
+     */
+    @Test
+    public void getMessagesPaginatedByClientTest() {
+        List<MessageEntity> list = messageLogic.getMessages(1, 10, fatherEntity.getId());
         Assert.assertEquals(data.size(), list.size());
         for (MessageEntity entity : list) {
             boolean found = false;
@@ -144,12 +184,32 @@ public class MessageLogicTest {
     
     
     /**
+     * Prueba para consultar la lista
+     *
+     * @generated
+     */
+    @Test
+    public void getMessagesByClientTest() {
+        List<MessageEntity> list = messageLogic.getMessages(fatherEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (MessageEntity entity : list) {
+            boolean found = false;
+            for (MessageEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }      
+    
+    /**
      * Prueba para consultar un Item
      *
      * @generated
      */
     @Test
-    public void getCreditCardTest() {
+    public void getMessageTest() {
         MessageEntity entity = data.get(0);
         MessageEntity resultEntity = messageLogic.getMessage(entity.getId());
         Assert.assertNotNull(resultEntity);
@@ -192,4 +252,23 @@ public class MessageLogicTest {
         Assert.assertEquals(pojoEntity.getSubject(), resp.getSubject());
         Assert.assertEquals(pojoEntity.getBody(), resp.getBody());  
     }    
+    
+    /**
+     * Prueba para contar items.
+     */
+    @Test
+    public void countMessagesByClientTest() {
+        int countRecords = messageLogic.countItems(fatherEntity.getId());
+        Assert.assertEquals(countRecords, data.size());
+    }       
+    
+    /**
+     * Prueba para contar items.
+     */
+    @Test
+    public void countMessagesTest() {
+        int countRecords = messageLogic.countItems();
+        Assert.assertEquals(countRecords, data.size());
+    }       
+    
 }

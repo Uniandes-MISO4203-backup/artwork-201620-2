@@ -94,7 +94,7 @@ public class ItemLogic implements IItemLogic {
         try {
             return persistence.find(itemid);
         }catch(NoResultException e){
-            throw new IllegalArgumentException("El Item no existe");
+            throw new IllegalArgumentException("El Item no existe", e);
         }
     }
 

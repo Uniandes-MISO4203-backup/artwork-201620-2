@@ -112,3 +112,23 @@ label.star:before {
     text-align: center;
     margin-top: 3px;
 }
+
+#copyright{
+    color:#888382;
+    font-family:verdana;
+    font-size:11px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.panel-header{
+    width:100%; 
+    padding-bottom:0px;
+    height: 100%;
+    background-image: url("images/banner_header.jpg");
+    margin-right: 0;
+    margin-left: 0;
+    display: block;
+    min-height: 90px;
+}
+
