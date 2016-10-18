@@ -69,7 +69,6 @@ SOFTWARE.
         <script src="src/app.js"></script>
         <script src="src/auth.js"></script>
         <script src="src/modules/client/client.mod.js"></script>
-        <script src="src/modules/item/item.mod.js"></script>
         <script src="src/modules/artwork/artwork.mod.js"></script>
         <script src="src/modules/artist/artist.mod.js"></script>
         <script src="src/modules/product/product.mod.js"></script>
@@ -83,12 +82,6 @@ SOFTWARE.
         <script src="src/modules/client/instance/edit/client.edit.ctrl.js"></script>
         <script src="src/modules/client/list/client.list.ctrl.js"></script>
         <script src="src/modules/client/new/client.new.ctrl.js"></script>
-        <script src="src/modules/item/item.ctrl.js"></script>
-        <script src="src/modules/item/instance/delete/item.delete.ctrl.js"></script>
-        <script src="src/modules/item/instance/detail/item.detail.ctrl.js"></script>
-        <script src="src/modules/item/instance/edit/item.edit.ctrl.js"></script>
-        <script src="src/modules/item/list/item.list.ctrl.js"></script>
-        <script src="src/modules/item/new/item.new.ctrl.js"></script>
         <script src="src/modules/artwork/artwork.ctrl.js"></script>
         <script src="src/modules/artwork/instance/category/edit/artwork.category.edit.ctrl.js"></script>
         <script src="src/modules/artwork/instance/category/list/artwork.category.list.ctrl.js"></script>
@@ -137,7 +130,10 @@ SOFTWARE.
         <script src="src/modules/message/instance/edit/message.edit.ctrl.js"></script>
         <script src="src/modules/message/instance/delete/message.delete.ctrl.js"></script>
         <script src="src/modules/artistLike/artistLike.dir.js"></script>
-	
+	<script src="src/modules/wishList/wishList.mod.js"></script>
+        <script src="src/modules/wishList/wishList.ctrl.js"></script>
+        <script src="src/modules/wishList/wishList.dir.js"></script>
+        <script src="src/modules/wishList/list/wishList.list.ctrl.js"></script>
         <!-- /include -->
         <!-- endbuild -->
 
@@ -171,7 +167,8 @@ SOFTWARE.
                                 <li ng-if="product"><a ui-sref="productList">Product</a></li>
                                 <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
                                 <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
-                                <li ng-if="message"><a ui-sref="messageList">Messages</a></li>                                
+                                <li ng-if="message"><a ui-sref="messageList">Messages</a></li>
+                                <li ng-if="item"><a ui-sref="wishList">Wishlist</a></li>                                    
                             </ul>
                             
                             <ul class="nav navbar-nav navbar-right">
