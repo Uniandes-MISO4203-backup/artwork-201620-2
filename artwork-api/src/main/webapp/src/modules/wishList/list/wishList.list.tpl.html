@@ -8,11 +8,12 @@
                         <td class="image">Item</td>
                         <td class="description"></td>
                         <td class="price">Price</td>
-                        <td class="quantity">Quantity</td>  
+                        <td class="quantity">Quantity</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="wishList in records">
+                    <tr ng-repeat="($index,wishList) in records">
                         <td class="cart_product">
                             <img class="img-responsive" style="max-width: 110px; height: 110px;" ng-src="{{wishList.artwork.image}}" alt='{{wishList.artwork.name}}'>
                         </td>
@@ -26,6 +27,9 @@
                             <div class="cart_quantity_button">
                                 <p>{{wishList.qty}}</p>
                             </div>
+                        </td>
+                        <td>
+                            <a class="cart_quantity_delete" ng-click="removeItem($index)"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
                 </tbody>
