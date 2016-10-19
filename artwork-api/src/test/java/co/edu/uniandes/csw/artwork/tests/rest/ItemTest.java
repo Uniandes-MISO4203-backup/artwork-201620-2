@@ -45,14 +45,18 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -64,10 +68,10 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class ItemTest {
 
-    private WebTarget target;
+      private WebTarget target;
     private final String apiPath = Utils.apiPath;
-    private final String username = "clienteprueba";
-    private final String password = "Password1";    
+    private final String username = Utils.username;
+    private final String password = Utils.password;    
     
     @ArquillianResource
     private URL deploymentURL;    
@@ -123,7 +127,7 @@ public class ItemTest {
      */
     public void insertData() {
         fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
-        fatherClientEntity.setId(1L);
+        fatherClientEntity.setId(99999L);
         em.persist(fatherClientEntity);
 
         for (int i = 0; i < 3; i++) {            
@@ -187,7 +191,7 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void createItemTest() throws IOException {
+    public void createMessageTest() throws IOException {
         ItemDTO item = factory.manufacturePojo(ItemDTO.class);
         Cookie cookieSessionId = login(username, password);
 
@@ -204,7 +208,7 @@ public class ItemTest {
         ItemEntity entity = em.find(ItemEntity.class, itemTest.getId());
         Assert.assertNotNull(entity);
         Assert.assertEquals(entity.getName(), item.getName());
-        Assert.assertEquals(entity.getQty(), item.getQty());
+        Assert.assertEquals(entity.getQty(), item.getQty());         
     }    
     
     
@@ -214,22 +218,16 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void getItemByIdTest() {
-        ItemDTO item = factory.manufacturePojo(ItemDTO.class);
+    public void getMessageByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
-        Response response = target
-            .request().cookie(cookieSessionId)
-            .post(Entity.entity(item, MediaType.APPLICATION_JSON));
-        
-        ItemDTO itemTes = (ItemDTO)response.readEntity(ItemDTO.class);
-        
         ItemDTO itemTest = target
-            .path(itemTes.getId().toString())
+            .path(oraculo.get(0).getId().toString())
             .request().cookie(cookieSessionId).get(ItemDTO.class);
-        Assert.assertEquals(itemTest.getId(), itemTes.getId());
-        Assert.assertEquals(itemTest.getName(), itemTes.getName());
-        Assert.assertEquals(itemTest.getQty(), itemTes.getQty());  
+        
+        Assert.assertEquals(itemTest.getId(), oraculo.get(0).getId());
+        Assert.assertEquals(itemTest.getName(), oraculo.get(0).getName());
+        Assert.assertEquals(itemTest.getQty(), oraculo.get(0).getQty());  
     }    
     
     /**
@@ -238,7 +236,7 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void updateItemTest() throws IOException {
+    public void updateMessageTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
         ItemDTO item = new ItemDTO(oraculo.get(0));
 
@@ -266,7 +264,7 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void deleteItemTest() {
+    public void deleteMessageTest() {
         Cookie cookieSessionId = login(username, password);
         ItemDTO item = new ItemDTO(oraculo.get(0));
         Response response = target
