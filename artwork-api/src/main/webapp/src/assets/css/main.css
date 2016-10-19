@@ -346,7 +346,9 @@ ul.sub-menu {
 **************************/
 
 #footer {
-  background: #F0F0E9;
+    background: #F0F0E9;
+    position:fixed;
+    bottom:0;
 }
 
 
@@ -899,7 +901,6 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
-  opacity:;
 }
 
 .single-products:hover .product-overlay {
