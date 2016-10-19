@@ -68,26 +68,23 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class ItemTest {
 
-    private WebTarget target;
+      private WebTarget target;
     private final String apiPath = Utils.apiPath;
     private final String username = Utils.username;
-    private final String password = Utils.password;
-    PodamFactory factory = new PodamFactoryImpl();
-
-    private final int Ok = Status.OK.getStatusCode();
-    private final int Created = Status.CREATED.getStatusCode();
-    private final int OkWithoutContent = Status.NO_CONTENT.getStatusCode();
-
-    private final static List<ItemEntity> oraculo = new ArrayList<>();
-
-    private final String clientPath = "clients";
-    private final String itemPath = "wishList";
-
-    ClientEntity fatherClientEntity;
-
+    private final String password = Utils.password;    
+    
     @ArquillianResource
-    private URL deploymentURL;
-
+    private URL deploymentURL;    
+    PodamFactory factory = new PodamFactoryImpl();
+    
+    private final static List<ItemEntity> oraculo = new ArrayList<>();
+    private final int Ok = Response.Status.OK.getStatusCode();
+    private final int Created = Response.Status.CREATED.getStatusCode();
+    private final int OkWithoutContent = Response.Status.NO_CONTENT.getStatusCode();   
+    
+    ClientEntity fatherClientEntity;
+    private final String messagePath = "wishList";
+    
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
@@ -105,12 +102,12 @@ public class ItemTest {
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/shiro.ini"))
                 // El archivo web.xml es necesario para el despliegue de los servlets
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"));
-    }
-
+    }    
+    
     private WebTarget createWebTarget() {
         return ClientBuilder.newClient().target(deploymentURL.toString()).path(apiPath);
-    }
-
+    }    
+    
     @PersistenceContext(unitName = "ArtworkPU")
     private EntityManager em;
 
@@ -121,8 +118,8 @@ public class ItemTest {
         em.createQuery("delete from ItemEntity").executeUpdate();
         em.createQuery("delete from ClientEntity").executeUpdate();
         oraculo.clear();
-    }
-
+    }    
+    
    /**
      * Datos iniciales para el correcto funcionamiento de las pruebas.
      *
@@ -130,7 +127,7 @@ public class ItemTest {
      */
     public void insertData() {
         fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
-        fatherClientEntity.setId(1L);
+        fatherClientEntity.setId(99999L);
         em.persist(fatherClientEntity);
 
         for (int i = 0; i < 3; i++) {            
@@ -163,11 +160,9 @@ public class ItemTest {
             }
         }
         target = createWebTarget()
-                .path(clientPath)
-                .path(fatherClientEntity.getId().toString())
-                .path(itemPath);
-    }
-
+                .path(messagePath);
+    }    
+    
     /**
      * Login para poder consultar los diferentes servicios
      *
@@ -188,15 +183,15 @@ public class ItemTest {
         } else {
             return null;
         }
-    }
-
+    }    
+    
     /**
      * Prueba para crear un Item
      *
      * @generated
      */
     @Test
-    public void createItemTest() throws IOException {
+    public void createMessageTest() throws IOException {
         ItemDTO item = factory.manufacturePojo(ItemDTO.class);
         Cookie cookieSessionId = login(username, password);
 
@@ -204,24 +199,26 @@ public class ItemTest {
             .request().cookie(cookieSessionId)
             .post(Entity.entity(item, MediaType.APPLICATION_JSON));
 
-        ItemDTO  itemTest = (ItemDTO) response.readEntity(ItemDTO.class);
+        ItemDTO itemTest = (ItemDTO)response.readEntity(ItemDTO.class);
 
         Assert.assertEquals(Created, response.getStatus());
-
-        Assert.assertEquals(item.getName(), itemTest.getName());
-        Assert.assertEquals(item.getQty(), itemTest.getQty());
-
+        Assert.assertEquals(itemTest.getName(), item.getName());
+        Assert.assertEquals(itemTest.getQty(), item.getQty());         
+        
         ItemEntity entity = em.find(ItemEntity.class, itemTest.getId());
         Assert.assertNotNull(entity);
-    }
-
+        Assert.assertEquals(entity.getName(), item.getName());
+        Assert.assertEquals(entity.getQty(), item.getQty());         
+    }    
+    
+    
     /**
      * Prueba para consultar un Item
      *
      * @generated
      */
     @Test
-    public void getItemByIdTest() {
+    public void getMessageByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
         ItemDTO itemTest = target
@@ -230,34 +227,16 @@ public class ItemTest {
         
         Assert.assertEquals(itemTest.getId(), oraculo.get(0).getId());
         Assert.assertEquals(itemTest.getName(), oraculo.get(0).getName());
-        Assert.assertEquals(itemTest.getQty(), oraculo.get(0).getQty());
-    }
-
-    /**
-     * Prueba para consultar la lista de Items
-     *
-     * @generated
-     */
-    @Test
-    public void listItemTest() throws IOException {
-        Cookie cookieSessionId = login(username, password);
-
-        Response response = target
-            .request().cookie(cookieSessionId).get();
-
-        String listItem = response.readEntity(String.class);
-        List<ItemDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
-        Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(3, listItemTest.size());
-    }
-
+        Assert.assertEquals(itemTest.getQty(), oraculo.get(0).getQty());  
+    }    
+    
     /**
      * Prueba para actualizar un Item
      *
      * @generated
      */
     @Test
-    public void updateItemTest() throws IOException {
+    public void updateMessageTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
         ItemDTO item = new ItemDTO(oraculo.get(0));
 
@@ -271,20 +250,21 @@ public class ItemTest {
             .request().cookie(cookieSessionId)
             .put(Entity.entity(item, MediaType.APPLICATION_JSON));
 
-        ItemDTO itemTest = (ItemDTO) response.readEntity(ItemDTO.class);
+        ItemDTO itemTest = (ItemDTO)response.readEntity(ItemDTO.class);
 
         Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(item.getId(), itemTest.getId());
         Assert.assertEquals(item.getName(), itemTest.getName());
-        Assert.assertEquals(item.getQty(), itemTest.getQty());
-    }
-
+        Assert.assertEquals(item.getQty(), itemTest.getQty());  
+    }       
+    
     /**
      * Prueba para eliminar un Item
      *
      * @generated
      */
     @Test
-    public void deleteItemTest() {
+    public void deleteMessageTest() {
         Cookie cookieSessionId = login(username, password);
         ItemDTO item = new ItemDTO(oraculo.get(0));
         Response response = target
@@ -292,5 +272,5 @@ public class ItemTest {
             .request().cookie(cookieSessionId).delete();
 
         Assert.assertEquals(OkWithoutContent, response.getStatus());
-    }
+    }      
 }
