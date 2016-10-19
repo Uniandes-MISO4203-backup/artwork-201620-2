@@ -2521,4 +2521,13 @@ h2.title {
   color: #FE980F;
 }
 
-
+.panel-header{
+    width:100%; 
+    padding-bottom:0px;
+    height: 100%;
+    background: url("../img/banner_header.jpg") no-repeat center center;;
+    margin-right: 0;
+    margin-left: 0;
+    display: block;
+    min-height: 90px;
+}
