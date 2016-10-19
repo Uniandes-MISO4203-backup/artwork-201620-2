@@ -1,4 +1,39 @@
 <!DOCTYPE html>
+<section id="slider"><!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item" ng-repeat="artwork in carouselRecords">
+                            <div class="col-sm-6">
+                                <h1><span>{{artwork.name}}</span></h1>
+                                <h1>{{artwork.artist.name}}</h1>
+                                <h2>{{artwork.price| currency}}</h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <img ng-src="{{artwork.image}}" alt='{{artwork.name}}' />
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
 <div class="row">
     <div class="col-sm-3">
         <div class="left-sidebar">
