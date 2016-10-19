@@ -217,18 +217,7 @@ public class ItemTest {
      *
      * @generated
      */
-    @Test
-    public void getMessageByIdTest() {
-        Cookie cookieSessionId = login(username, password);
 
-        ItemDTO itemTest = target
-            .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(ItemDTO.class);
-        
-        Assert.assertEquals(itemTest.getId(), oraculo.get(0).getId());
-        Assert.assertEquals(itemTest.getName(), oraculo.get(0).getName());
-        Assert.assertEquals(itemTest.getQty(), oraculo.get(0).getQty());  
-    }    
     
     /**
      * Prueba para actualizar un Item
