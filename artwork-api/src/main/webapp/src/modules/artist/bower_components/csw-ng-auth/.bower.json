@@ -1,0 +1,43 @@
+{
+  "name": "csw-ng-auth",
+  "description": "Authentication module for AngularJS",
+  "main": "./dist/csw-ng-auth.js",
+  "authors": [
+    "jj.alarcon10@uniandes.edu.co"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "uniandes",
+    "auth"
+  ],
+  "homepage": "https://github.com/recursosCSWuniandes/ng-crud-auth",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-messages": "~1.4.8",
+    "angular-bootstrap": "^0.13.4",
+    "ngstorage": "~0.3.10",
+    "checklist-model": "~0.7.0",
+    "angular-ui-router": "~0.2.15",
+    "angular-cookies": "~1.4.8",
+    "angular": "~1.4.8"
+  },
+  "version": "0.1.7",
+  "_release": "0.1.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.7",
+    "commit": "5ed2248b92db1b4727b699830056906e23451151"
+  },
+  "_source": "https://github.com/recursosCSWuniandes/ng-crud-auth.git",
+  "_target": "^0.1.0",
+  "_originalSource": "csw-ng-auth"
+}
