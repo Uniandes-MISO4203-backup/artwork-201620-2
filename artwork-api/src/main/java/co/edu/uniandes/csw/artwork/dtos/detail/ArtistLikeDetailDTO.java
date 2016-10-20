@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.artwork.dtos.detail;
 
 import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistLikeDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ClientDTO;
 import co.edu.uniandes.csw.artwork.entities.ArtistLikeEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import uk.co.jemos.podam.common.PodamExclude;
