@@ -26,6 +26,7 @@ SOFTWARE.
         //'ngCrudMock',
         'ngCrud',
         'ui.router',
+        'ui.bootstrap',
         'clientModule',
         'artworkModule',
         'artistModule',

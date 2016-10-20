@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<div class="row">            
-    <div class="col-md-2 panel panel-info" >
-        <h4>Categories</h4>
-        <ul class="list-group">
-            <li class="list-group-item" style="cursor: pointer">
-                <a ng-click="filtrar('')">Show all</a>
-            </li>
-            <li ng-repeat="category in categorys" class="list-group-item">
-                <a ng-click="filtrar(category.id)" style="cursor: pointer">{{category.name}}</a>
-            </li>
-        </ul>
-    </div>
-    <div class='col-md-13'>
-        <div class="col-md-4 col-sm-6 col-lg-3" ng-repeat="artwork in records">
-            <div class="thumbnail">
-                <img class="img-responsive" ng-src="{{artwork.image}}" alt='{{artwork.name}}'>
-                <div class="caption">
-                    <h3>{{artwork.name}}</h3>
-                    <h4>{{artwork.price| currency}}</h4>
-                    <add-wish-list artwork="artwork"></add-wish-list>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="left-sidebar">
+            <h2>Categories</h2>
+            <div class="panel-group category-products" id="accordian">
+                <div class="panel panel-default" ng-repeat="category in categorys">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a ng-click="filtrar('')" style="cursor: pointer">Show all</a></h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-repeat="category in categorys">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a ng-click="filtrar(category.id)" style="cursor: pointer">{{category.name}}</a></h4>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
+    <div class="col-sm-9 padding-right">
+        <div class="features_items">
+            <h2 class="title text-center">Gallery</h2>
+            <div class="col-sm-4" ng-repeat="artwork in records">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;">
+                            <h2>{{artwork.price| currency}}</h2>
+                            <h3>{{artwork.name}}</h3>
+                            <add-wish-list artwork="artwork"></add-wish-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
