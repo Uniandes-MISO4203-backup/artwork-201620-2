@@ -93,23 +93,24 @@ public class ArtistResource {
         if (accountHref != null) {
             Account account = Utils.getClient().getResource(accountHref, Account.class);
             for (Group gr : account.getGroups()) {
-                switch (gr.getHref()) {
-                    case ADMIN_HREF:
-                        if (page != null && maxRecords != null) {
+                if(gr.getHref().equals(ADMIN_HREF)) {
+                    if (page != null && maxRecords != null) {
                         this.response.setIntHeader("X-Total-Count", artistLogic.countArtists());
                         return listEntity2DTO(artistLogic.getArtists(page, maxRecords));
+                    } else {
+                        return listEntity2DTO(artistLogic.getArtists());
                     }
-                    return listEntity2DTO(artistLogic.getArtists());
-                    case ARTIST_HREF:
-                        Integer id = (int) account.getCustomData().get("artist_id");
-                        List<ArtistDetailDTO> list = new ArrayList();
-                        list.add(new ArtistDetailDTO(artistLogic.getArtist(id.longValue())));
-                        return list;
                 }
+                else if(gr.getHref().equals(ARTIST_HREF)) {
+                    Integer id = (int) account.getCustomData().get("artist_id");
+                    List<ArtistDetailDTO> list = new ArrayList();
+                    list.add(new ArtistDetailDTO(artistLogic.getArtist(id.longValue())));
+                    return list;
+                }  
             }
         } 
-        return null;
-        
+        List<ArtistDetailDTO> emptyResponse = new ArrayList<>();
+        return emptyResponse;
     }
 
     /**
@@ -157,7 +158,6 @@ public class ArtistResource {
     public ArtistDetailDTO updateArtist(@PathParam("id") Long id, ArtistDetailDTO dto) {
         ArtistEntity entity = dto.toEntity();
         entity.setId(id);
-        ArtistEntity oldEntity = artistLogic.getArtist(id);
         return new ArtistDetailDTO(artistLogic.updateArtist(entity));
     }
 
