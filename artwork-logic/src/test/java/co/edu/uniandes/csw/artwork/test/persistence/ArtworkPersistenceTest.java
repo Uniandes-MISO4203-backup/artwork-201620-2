@@ -24,6 +24,7 @@ SOFTWARE.
 package co.edu.uniandes.csw.artwork.test.persistence;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
+import co.edu.uniandes.csw.artwork.entities.CategoryEntity;
 import co.edu.uniandes.csw.artwork.persistence.ArtworkPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class ArtworkPersistenceTest {
      * @generated
      */
     ArtistEntity fatherEntity;
-
+    CategoryEntity categoryFatherEntity;
     /**
      * @generated
      */
@@ -115,6 +116,7 @@ public class ArtworkPersistenceTest {
     private void clearData() {
         em.createQuery("delete from ArtworkEntity").executeUpdate();
         em.createQuery("delete from ArtistEntity").executeUpdate();
+        em.createQuery("delete from CategoryEntity").executeUpdate();
     }
 
     /**
@@ -132,10 +134,16 @@ public class ArtworkPersistenceTest {
             fatherEntity = factory.manufacturePojo(ArtistEntity.class);
             fatherEntity.setId(1L);
             em.persist(fatherEntity);
+            
+            categoryFatherEntity = factory.manufacturePojo(CategoryEntity.class);
+            categoryFatherEntity.setId(99L);
+            em.persist(categoryFatherEntity);
+            
         for (int i = 0; i < 3; i++) {
             ArtworkEntity entity = factory.manufacturePojo(ArtworkEntity.class);
             
             entity.setArtist(fatherEntity);
+            entity.getCategory().add(categoryFatherEntity);
             em.persist(entity);
             data.add(entity);
         }
@@ -181,6 +189,38 @@ public class ArtworkPersistenceTest {
         }
     }
 
+    @Test
+    public void getArtworksByCategory(){
+        List<ArtworkEntity> list = artworkPersistence.getArtworkByCategory(null, null, 
+                categoryFatherEntity.getId(), data.get(0).getArtist().getName().substring(0,2));
+        Assert.assertEquals(data.size(), list.size());
+        for (ArtworkEntity ent : list) {
+            boolean found = false;
+            for (ArtworkEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+    @Test
+    public void getArtworksByNullCategory(){
+        List<ArtworkEntity> list = artworkPersistence.getArtworkByCategory(null, null, 
+                null, data.get(0).getArtist().getName().substring(0,2));
+        Assert.assertEquals(data.size(), list.size());
+        for (ArtworkEntity ent : list) {
+            boolean found = false;
+            for (ArtworkEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
     /**
      * Prueba para consultar un Artwork.
      *

@@ -96,8 +96,8 @@ public class ArtworkLogic implements IArtworkLogic {
      * @generated
      */
     @Override
-    public List<ArtworkEntity> getArtworkByCategory(Integer page, Integer maxRecords, Long categoryid) {        
-        return persistence.getArtworkByCategory(page, maxRecords,categoryid);  
+    public List<ArtworkEntity> getArtworkByCategory(Integer page, Integer maxRecords, Long categoryid, String artistName) {        
+        return persistence.getArtworkByCategory(page, maxRecords,categoryid, artistName);  
         
     }
 

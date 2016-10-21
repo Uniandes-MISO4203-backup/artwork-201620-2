@@ -95,13 +95,20 @@ public class RootArtworkResource {
     @GET
     @Path("/filtered")
     public List<ArtworkDetailDTO> getArtworkByCategory(
-            @DefaultValue("") @QueryParam("categoryid") Long categoryid,
+            @DefaultValue("") @QueryParam("categoryid") String categoryidin,
             @DefaultValue("") @QueryParam("artistName") String artistName) 
-    {
+    {   
+        Long categoryid;
+        if(categoryidin.equals("")){
+            categoryid = null;
+        }
+        else{
+            categoryid = new Long(categoryidin);
+        }
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", ArtworkLogic.countArtworks());
-            return listEntity2DTO(ArtworkLogic.getArtworkByCategory(page, maxRecords,categoryid));
+            return listEntity2DTO(ArtworkLogic.getArtworkByCategory(page, maxRecords,categoryid, artistName));
         }
-        return listEntity2DTO(ArtworkLogic.getArtworkByCategory(null,null,categoryid));
+        return listEntity2DTO(ArtworkLogic.getArtworkByCategory(null,null,categoryid, artistName));
     }
 }

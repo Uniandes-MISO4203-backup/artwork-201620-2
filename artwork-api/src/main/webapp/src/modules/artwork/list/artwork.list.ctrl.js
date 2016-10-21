@@ -33,6 +33,7 @@ SOFTWARE.
             this.currentPage = $params.page;
             this.totalItems = artworks.totalRecords;
             
+            $scope.category = null;
             $scope.categorys = [];
             
             $scope.getCategorys = function (parentCategory) {
@@ -43,9 +44,10 @@ SOFTWARE.
                 });
             };
             $scope.filtrar = function (parentCategory) {
+                $scope.category = parentCategory;
                 $scope.getCategorys(parentCategory);
                 Restangular.all("artworks").customGET("filtered", {categoryid:parentCategory, artistName:$scope.artistName}).then(function (response) {                    
-                        $scope.records=response;
+                    $scope.records=response;
                 });
             };
             $scope.getCategorys("");
@@ -53,7 +55,19 @@ SOFTWARE.
             this.pageChanged = function () {
                 $state.go('artworkList', {page: this.currentPage});
             };
-
+            
+            $scope.filter = function(){
+                filterByCategoryAndArtist($scope.category, $scope.artistName, function(response){
+                    $scope.records=response;
+                });
+            }
+            
+            function filterByCategoryAndArtist(categoryId, artistName, callback){
+                Restangular.all("artworks").customGET("filtered", {categoryid:categoryId, artistName:artistName}).then(function (response) {                    
+                    callback(response);
+                });
+            }
+            
             $scope.actions = {
                 create: {
                     displayName: 'Create',

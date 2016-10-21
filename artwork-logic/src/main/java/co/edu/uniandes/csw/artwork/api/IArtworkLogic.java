@@ -31,7 +31,7 @@ public interface IArtworkLogic {
     public int countArtworks();
     public List<ArtworkEntity> getArtworks(Long artistid);
     public List<ArtworkEntity> getArtworks(Integer page, Integer maxRecords, Long artistid);
-    public List<ArtworkEntity> getArtworkByCategory(Integer page, Integer maxRecords, Long categoryid);
+    public List<ArtworkEntity> getArtworkByCategory(Integer page, Integer maxRecords, Long categoryid, String artistName);
     public ArtworkEntity getArtwork(Long artworkid);
     public ArtworkEntity createArtwork(Long artistid, ArtworkEntity entity);
     public ArtworkEntity updateArtwork(Long artistid, ArtworkEntity entity);

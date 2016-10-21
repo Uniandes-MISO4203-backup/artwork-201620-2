@@ -73,9 +73,18 @@ public class ArtworkPersistence extends CrudPersistence<ArtworkEntity> {
         return q.getResultList();
     }
     
-    public List<ArtworkEntity> getArtworkByCategory(Integer page, Integer maxRecords, Long categoryid) {
-        TypedQuery<ArtworkEntity> q = em.createQuery("select p from ArtworkEntity p join  p.category i where (i.id = :categoryid)", ArtworkEntity.class);
-        q.setParameter("categoryid", categoryid);
+    public List<ArtworkEntity> getArtworkByCategory(Integer page, Integer maxRecords, Long categoryid, String artistName) {
+        TypedQuery<ArtworkEntity> q;
+        if(categoryid == null){
+            q = em.createQuery("select p from ArtworkEntity p where p.artist.name LIKE :artistname", ArtworkEntity.class);
+        }
+        else {
+            q = em.createQuery("select p from ArtworkEntity p join  p.category i where i.id = :categoryid AND p.artist.name LIKE :artistname", ArtworkEntity.class);
+            q.setParameter("categoryid", categoryid);
+        }
+
+        q.setParameter("artistname", "%" + artistName + "%");
+        
         if (page != null && maxRecords != null) {
             q.setFirstResult((page - 1) * maxRecords);
             q.setMaxResults(maxRecords);
