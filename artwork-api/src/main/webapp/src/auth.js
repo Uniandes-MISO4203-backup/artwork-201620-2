@@ -11,6 +11,7 @@
                         $rootScope.product = false;
                         $rootScope.nationality = false;
                         $rootScope.message = false;
+                        $rootScope.item = false;
                         $rootScope.authenticated = false;
                     } else {
                         $rootScope.authenticated = true;
@@ -21,7 +22,8 @@
                             $rootScope.client = true;
                             $rootScope.product = false;
                             $rootScope.nationality = false;
-                            $rootScope.message = true;                            
+                            $rootScope.message = true;
+                            $rootScope.item = true;
                         }
                         if (roles.indexOf("artist") !== -1) {
                             $rootScope.category = false;
@@ -36,7 +38,7 @@
                             $rootScope.client = true;
                             $rootScope.product = true;
                             $rootScope.nationality = true;
-                            $rootScope.message = true;                            
+                            $rootScope.message = true;
                         }
                     }
                 });

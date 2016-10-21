@@ -27,31 +27,24 @@ SOFTWARE.
         <title>Artwork</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- build:css(<%= meta.src %>) styles/vendor.css -->
-        <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <!-- endbower -->
-        <!-- endbuild -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Artwork | Froba</title>
+        
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="src/assets/css/prettyPhoto.css" rel="stylesheet">
+        <link href="src/assets/css/price-range.css" rel="stylesheet">
+        <link href="src/assets/css/animate.css" rel="stylesheet">
+	<link href="src/assets/css/main.css" rel="stylesheet">
+	<link href="src/assets/css/responsive.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="src/assets/css/css.css" />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-              
-
-        <!-- build:css(<%= meta.src %>) styles/main.css -->
-        <!-- include: "type": "css", "files": "<%= meta.includeCssFiles %>" -->
-        <!-- /include -->
-        <!-- endbuild -->
-       
-
-        <!-- build:js(<%= meta.src %>) scripts/vendor.js -->
-        <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="bower_components/angular-mocks/angular-mocks.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/ui.bootstrap/src/carousel/carousel.js"></script>
         <script src="bower_components/lodash/lodash.js"></script>
         <script src="bower_components/restangular/dist/restangular.js"></script>
         <script src="bower_components/ng-crud/dist/ngcrud.js"></script>
@@ -61,15 +54,10 @@ SOFTWARE.
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/csw-ng-auth/dist/csw-ng-auth.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
- 
-        <!-- build:js(<%= meta.src %>) scripts/scripts.js -->
-        <!-- include: "type": "js", "files": "<%= meta.includeJsFiles %>" -->
+
         <script src="src/app.js"></script>
         <script src="src/auth.js"></script>
         <script src="src/modules/client/client.mod.js"></script>
-        <script src="src/modules/item/item.mod.js"></script>
         <script src="src/modules/artwork/artwork.mod.js"></script>
         <script src="src/modules/artist/artist.mod.js"></script>
         <script src="src/modules/product/product.mod.js"></script>
@@ -83,12 +71,6 @@ SOFTWARE.
         <script src="src/modules/client/instance/edit/client.edit.ctrl.js"></script>
         <script src="src/modules/client/list/client.list.ctrl.js"></script>
         <script src="src/modules/client/new/client.new.ctrl.js"></script>
-        <script src="src/modules/item/item.ctrl.js"></script>
-        <script src="src/modules/item/instance/delete/item.delete.ctrl.js"></script>
-        <script src="src/modules/item/instance/detail/item.detail.ctrl.js"></script>
-        <script src="src/modules/item/instance/edit/item.edit.ctrl.js"></script>
-        <script src="src/modules/item/list/item.list.ctrl.js"></script>
-        <script src="src/modules/item/new/item.new.ctrl.js"></script>
         <script src="src/modules/artwork/artwork.ctrl.js"></script>
         <script src="src/modules/artwork/instance/category/edit/artwork.category.edit.ctrl.js"></script>
         <script src="src/modules/artwork/instance/category/list/artwork.category.list.ctrl.js"></script>
@@ -137,61 +119,56 @@ SOFTWARE.
         <script src="src/modules/message/instance/edit/message.edit.ctrl.js"></script>
         <script src="src/modules/message/instance/delete/message.delete.ctrl.js"></script>
         <script src="src/modules/artistLike/artistLike.dir.js"></script>
-	
+	<script src="src/modules/wishList/wishList.mod.js"></script>
+        <script src="src/modules/wishList/wishList.ctrl.js"></script>
+        <script src="src/modules/wishList/wishList.dir.js"></script>
+        <script src="src/modules/wishList/list/wishList.list.ctrl.js"></script>
         <!-- /include -->
         <!-- endbuild -->
 
     </head>
-    <body style="padding-top: 170px;">  
-        <div class="container-fluid">
-            <div class="col-md-12">
-                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-                    <div class="panel-header">
-                    </div>
-                    <div class="container-fluid">                          
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header"> 
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-bar">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" ui-sref="artworkGallery">Artwork</a>
-                        </div>
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="main-bar">
-                            
-                            
-                            
-                            <ul ng-controller="roleCtrl"  class="nav navbar-nav">
-                                <li ng-if="client"><a ui-sref="clientList">Client</a></li>
-                                <li ng-if="artist"><a ui-sref="artistList">Artist</a></li>
-                                <li ng-if="product"><a ui-sref="productList">Product</a></li>
-                                <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
-                                <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
-                                <li ng-if="message"><a ui-sref="messageList">Messages</a></li>                                
-                            </ul>
-                            
-                            <ul class="nav navbar-nav navbar-right">
-                                
-                                <login-button></login-button>
-                            </ul>
-                        </div> <!-- /.navbar-collapse -->
-                    </div> <!-- /.container-fluid -->
-                </nav>
+    <body>  
+        <header id="header">
+            <div class='panel-header'>
             </div>
-            <div ui-view="mainView" style="min-height: 410px"></div>
-        </div>
-        
+            <div class="header-middle"><!--header-middle-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="logo pull-left">
+                                <a ui-sref="artworkGallery"><img src="src/assets/img/logo.png" alt="logo" style='max-height:39px;'/></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="shop-menu pull-right">
+                                <ul ng-controller="roleCtrl" class="nav navbar-nav">
+                                    <li ng-if="client"><a ui-sref="clientList">Client</a></li>
+                                    <li ng-if="artist"><a ui-sref="artistList">Artist</a></li>
+                                    <li ng-if="product"><a ui-sref="productList">Product</a></li>
+                                    <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
+                                    <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
+                                    <li ng-if="message"><a ui-sref="messageList">Messages</a></li>
+                                    <li ng-if="item"><a ui-sref="wishList">Wishlist</a></li>
+                                    <login-button></login-button>                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <br>
+        <section>
+            <div ui-view="mainView" class="container"></div>
+	</section>
         <footer>
-            <div class="panel-footer">
-
-                <div class="col-xs-12" id="copyright">
-                    <span>© Copyright 2016 Artwork By Froba All right reserved.</span><br>
-                    <span>Grupo 1 - Gestión de Proyectos de Software</span><br>
-                    <span>Universidad de los Andes</span>          
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <span>© Copyright 2016 Artwork By Froba All right reserved.</span><br>
+                        <span>Grupo 1 - Gestión de Proyectos de Software</span><br>
+                        <span>Universidad de los Andes</span>          
+                    </div>
                 </div>
             </div>
         </footer>
