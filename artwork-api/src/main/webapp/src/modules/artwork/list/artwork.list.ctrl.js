@@ -44,7 +44,7 @@ SOFTWARE.
             };
             $scope.filtrar = function (parentCategory) {
                 $scope.getCategorys(parentCategory);
-                Restangular.all("artworks").customGET(parentCategory, {artistName:$scope.artistName}).then(function (response) {                    
+                Restangular.all("artworks").customGET("filtered", {categoryid:parentCategory, artistName:$scope.artistName}).then(function (response) {                    
                         $scope.records=response;
                 });
             };

@@ -93,9 +93,10 @@ public class RootArtworkResource {
      * @generated
      */
     @GET
-    @Path("{categoryid: \\d+}")
-    public List<ArtworkDetailDTO> getArtworkByCategory(@PathParam("categoryid") Long categoryid,
-             @DefaultValue("") @QueryParam("artistName") String artistName) 
+    @Path("/filtered")
+    public List<ArtworkDetailDTO> getArtworkByCategory(
+            @DefaultValue("") @QueryParam("categoryid") Long categoryid,
+            @DefaultValue("") @QueryParam("artistName") String artistName) 
     {
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", ArtworkLogic.countArtworks());
