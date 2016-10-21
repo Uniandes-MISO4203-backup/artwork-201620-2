@@ -112,11 +112,10 @@ public class ItemResource {
      * @generated
      */
     @GET
-    @Path("{itemId: \\d+}")
     public ItemDetailDTO getItem(@PathParam("itemId") Long itemId) {
         String accountHref = request.getRemoteUser();
         if (accountHref == null) {
-            return nuull;
+            return null;
         }        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
         int clientId = (int) account.getCustomData().get(CLIENT_ID);
