@@ -112,6 +112,7 @@ public class ItemResource {
      * @generated
      */
     @GET
+    @Path("{itemId: \\d+}")
     public ItemDetailDTO getItem(@PathParam("itemId") Long itemId) {
         String accountHref = request.getRemoteUser();
         if (accountHref == null) {
