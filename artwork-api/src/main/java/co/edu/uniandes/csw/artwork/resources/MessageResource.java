@@ -37,6 +37,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/messages")
 public class MessageResource {
     
+    private static final String CLIENT_ID = "client_id";
     private static final String CLIENT_HREF = "https://api.stormpath.com/v1/groups/5xJfg140VZoCF2Ny36Y7k1";
     private static final String ADMIN_HREF = "https://api.stormpath.com/v1/groups/G6wKFbwsYpo7yFR3ziC4v";       
     
@@ -78,7 +79,7 @@ public class MessageResource {
                     return listEntity2DTO(messageLogic.getMessages());
                     
                 case CLIENT_HREF:
-                    Integer id = (int) account.getCustomData().get("client_id");
+                    Integer id = (int) account.getCustomData().get(CLIENT_ID);
                     if (page != null && maxRecords != null) {
                         this.response.setIntHeader("X-Total-Count", messageLogic.countItems(id.longValue()));
                         return listEntity2DTO(messageLogic.getMessages(page, maxRecords, id.longValue()));
@@ -105,7 +106,7 @@ public class MessageResource {
         }        
        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        Integer id = (int) account.getCustomData().get("client_id");
+        Integer id = (int) account.getCustomData().get(CLIENT_ID);
         
         return new MessageDTO(messageLogic.createMessage(id.longValue(), dto.toEntity()));
     }
@@ -127,7 +128,7 @@ public class MessageResource {
                     return new MessageDTO(entity);
                     
                 case CLIENT_HREF:
-                    Long clientId = new Long((int) account.getCustomData().get("client_id"));
+                    Long clientId = new Long((int) account.getCustomData().get(CLIENT_ID));
                     if (entity.getClient() != null && !clientId.equals(entity.getClient().getId())) {
                         throw new WebApplicationException(404);
                     }                   
@@ -149,7 +150,7 @@ public class MessageResource {
         }        
        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        Long clientId = new Long(((int) account.getCustomData().get("client_id")));
+        Long clientId = new Long(((int) account.getCustomData().get(CLIENT_ID)));
         
         MessageEntity entity = dto.toEntity();
         entity.setId(id);
