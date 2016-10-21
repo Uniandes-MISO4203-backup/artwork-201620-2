@@ -56,8 +56,8 @@ public class CreditCardLogic implements ICreditCardLogic {
     public CreditCardEntity createItem(Long clientid, CreditCardEntity entity) {
         ClientEntity client = clientLogic.getClient(clientid);
         entity.setClient(client);
-        entity = persistence.create(entity);
-        return entity;
+        CreditCardEntity response = persistence.create(entity);
+        return response;
     }    
     
     @Override

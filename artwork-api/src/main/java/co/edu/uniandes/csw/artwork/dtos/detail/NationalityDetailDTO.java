@@ -5,11 +5,20 @@
  */
 package co.edu.uniandes.csw.artwork.dtos.detail;
 
+import co.edu.uniandes.csw.artwork.dtos.minimum.NationalityDTO;
+import co.edu.uniandes.csw.artwork.entities.NationalityEntity;
+
 /**
  *
  * @author am.osorio
  */
-public class NationalityDetailDTO {
+public class NationalityDetailDTO extends NationalityDTO {
 
- 
+    public NationalityDetailDTO() {
+        super();
+    }
+    
+    public NationalityDetailDTO(NationalityEntity entity) {
+        super(entity);
+    }
 }

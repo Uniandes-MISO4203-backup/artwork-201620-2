@@ -51,6 +51,7 @@ public class ArtworkLogic implements IArtworkLogic {
      * @return Número de registros de Artwork.
      * @generated
      */
+    @Override
     public int countArtworks() {
         return persistence.count();
     }
@@ -130,8 +131,8 @@ public class ArtworkLogic implements IArtworkLogic {
     public ArtworkEntity createArtwork(Long artistid, ArtworkEntity entity) {
         ArtistEntity artist = artistLogic.getArtist(artistid);
         entity.setArtist(artist);
-        entity = persistence.create(entity);
-        return entity;
+        ArtworkEntity response = persistence.create(entity);
+        return response;
     }
 
     /**
@@ -153,7 +154,6 @@ public class ArtworkLogic implements IArtworkLogic {
      * Elimina una instancia de Artwork de la base de datos.
      *
      * @param id Identificador de la instancia a eliminar.
-     * @param artistid id del Artist el cual es padre del Artwork.
      * @generated
      */
     @Override
@@ -181,6 +181,7 @@ public class ArtworkLogic implements IArtworkLogic {
      *
      * @param artworkId Identificador de la instancia de Artwork
      * @param categoryId Identificador de la instancia de Category
+     * @return 
      * @generated
      */
     @Override
