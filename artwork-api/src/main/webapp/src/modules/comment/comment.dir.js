@@ -26,7 +26,7 @@
             if(comment) {
                 comment.name = comment.message;
                 comment.artwork = $scope.artwork;
-                Restangular.all('comments').post(comment).then(function(data) {
+                Restangular.all('comments').post(comment).then(function() {
                     $scope.empty = false;
                     $scope.comments.push(comment);
                     $scope.comment = null;

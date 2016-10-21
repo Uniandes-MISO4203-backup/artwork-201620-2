@@ -65,7 +65,7 @@
             if(qualify) {
                 qualify.artwork = $scope.artwork;
                 
-                Restangular.all('qualifys').post(qualify).then(function(data) {
+                Restangular.all('qualifys').post(qualify).then(function() {
                     $scope.empty = false;
                     $scope.qualify = null;
                     Restangular.one('qualifys', $scope.artwork.id).customGET('score').then(function (data) {
@@ -74,7 +74,7 @@
                     Restangular.one('qualifys', $scope.artwork.id).get().then(function (data) {
                         $scope.comments = mapSimplify(data);
                     });
-                }, function(err){
+                }, function(){
                     $scope.alreadyQualifiedError = true;
                 });
             }  
