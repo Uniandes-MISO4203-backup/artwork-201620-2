@@ -56,6 +56,8 @@ import javax.ws.rs.WebApplicationException;
 @Produces(MediaType.APPLICATION_JSON)
 public class ItemResource {
 
+    private final static String CLIENT_ID = "client_id";
+    
     @Inject private IItemLogic itemLogic;
     @Context private HttpServletResponse response;
     @QueryParam("page") private Integer page;
@@ -89,10 +91,11 @@ public class ItemResource {
     public List<ItemDetailDTO> getItems() {
         String accountHref = request.getRemoteUser();
         if (accountHref == null) {
-            return null;
+            List<ItemDetailDTO> list = new ArrayList<>();
+            return list;
         }        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        int clientId = (int) account.getCustomData().get("client_id");
+        int clientId = (int) account.getCustomData().get(CLIENT_ID);
         Long clientsId = new Long(clientId);
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", itemLogic.countItems());
@@ -113,10 +116,10 @@ public class ItemResource {
     public ItemDetailDTO getItem(@PathParam("itemId") Long itemId) {
         String accountHref = request.getRemoteUser();
         if (accountHref == null) {
-            return null;
+            return nuull;
         }        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        int clientId = (int) account.getCustomData().get("client_id");
+        int clientId = (int) account.getCustomData().get(CLIENT_ID);
         Long clientsId = new Long(clientId);
         ItemEntity entity = itemLogic.getItem(itemId);
         if (entity.getClient() != null && !clientsId.equals(entity.getClient().getId())) {
@@ -140,7 +143,7 @@ public class ItemResource {
             return null;
         }        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        int clientId = (int) account.getCustomData().get("client_id");
+        int clientId = (int) account.getCustomData().get(CLIENT_ID);
         Long clientsId = new Long(clientId);
         return new ItemDetailDTO(itemLogic.createItem(clientsId, dto.toEntity()));
     }
@@ -161,7 +164,7 @@ public class ItemResource {
             return null;
         }        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        int clientId = (int) account.getCustomData().get("client_id");
+        int clientId = (int) account.getCustomData().get(CLIENT_ID);
         Long clientsId = new Long(clientId);
         ItemEntity entity = dto.toEntity();
         entity.setId(itemId);
