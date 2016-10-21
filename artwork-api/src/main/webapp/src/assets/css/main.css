@@ -9,7 +9,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     position: relative;
-    font-weight:400px;
+    font-weight:400;
 }
 
 ul li {
@@ -2141,14 +2141,13 @@ h2.title {
 
 .rating-area {
     border: 1px solid #F7F7F0;
-    direction: block;
     overflow: hidden;
 }
 
 .rating-area ul li {
     float: left;
     padding: 5px;
-    font-size: 12px
+    font-size: 12px;
 }
 
 .rating-area .ratings {
