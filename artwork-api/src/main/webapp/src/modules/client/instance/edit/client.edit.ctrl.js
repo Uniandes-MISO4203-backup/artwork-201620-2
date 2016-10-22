@@ -35,7 +35,7 @@ SOFTWARE.
                     fn: function () {
                         if ($scope.clientForm.$valid) {
                             $scope.currentRecord.put().then(function (rc) {
-                                $state.go('clientDetail', {clientId: rc.id}, {reload: true});
+                                    $state.go('clientDetail', {clientId: rc.id}, {reload: true});
                             });
                         }
                     }
@@ -44,7 +44,7 @@ SOFTWARE.
                     displayName: 'Cancel',
                     icon: 'remove',
                     fn: function () {
-                        $state.go('clientDetail');
+                       $state.go('clientDetail');   
                     }
                 }
             };

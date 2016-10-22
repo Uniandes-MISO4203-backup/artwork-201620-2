@@ -24,6 +24,12 @@ SOFTWARE.
 <header>
     <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
 </header>
+
+<div ng-if="roles.indexOf('client')!= -1">
+    <h3>My Account</h3>
+</div>
+
+
 <list-records fields="model.fields" records="records" actions="recordActions"></list-records>
 <pagination ng-if="ctrl.itemsPerPage < ctrl.totalItems"
             total-items="ctrl.totalItems"

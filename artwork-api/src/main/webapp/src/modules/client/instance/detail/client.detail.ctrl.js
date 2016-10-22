@@ -75,7 +75,7 @@ SOFTWARE.
                     displayName: 'Wish List',
                     icon: 'link',
                     fn: function () {
-                        $state.go('itemList');
+                        $state.go('wishList');
                     }
                 },
                 creditCardList: {

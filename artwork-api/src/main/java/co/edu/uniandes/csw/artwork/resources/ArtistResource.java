@@ -40,6 +40,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import co.edu.uniandes.csw.artwork.api.IArtistLogic;
 import co.edu.uniandes.csw.artwork.dtos.detail.ArtistDetailDTO;
+import co.edu.uniandes.csw.artwork.dtos.detail.ArtistProfileDTO;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.auth.stormpath.Utils;
 import com.stormpath.sdk.account.Account;
@@ -121,8 +122,18 @@ public class ArtistResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public ArtistDetailDTO getArtist(@PathParam("id") Long id) {
-        return new ArtistDetailDTO(artistLogic.getArtist(id));
+    public ArtistProfileDTO getArtist(@PathParam("id") Long id) {
+        String accountHref = req.getRemoteUser();
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        ArtistProfileDTO artist = new ArtistProfileDTO(artistLogic.getArtist(id));
+        artist.setEmail(account.getEmail());
+        artist.setGivenName(account.getGivenName());
+        artist.setMiddleName(account.getMiddleName());
+        artist.setRole("Artist");
+        artist.setStatus(account.getStatus().name());
+        artist.setSurName(account.getSurname());
+        artist.setUserName(account.getUsername());
+        return artist;
     }
     
     @GET
@@ -173,7 +184,7 @@ public class ArtistResource {
         artistLogic.deleteArtist(id);
     }
     public void existsArtist(Long artistsId){
-        ArtistDetailDTO artist = getArtist(artistsId);
+        ArtistDetailDTO artist = new ArtistDetailDTO(artistLogic.getArtist(artistsId));
         if (artist== null) {
             throw new WebApplicationException(404);
         }

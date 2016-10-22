@@ -40,6 +40,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import co.edu.uniandes.csw.artwork.api.IClientLogic;
 import co.edu.uniandes.csw.artwork.dtos.detail.ClientDetailDTO;
+import co.edu.uniandes.csw.artwork.dtos.detail.ClientProfileDetailDTO;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.auth.stormpath.Utils;
 import com.stormpath.sdk.account.Account;
@@ -123,8 +124,19 @@ public class ClientResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public ClientDetailDTO getClient(@PathParam("id") Long id) {
-        return new ClientDetailDTO(clientLogic.getClient(id));
+    public ClientProfileDetailDTO getClient(@PathParam("id") Long id) {
+
+        String accountHref = req.getRemoteUser();
+        Account account = Utils.getClient().getResource(accountHref, Account.class);
+        ClientProfileDetailDTO cliente = new ClientProfileDetailDTO(clientLogic.getClient(id));
+        cliente.setEmail(account.getEmail());
+        cliente.setGivenName(account.getGivenName());
+        cliente.setMiddleName(account.getMiddleName());
+        cliente.setRole("Client");
+        cliente.setStatus(account.getStatus().name());
+        cliente.setSurName(account.getSurname());
+        cliente.setUserName(account.getUsername());
+        return cliente;
     }
 
     /**
@@ -169,7 +181,7 @@ public class ClientResource {
         clientLogic.deleteClient(id);
     }
     public void existsClient(Long clientsId){
-        ClientDetailDTO client = getClient(clientsId);
+        ClientDetailDTO client = new ClientDetailDTO(clientLogic.getClient(clientsId));
         if (client== null) {
             throw new WebApplicationException(404);
         }
