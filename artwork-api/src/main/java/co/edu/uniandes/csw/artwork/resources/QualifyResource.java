@@ -64,6 +64,7 @@ public class QualifyResource {
      * Creates a new instance of CreditCardResource
      */
     public QualifyResource() {
+        //Constructor vacio
     }
     
      public static QualifyDetailDTO basicEntity2DTO(QualifyEntity entity) {
@@ -130,7 +131,6 @@ public class QualifyResource {
     @GET
     @Path("{artworksId: \\d+}")
     public List<QualifyDetailDTO> getQualifies(@PathParam("artworksId") Long artworksId) {  
-        Long fullScore=0l;
         List<QualifyDetailDTO> qualiefies = getQualifys(artworksId);
         return qualiefies;
     } 

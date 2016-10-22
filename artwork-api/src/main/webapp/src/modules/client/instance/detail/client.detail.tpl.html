@@ -24,12 +24,61 @@ SOFTWARE.
 <header>
     <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
 </header>
-<div  class="container-fluid well">
-    <div class="col-md-12">
-        <p>
-        <label><strong>Name: </strong></label><span id="name"> {{currentRecord.name}}</span>
-        </p>
-    </div>
+<div ng-if="roles.indexOf('admin')!= -1">
+    <div  class="container-fluid well">
+        <div class="col-md-12">
+            <p>
+            <label><strong>Name: </strong></label><span id="name"> {{currentRecord.name}}</span>
+            </p>
+        </div>
+   </div>
+</div>
+ <div ng-if="roles.indexOf('client')!= -1">
+     <div class="row" style="text-align: ">
+            
+     
+         <div class="col-sm-2 col-sm-offset-5">
+             <h2 class="title text-center">MY PROFILE</h2>
+             
+             <img class="title text-center" src="src/assets/img/profile.png" alt="" style='width: 100%'>
+             
+         </div>
+     <div class="col-sm-7 col-sm-offset-2">
+        <div class="blog-post-area">
+                
+                
+                <div class="single-blog-post">
+                        <h3>ACCOUNT INFO</h3>
+                        
+                        <div class="post-meta">
+                                <ul>
+                                        <li><i class="fa fa-user"></i>{{currentRecord.email}}</li>
+                                        <li><i class="fa fa-clock-o"></i> {{currentRecord.status}}</li>
+                                </ul>
+                        </div>
+                    
+                        
+                    </div>
+                        <div class="brands-name">
+                                        <ul class="nav nav-pills nav-stacked">
+                                            <li><span class="pull-right">{{currentRecord.name}}</span><b class="fa fa-user"> GIVEN NAME</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.middleName}}</span><b class="fa fa-user"> MIDDLE NAME</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.surName}}</span><b class="fa fa-user"> SUR NAME</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.userName}}</span><b class="fa fa-user"> USER NAME</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.age}}</span><b class="fa fa-user"> AGE</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.email}}</span><b class="fa fa-envelope"> EMAIL</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.role}}</span><b class="fa fa-edit"> ROLE</b></li>
+                                            <li> <span class="pull-right">{{currentRecord.status}}</span><b class="fa fa-check"> STATUS</b></li>
+                                        </ul>
+                        </div>
+                </div>
+                
+                
+        </div>
+</div>
+ </div>
+
+
 </div>
 <div ui-view="clientChieldView"></div>
 <!-- TODO -->

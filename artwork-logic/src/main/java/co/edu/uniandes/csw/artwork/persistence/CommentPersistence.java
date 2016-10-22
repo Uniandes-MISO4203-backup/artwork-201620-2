@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.artwork.persistence;
 
-import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.entities.CommentEntity;
 import co.edu.uniandes.csw.crud.spi.persistence.CrudPersistence;
 import java.util.List;

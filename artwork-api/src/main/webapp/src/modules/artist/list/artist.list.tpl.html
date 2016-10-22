@@ -30,6 +30,11 @@ SOFTWARE.
         </span>
     </div>
 </header>
+
+<div ng-if="roles.indexOf('artist')!= -1">
+    <h3>My Account</h3>
+</div>
+
 <br>
 <list-records fields="model.fields" records="records" actions="recordActions"></list-records>
 <!--<search-bar name="model.name" fields="model.fields" record="records" submit-fn="findArtistsByName"></search-bar>-->

@@ -46,7 +46,6 @@ public class NationalityLogic implements INationalityLogic{
     @Override
     public NationalityEntity updateNationality(NationalityEntity entity) {
         NationalityEntity newEntity = entity;
-        //NationalityEntity oldEntity = persistence.find(entity.getId());
         return persistence.update(newEntity);
     }
 
