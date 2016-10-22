@@ -69,6 +69,19 @@ SOFTWARE.
                     icon: 'th-list',
                     fn: function () {
                         $state.go('clientList');
+                    },
+                    show: function () {
+                        return (roles.indexOf("admin") !== -1);
+                    }
+                },
+                back: {
+                    displayName: 'Go Back',
+                    icon: 'arrow-left',
+                    fn: function () {
+                        $state.go('clientList');
+                    },
+                    show: function () {
+                        return (roles.indexOf("client") !== -1);
                     }
                 },
                 wishList: {
@@ -76,6 +89,9 @@ SOFTWARE.
                     icon: 'link',
                     fn: function () {
                         $state.go('wishList');
+                    },
+                    show: function () {
+                        return (roles.indexOf("client") !== -1);
                     }
                 },
                 creditCardList: {
@@ -83,6 +99,16 @@ SOFTWARE.
                     icon: 'link',
                     fn: function () {
                         $state.go('creditCardList');
+                    }
+                },
+                messageList: {
+                    displayName: 'Messages',
+                    icon: 'envelope',
+                    fn: function () {
+                        $state.go('messageList');
+                    },
+                    show: function () {
+                        return (roles.indexOf("client") !== -1);
                     }
                 }
             };

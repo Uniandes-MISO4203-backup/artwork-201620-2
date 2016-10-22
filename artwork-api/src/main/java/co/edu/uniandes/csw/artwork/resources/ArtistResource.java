@@ -166,7 +166,7 @@ public class ArtistResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public ArtistDetailDTO updateArtist(@PathParam("id") Long id, ArtistDetailDTO dto) {
+    public ArtistDetailDTO updateArtist(@PathParam("id") Long id, ArtistProfileDTO dto) {
         ArtistEntity entity = dto.toEntity();
         entity.setId(id);
         return new ArtistDetailDTO(artistLogic.updateArtist(entity));

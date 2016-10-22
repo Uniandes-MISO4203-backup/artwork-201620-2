@@ -21,10 +21,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<header>
-    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
-</header>
-<list-records fields="model.fields" records="records" actions="recordActions"></list-records>
+<section id="cart_items">
+    
+    <div class="container">
+        <header>
+            <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
+        </header>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="description">Name</td>
+                        <td class="description">Image</td>
+                        <td class="description">Price</td>
+                        <td class="quantity">Actions</td> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="($index,art) in records">
+                        <td>
+                           <h5>{{art.name}}</h5>
+                        </td>
+                        <td class="cart_description">
+                            <h5>{{art.image}}</h5>
+                        </td>
+                        <td class="cart_description">
+                            <h5>{{art.price}}</h5>
+                        </td>
+                        <td>
+                            <toolbar actions='recordActions'></toolbar>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 <pagination ng-if="ctrl.itemsPerPage < ctrl.totalItems"
             total-items="ctrl.totalItems"
             max-size="5"

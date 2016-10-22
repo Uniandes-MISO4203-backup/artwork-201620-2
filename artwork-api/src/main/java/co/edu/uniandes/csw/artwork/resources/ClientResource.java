@@ -162,7 +162,7 @@ public class ClientResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public ClientDetailDTO updateClient(@PathParam("id") Long id, ClientDetailDTO dto) {
+    public ClientDetailDTO updateClient(@PathParam("id") Long id, ClientProfileDetailDTO dto) {
         ClientEntity entity = dto.toEntity();
         entity.setId(id);
         ClientEntity oldEntity = clientLogic.getClient(id);

@@ -37,7 +37,7 @@ SOFTWARE.
 </div>
 
 <div ng-if="roles.indexOf('artist')!= -1">
-     <div class="row" style="text-align: ">
+          <div class="row" style="text-align: ">
             
      
          <div class="col-sm-2 col-sm-offset-5">
@@ -46,7 +46,7 @@ SOFTWARE.
              <img class="title text-center" src="src/assets/img/profile.png" alt="" style='width: 100%'>
              
          </div>
-     <div class="col-sm-7 col-sm-offset-2">
+     <div class="col-sm-6 col-sm-offset-3">
         <div class="blog-post-area">
                 
                 
@@ -55,7 +55,7 @@ SOFTWARE.
                         
                         <div class="post-meta">
                                 <ul>
-                                        <li><i class="fa fa-user"></i>{{currentRecord.email}}</li>
+                                        <li><i class="fa fa-user"></i>{{currentRecord.userName}}</li>
                                         <li><i class="fa fa-clock-o"></i> {{currentRecord.status}}</li>
                                 </ul>
                         </div>
@@ -63,23 +63,43 @@ SOFTWARE.
                         
                     </div>
                         <div class="brands-name">
-                                        <ul class="nav nav-pills nav-stacked">
-                                            <li><span class="pull-right">{{currentRecord.name}}</span><b class="fa fa-user"> GIVEN NAME</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.middleName}}</span><b class="fa fa-user"> MIDDLE NAME</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.surName}}</span><b class="fa fa-user"> SUR NAME</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.userName}}</span><b class="fa fa-user"> USER NAME</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.nationality}}</span><b class="fa fa-user"> NATIONALITY</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.score}}</span><b class="fa fa-user"> SCORE</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.email}}</span><b class="fa fa-envelope"> EMAIL</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.role}}</span><b class="fa fa-edit"> ROLE</b></li>
-                                            <li> <span class="pull-right">{{currentRecord.status}}</span><b class="fa fa-check"> STATUS</b></li>
-                                        </ul>
+                                        
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.name}}</span>
+                                <span class="glyphicon glyphicon-user"></span> GIVEN NAME
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.middleName}}</span>
+                                <span class="glyphicon glyphicon-user"></span> MIDDLE NAME
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.surName}}</span>
+                                <span class="glyphicon glyphicon-user"></span> SUR NAME
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.nationality.name}}</span>
+                                <span class="glyphicon glyphicon-globe"></span> NATIONALITY
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.score}}</span>
+                                <span class="glyphicon glyphicon-star"></span> SCORE
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.email}}</span>
+                                <span class="glyphicon glyphicon-envelope"></span> EMAIL
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.role}}</span>
+                                <span class="glyphicon glyphicon-certificate"></span> ROLE
+                            </h4>
+                            <h4 class="panel-title">						
+                                <span class="pull-right">{{currentRecord.status}}</span>
+                                <span class="glyphicon glyphicon-check"></span> STATUS
+                            </h4>
                         </div>
                 </div>
-                
-                
         </div>
-</div>
+    </div>
  </div>
 
 <div ui-view="artistChieldView"></div>

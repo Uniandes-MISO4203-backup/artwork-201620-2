@@ -1,7 +1,44 @@
-<header>
-    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
-</header>
-<list-records fields="model.fields" records="records" actions="recordActions"></list-records>
+<section id="cart_items">
+    
+    <div class="container">
+        <header>
+            <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
+        </header>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="description">From</td>
+                        <td class="description">Subject</td>
+                        <td class="description">Body</td>
+                        <td class="description">Sent Date</td>
+                        <td class="quantity">Actions</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="($index,message) in records">
+                        <td>
+                           <h5>{{message.client.name}}</h5>
+                        </td>
+                        <td class="cart_description">
+                            <h5>{{message.subject}}</h5>
+                        </td>
+                        <td class="cart_description">
+                            <h5>{{message.body}}</h5>
+                        </td>
+                        <td class="cart_description">
+                               <h5>{{message.sentDate}}</h5>
+                        </td>
+                        <td>
+                            <toolbar actions='recordActions'></toolbar>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 <pagination ng-if="ctrl.itemsPerPage < ctrl.totalItems"
             total-items="ctrl.totalItems"
             max-size="5"
