@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @XmlRootElement
-public class ArtistProfileDTO extends ArtistDTO{
+public class ArtistProfileDetailDTO extends ArtistDTO{
 
     private String email;
     private String givenName;
@@ -44,7 +44,7 @@ public class ArtistProfileDTO extends ArtistDTO{
     /**
      * @generated
      */
-    public ArtistProfileDTO() {
+    public ArtistProfileDetailDTO() {
         super();
     }
 
@@ -54,7 +54,7 @@ public class ArtistProfileDTO extends ArtistDTO{
      * @param entity Entidad ArtistEntity desde la cual se va a crear el nuevo objeto.
      * @generated
      */
-    public ArtistProfileDTO(ArtistEntity entity) {
+    public ArtistProfileDetailDTO(ArtistEntity entity) {
         super(entity);
         
     }
