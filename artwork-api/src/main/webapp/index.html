@@ -139,7 +139,9 @@ SOFTWARE.
                             <div class="shop-menu pull-right">
                                 <ul ng-controller="roleCtrl" class="nav navbar-nav">
                                     <li ng-if="client"><a ui-sref="clientList">Client</a></li>
+                                    <li ng-if="profile"><a ui-sref="clientList"><span class="glyphicon glyphicon-user"></span>Your Profile</a></li>
                                     <li ng-if="artist"><a ui-sref="artistList">Artist</a></li>
+                                    <li ng-if="profileArtist"><a ui-sref="artistList"><span class="glyphicon glyphicon-user"></span>Your Profile</a></li>
                                     <li ng-if="product"><a ui-sref="productList">Product</a></li>
                                     <li ng-if="category"><a ui-sref="categoryList">Category</a></li>
                                     <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
