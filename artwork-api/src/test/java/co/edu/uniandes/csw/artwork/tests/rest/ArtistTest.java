@@ -23,6 +23,7 @@ SOFTWARE.
 */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
+import co.edu.uniandes.csw.artwork.dtos.detail.ArtistProfileDetailDTO;
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
@@ -212,9 +213,9 @@ public class ArtistTest {
     public void getArtistByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
-        ArtistDTO artistTest = target
+        ArtistProfileDetailDTO artistTest = target
             .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(ArtistDTO.class);
+            .request().cookie(cookieSessionId).get(ArtistProfileDetailDTO.class);
         
         Assert.assertEquals(artistTest.getId(), oraculo.get(0).getId());
         Assert.assertEquals(artistTest.getName(), oraculo.get(0).getName());
@@ -246,7 +247,7 @@ public class ArtistTest {
     @Test
     public void updateArtistTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
-        ArtistDTO artist = new ArtistDTO(oraculo.get(0));
+        ArtistProfileDetailDTO artist = new ArtistProfileDetailDTO(oraculo.get(0));
 
         ArtistDTO artistChanged = factory.manufacturePojo(ArtistDTO.class);
 

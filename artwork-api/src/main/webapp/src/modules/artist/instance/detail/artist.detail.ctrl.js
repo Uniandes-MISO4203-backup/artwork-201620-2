@@ -69,6 +69,19 @@ SOFTWARE.
                     icon: 'th-list',
                     fn: function () {
                         $state.go('artistList');
+                    },
+                    show: function () {
+                        return (roles.indexOf("admin") !== -1);
+                    }
+                },
+                back: {
+                    displayName: 'Go Back',
+                    icon: 'arrow-left',
+                    fn: function () {
+                        $state.go('artistList');
+                    },
+                    show: function () {
+                        return (roles.indexOf("artist") !== -1);
                     }
                 },
                 artworks: {

@@ -13,24 +13,31 @@
                         $rootScope.message = false;
                         $rootScope.item = false;
                         $rootScope.authenticated = false;
+                        $rootScope.profile = false;
+                        $rootScope.profileArtist = false;
                     } else {
                         $rootScope.authenticated = true;
                         var roles = $rootScope.roles = response.roles;
                         if (roles.indexOf("client") !== -1) {
                             $rootScope.category = false;
                             $rootScope.artist = false;
-                            $rootScope.client = true;
+                            $rootScope.client = false;
+                            $rootScope.profile = true;
                             $rootScope.product = false;
                             $rootScope.nationality = false;
                             $rootScope.message = true;
                             $rootScope.item = true;
+                            $rootScope.profileArtist = false;
+                            
                         }
                         if (roles.indexOf("artist") !== -1) {
                             $rootScope.category = false;
-                            $rootScope.artist = true;
+                            $rootScope.artist = false;
                             $rootScope.client = false;
                             $rootScope.product = false;
                             $rootScope.nationality = false;
+                            $rootScope.profile = false;
+                            $rootScope.profileArtist = true;
                         }
                         if (roles.indexOf("admin") !== -1) {
                             $rootScope.category = true;
@@ -39,6 +46,8 @@
                             $rootScope.product = true;
                             $rootScope.nationality = true;
                             $rootScope.message = true;
+                            $rootScope.profile = false;
+                            $rootScope.profileArtist = false;
                         }
                     }
                 });

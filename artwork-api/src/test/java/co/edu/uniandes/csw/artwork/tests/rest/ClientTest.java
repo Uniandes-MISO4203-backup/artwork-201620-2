@@ -23,6 +23,7 @@ SOFTWARE.
 */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
+import co.edu.uniandes.csw.artwork.dtos.detail.ClientProfileDetailDTO;
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
@@ -212,9 +213,9 @@ public class ClientTest {
     public void getClientByIdTest() {
         Cookie cookieSessionId = login(username, password);
 
-        ClientDTO clientTest = target
+        ClientProfileDetailDTO clientTest = target
             .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(ClientDTO.class);
+            .request().cookie(cookieSessionId).get(ClientProfileDetailDTO.class);
         
         Assert.assertEquals(clientTest.getId(), oraculo.get(0).getId());
         Assert.assertEquals(clientTest.getName(), oraculo.get(0).getName());
@@ -246,7 +247,7 @@ public class ClientTest {
     @Test
     public void updateClientTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
-        ClientDTO client = new ClientDTO(oraculo.get(0));
+        ClientProfileDetailDTO client = new ClientProfileDetailDTO(oraculo.get(0));
 
         ClientDTO clientChanged = factory.manufacturePojo(ClientDTO.class);
 
