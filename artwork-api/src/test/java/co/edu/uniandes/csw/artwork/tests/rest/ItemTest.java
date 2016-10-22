@@ -23,11 +23,13 @@ SOFTWARE.
 */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
+import co.edu.uniandes.csw.artwork.dtos.detail.ItemDetailDTO;
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
 import co.edu.uniandes.csw.artwork.entities.ItemEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.dtos.minimum.ItemDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.MessageDTO;
 import co.edu.uniandes.csw.artwork.resources.ItemResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
@@ -39,6 +41,7 @@ import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -126,9 +129,9 @@ public class ItemTest {
      * @generated
      */
     public void insertData() {
-        fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
-        fatherClientEntity.setId(99999L);
-        em.persist(fatherClientEntity);
+
+        em.createNativeQuery("INSERT INTO ClientEntity (ID, NAME, AGE) VALUES(99999, 'Test User', 35)").executeUpdate();
+        fatherClientEntity = em.getReference(ClientEntity.class, 99999L);
 
         for (int i = 0; i < 3; i++) {            
             ItemEntity item = factory.manufacturePojo(ItemEntity.class);
@@ -151,6 +154,7 @@ public class ItemTest {
             clearData();
             insertData();
             utx.commit();
+            
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -191,7 +195,7 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void createMessageTest() throws IOException {
+    public void createItemTest() throws IOException {
         ItemDTO item = factory.manufacturePojo(ItemDTO.class);
         Cookie cookieSessionId = login(username, password);
 
@@ -217,6 +221,18 @@ public class ItemTest {
      *
      * @generated
      */
+    @Test
+    public void getItemByIdTest() {
+        Cookie cookieSessionId = login(username, password);
+
+        ItemDetailDTO itemTest = target
+            .path(oraculo.get(0).getId().toString())
+            .request().cookie(cookieSessionId).get(ItemDetailDTO.class);
+        
+        Assert.assertEquals(itemTest.getId(), oraculo.get(0).getId());
+        Assert.assertEquals(itemTest.getName(), oraculo.get(0).getName());
+        Assert.assertEquals(itemTest.getQty(), oraculo.get(0).getQty());
+    }   
 
     
     /**
@@ -225,7 +241,7 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void updateMessageTest() throws IOException {
+    public void updateItemTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
         ItemDTO item = new ItemDTO(oraculo.get(0));
 
@@ -253,7 +269,7 @@ public class ItemTest {
      * @generated
      */
     @Test
-    public void deleteMessageTest() {
+    public void deleteItemTest() {
         Cookie cookieSessionId = login(username, password);
         ItemDTO item = new ItemDTO(oraculo.get(0));
         Response response = target

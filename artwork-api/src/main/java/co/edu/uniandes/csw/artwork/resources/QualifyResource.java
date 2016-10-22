@@ -67,20 +67,6 @@ public class QualifyResource {
         //Constructor vacio
     }
     
-     public static QualifyDetailDTO basicEntity2DTO(QualifyEntity entity) {
-         if (entity != null) {
-            QualifyDetailDTO dto = new QualifyDetailDTO();
-            dto.setId(entity.getId());
-            dto.setName(entity.getName());
-            dto.setArtwork(new ArtworkDTO(entity.getArtwork()));
-            dto.setScore(entity.getScore());
-            dto.setMessage(entity.getMessage());
-            return dto;
-        } else {
-            return null;
-        }
-    }
-
       public static QualifyEntity basicDTO2Entity(QualifyDetailDTO dto) {
         if (dto != null) {
             QualifyEntity entity = new QualifyEntity();
@@ -104,15 +90,6 @@ public class QualifyResource {
         return dtos;
     }
 
-    public static List<QualifyEntity> listDTO2Entity(List<QualifyDetailDTO> dtos) {
-        List<QualifyEntity> entities = new ArrayList<>();
-        if (dtos != null) {
-            for (QualifyDetailDTO dto : dtos) {
-                entities.add(basicDTO2Entity(dto));
-            }
-        }
-        return entities;
-    }
     /**
      * Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.QualifyResource
      * @param artworksId
@@ -143,13 +120,13 @@ public class QualifyResource {
     @Path("{artworksId: \\d+}/score")
     public String getScore(@PathParam("artworksId") Long artworksId) {
         
-        Long fullScore=0l;
+        Long fullScore = 0L;
         List<QualifyDetailDTO> scores = getQualifys(artworksId);
         
         for (QualifyDetailDTO qualify : scores) {
             fullScore+=qualify.getScore();
         }
-        if(fullScore != 0l){
+        if(fullScore != 0L){
             fullScore = fullScore/scores.size();
         }
         return fullScore.toString();

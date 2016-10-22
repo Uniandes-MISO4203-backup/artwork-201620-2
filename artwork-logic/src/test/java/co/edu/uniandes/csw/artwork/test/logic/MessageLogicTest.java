@@ -14,6 +14,8 @@ import co.edu.uniandes.csw.artwork.entities.MessageEntity;
 import co.edu.uniandes.csw.artwork.persistence.MessagePersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +39,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class MessageLogicTest {
     
     ClientEntity fatherEntity;
+    Long notExistId = 999L;
 
     private PodamFactory factory = new PodamFactoryImpl();
     
@@ -94,6 +97,7 @@ public class MessageLogicTest {
         fatherEntity = factory.manufacturePojo(ClientEntity.class);
         fatherEntity.setId(1L);
         em.persist(fatherEntity);
+        /// ThreadLocalRandom.current().nextLong(m, n);
         
         for (int i = 0; i < 3; i++) {
             MessageEntity entity = factory.manufacturePojo(MessageEntity.class);
@@ -101,6 +105,10 @@ public class MessageLogicTest {
 
             em.persist(entity);
             data.add(entity);
+            
+            while (Objects.equals(entity.getId(), notExistId)) {
+                notExistId = ThreadLocalRandom.current().nextLong();
+            }
         }        
     }
 
@@ -218,6 +226,17 @@ public class MessageLogicTest {
         Assert.assertEquals(resultEntity.getSubject(), entity.getSubject());
         Assert.assertEquals(resultEntity.getBody(), entity.getBody());  
     }    
+    
+    /**
+     * Prueba para consultar un Item
+     *
+     * @generated
+     */
+    @Test()
+    public void getMessageDoesNotExistTest() {
+        MessageEntity resultEntity = messageLogic.getMessage(notExistId);
+        Assert.assertNull(resultEntity);
+    }       
     
     /**
      * Prueba para eliminar un Item
