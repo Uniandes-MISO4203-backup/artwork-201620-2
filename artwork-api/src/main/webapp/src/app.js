@@ -36,7 +36,6 @@ SOFTWARE.
         'roleModule',
         'nationalityModule',
         'creditCardModule',
-        'commentModule',
         'messageModule',
         'artistLikeModule',
         'qualifyModule',
