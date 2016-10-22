@@ -96,8 +96,8 @@ SOFTWARE.
             auth.setRoles({
                 'client': [{
                         id: 'client',
-                        label: 'Client',
-                        icon: 'list-alt',
+                        label: 'Your Profile',
+                        icon: 'user',
                         state: 'clientList'
                     },{
                         id: 'message',
@@ -107,8 +107,8 @@ SOFTWARE.
                     }],
                 'artist': [{
                         id: 'artist',
-                        label: 'Artist',
-                        icon: 'list-alt',
+                        label: 'Your Profile',
+                        icon: 'user',
                         state: 'artistList'
                     }],
                 'admin': [{
