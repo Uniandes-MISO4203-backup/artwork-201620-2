@@ -10,7 +10,6 @@
                 artwork:$scope.artwork
             };
             Restangular.all('wishList').post(item).then(function(data) { 
-                console.log(data);
                 $scope.added=true;
             });
         };

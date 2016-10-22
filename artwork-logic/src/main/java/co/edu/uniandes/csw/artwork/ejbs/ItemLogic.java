@@ -50,6 +50,7 @@ public class ItemLogic implements IItemLogic {
      * @return Número de registros de Item.
      * @generated
      */
+    @Override
     public int countItems() {
         return persistence.count();
     }
@@ -110,8 +111,8 @@ public class ItemLogic implements IItemLogic {
     public ItemEntity createItem(Long clientid, ItemEntity entity) {
         ClientEntity client = clientLogic.getClient(clientid);
         entity.setClient(client);
-        entity = persistence.create(entity);
-        return entity;
+        ItemEntity response = persistence.create(entity);
+        return response;
     }
 
     /**

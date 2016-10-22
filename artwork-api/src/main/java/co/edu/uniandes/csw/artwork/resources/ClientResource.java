@@ -96,23 +96,23 @@ public class ClientResource {
         if (accountHref != null) {
             Account account = Utils.getClient().getResource(accountHref, Account.class);
             for (Group gr : account.getGroups()) {
-                switch (gr.getHref()) {
-                    case ADMIN_HREF:
-                        if (page != null && maxRecords != null) {
-                            this.response.setIntHeader("X-Total-Count", clientLogic.countClients());
-                            return listEntity2DTO(clientLogic.getClients(page, maxRecords));
-                        }
-                        return listEntity2DTO(clientLogic.getClients());
-                    case CLIENT_HREF:
-                        Integer id = (int) account.getCustomData().get("client_id");
-                        List<ClientDetailDTO> list = new ArrayList();
-                        list.add(new ClientDetailDTO(clientLogic.getClient(id.longValue())));
-                        return list;
+                if (gr.getHref().equals(ADMIN_HREF)) {
+                    if (page != null && maxRecords != null) {
+                        this.response.setIntHeader("X-Total-Count", clientLogic.countClients());
+                        return listEntity2DTO(clientLogic.getClients(page, maxRecords));
+                    }
+                    return listEntity2DTO(clientLogic.getClients());
+                } 
+                else if (gr.getHref().equals(CLIENT_HREF)) {
+                    Integer id = (int) account.getCustomData().get("client_id");
+                    List<ClientDetailDTO> list = new ArrayList();
+                    list.add(new ClientDetailDTO(clientLogic.getClient(id.longValue())));
+                    return list;
                 }
             }
         } 
-        return null;
-        
+        List<ClientDetailDTO> emptyResponse = new ArrayList<>();
+        return emptyResponse;
     }
 
     /**

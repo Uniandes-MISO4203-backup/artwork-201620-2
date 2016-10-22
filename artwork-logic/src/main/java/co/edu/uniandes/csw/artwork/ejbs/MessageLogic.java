@@ -71,8 +71,8 @@ public class MessageLogic implements IMessageLogic{
     public MessageEntity createMessage(Long clientid, MessageEntity entity) {
         ClientEntity client = clientLogic.getClient(clientid);
         entity.setClient(client);
-        entity = persistence.create(entity);
-        return entity;
+        MessageEntity response = persistence.create(entity);
+        return response;
     }      
     
     @Override

@@ -92,8 +92,8 @@ public class ArtistEntity extends BaseEntity implements Serializable {
         return score;
     }
 
-    public void setScore(Long Score) {
-        this.score = Score;
+    public void setScore(Long score) {
+        this.score = score;
     }
 
     public List<ArtistLikeEntity> getLikes() {

@@ -1,60 +1,58 @@
-@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
-
-.detailBox {
+.detailbox {
     width:320px;
     border:1px solid #bbb;
     margin:50px;
 }
-.titleBox {
+.titlebox {
     background-color:#fdfdfd;
     padding:10px;
 }
-.titleBox label{
+.titlebox label{
   color:#444;
   margin:0;
   display:inline-block;
 }
 
-.commentBox {
+.commentbox {
     padding:10px;
     border-top:1px dotted #bbb;
 }
-.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+.commentbox .form-group:first-child, .actionbox .form-group:first-child {
     width:80%;
 }
-.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+.commentbox .form-group:nth-child(2), .actionbox .form-group:nth-child(2) {
     width:18%;
 }
-.actionBox .form-group * {
+.actionbox .form-group * {
     width:100%;
 }
-.taskDescription {
+.taskdescription {
     margin-top:10px;
 }
-.commentList {
+.commentlist {
     padding:0;
     list-style:none;
     max-height:200px;
     overflow:auto;
 }
-.commentList li {
+.commentlist li {
     margin:0;
     margin-top:10px;
 }
-.commentList li > div {
+.commentlist li > div {
     display:table-cell;
 }
-.commenterImage {
+.commenterimage {
     width:30px;
     margin-right:5px;
     height:100%;
     float:left;
 }
-.commenterImage img {
+.commenterimage img {
     width:100%;
     border-radius:50%;
 }
-.commentText p {
+.commenttext p {
     margin:0;
 }
 .sub-text {
@@ -62,15 +60,15 @@
     font-family:verdana;
     font-size:11px;
 }
-.actionBox {
+.actionbox {
     border-top:1px dotted #bbb;
     padding:10px;
 }
-.actionQualifyBox {
+.actionqualifybox {
     padding-top: 10px;
     border-top:2px dotted #bbb; 
 }
-.actionQualifyBox div{
+.actionqualifybox div{
    padding-bottom: 10px;
 }
 

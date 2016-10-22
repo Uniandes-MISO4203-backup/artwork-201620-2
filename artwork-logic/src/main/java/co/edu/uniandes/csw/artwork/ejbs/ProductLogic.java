@@ -29,7 +29,6 @@ import co.edu.uniandes.csw.artwork.persistence.ProductPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 /**
  * @generated
@@ -46,6 +45,7 @@ public class ProductLogic implements IProductLogic {
      * @return Número de registros de Product.
      * @generated
      */
+    @Override
     public int countProducts() {
         return persistence.count();
     }
@@ -81,6 +81,7 @@ public class ProductLogic implements IProductLogic {
      * @return Instancia de ProductEntity con los datos del Product consultado.
      * @generated
      */
+    @Override
     public ProductEntity getProduct(Long id) {
         return persistence.find(id);
     }

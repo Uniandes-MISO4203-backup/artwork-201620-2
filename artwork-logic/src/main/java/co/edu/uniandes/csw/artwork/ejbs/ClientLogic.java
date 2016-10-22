@@ -29,7 +29,6 @@ import co.edu.uniandes.csw.artwork.persistence.ClientPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 /**
  * @generated
@@ -46,6 +45,7 @@ public class ClientLogic implements IClientLogic {
      * @return Número de registros de Client.
      * @generated
      */
+    @Override
     public int countClients() {
         return persistence.count();
     }
@@ -81,6 +81,7 @@ public class ClientLogic implements IClientLogic {
      * @return Instancia de ClientEntity con los datos del Client consultado.
      * @generated
      */
+    @Override
     public ClientEntity getClient(Long id) {
         return persistence.find(id);
     }
