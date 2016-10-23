@@ -2,9 +2,11 @@
 
     var mod = ng.module("creditCardModule");
 
-    mod.controller("creditCardDetailCtrl", ['$scope', "$state", "item",
-        function ($scope, $state, item) {
+    mod.controller("creditCardDetailCtrl", ['$scope', "$state", "item", '$rootScope',
+        function ($scope, $state, item, $rootScope) {
             $scope.currentRecord = item;
+            var roles = $rootScope.roles;
+            
             $scope.actions = {
                 create: {
                     displayName: 'Create',
@@ -25,6 +27,9 @@
                     icon: 'minus',
                     fn: function () {
                         $state.go('creditCardDelete');
+                    },
+                    show: function () {
+                        return (roles.indexOf("admin") !== -1);
                     }
                 },
                 refresh: {

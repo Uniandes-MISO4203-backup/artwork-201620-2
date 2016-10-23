@@ -1,6 +1,6 @@
 (function (ng) {
 
-    var mod = ng.module("itemModule");
+    var mod = ng.module("creditCardModule");
 
     mod.controller("creditCardDeleteCtrl", ["$state", "item", function ($state, item) {
             this.confirmDelete = function () {

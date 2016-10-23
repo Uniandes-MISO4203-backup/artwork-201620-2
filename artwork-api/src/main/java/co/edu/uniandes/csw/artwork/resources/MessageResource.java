@@ -63,32 +63,24 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<MessageDTO> getMessages() {
         String accountHref = req.getRemoteUser();
-        if (accountHref == null) {
-            return new ArrayList<>();
-        }
-        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
+        
         for (Group gr : account.getGroups()) {
-            switch (gr.getHref()) {
-                case ADMIN_HREF:
-                    if (page != null && maxRecords != null) {
-                        this.response.setIntHeader("X-Total-Count", messageLogic.countItems());
-                        return listEntity2DTO(messageLogic.getMessages(page, maxRecords));
-                    }
-                    
-                    return listEntity2DTO(messageLogic.getMessages());
-                    
-                case CLIENT_HREF:
-                    Integer id = (int) account.getCustomData().get(CLIENT_ID);
-                    if (page != null && maxRecords != null) {
-                        this.response.setIntHeader("X-Total-Count", messageLogic.countItems(id.longValue()));
-                        return listEntity2DTO(messageLogic.getMessages(page, maxRecords, id.longValue()));
-                    }
-                    
-                    return listEntity2DTO(messageLogic.getMessages(id.longValue()));
-
-                default:
-                    return new ArrayList<>();
+            
+            Integer id = (int)account.getCustomData().get(CLIENT_ID);
+            boolean paged = CheckPaged();
+            
+            if (gr.getHref().equals(ADMIN_HREF))  {
+                if (paged) {
+                   return listEntity2DTO(messageLogic.getMessages(page, maxRecords));                    
+                }
+                return listEntity2DTO(messageLogic.getMessages());                
+            }
+            else {
+                if (paged) {
+                    return listEntity2DTO(messageLogic.getMessages(page, maxRecords, id.longValue()));
+                }
+                return listEntity2DTO(messageLogic.getMessages(id.longValue()));                
             }
         }        
 
@@ -101,10 +93,6 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public MessageDTO createMessage(MessageDTO dto) {
         String accountHref = req.getRemoteUser();
-        if (accountHref == null) {
-            return null;
-        }        
-       
         Account account = Utils.getClient().getResource(accountHref, Account.class);
         Integer id = (int) account.getCustomData().get(CLIENT_ID);
         
@@ -116,25 +104,18 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)    
     public MessageDTO getMessage(@PathParam("messageId") Long itemId) {
         String accountHref = req.getRemoteUser();
-        if (accountHref == null) {
-            throw new WebApplicationException(404);
-        }        
-       
         MessageEntity entity = messageLogic.getMessage(itemId);        
         Account account = Utils.getClient().getResource(accountHref, Account.class);
         for (Group gr : account.getGroups()) {
-            switch (gr.getHref()) {
-                case ADMIN_HREF:
-                    return new MessageDTO(entity);
-                    
-                case CLIENT_HREF:
-                    Long clientId = new Long((int) account.getCustomData().get(CLIENT_ID));
-                    if (entity.getClient() != null && !clientId.equals(entity.getClient().getId())) {
-                        throw new WebApplicationException(404);
-                    }                   
-                    
-                    return new MessageDTO(entity);                    
+            Long clientId = new Long((int) account.getCustomData().get(CLIENT_ID));            
+            
+            if (gr.getHref().equals(CLIENT_HREF)) {
+                if (entity.getClient() != null && !clientId.equals(entity.getClient().getId())) {
+                    throw new WebApplicationException(404);
+                }                    
             }
+            
+            return new MessageDTO(entity);
         }
 
         throw new WebApplicationException(404);
@@ -142,13 +123,8 @@ public class MessageResource {
     
     @PUT
     @Path("{id: \\d+}")
-    public MessageDTO updateClient(@PathParam("id") Long id, MessageDTO dto) {
-
+    public MessageDTO updateMessage(@PathParam("id") Long id, MessageDTO dto) {
         String accountHref = req.getRemoteUser();
-        if (accountHref == null) {
-            throw new WebApplicationException(404);
-        }        
-       
         Account account = Utils.getClient().getResource(accountHref, Account.class);
         Long clientId = new Long(((int) account.getCustomData().get(CLIENT_ID)));
         
@@ -160,7 +136,17 @@ public class MessageResource {
     
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteClient(@PathParam("id") Long id) {
+    public void deleteMessage(@PathParam("id") Long id) {
         messageLogic.deleteMessage(id);
+    }
+    
+    
+    private boolean CheckPaged() {
+        if (page != null && maxRecords != null) {
+            this.response.setIntHeader("X-Total-Count", messageLogic.countItems());
+            return true;
+        }        
+
+        return false;
     }
 }

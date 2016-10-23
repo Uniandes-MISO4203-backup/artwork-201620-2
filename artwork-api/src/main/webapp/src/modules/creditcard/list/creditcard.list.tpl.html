@@ -12,7 +12,7 @@
                         <td class="description">Type</td>
                         <td class="description">Expiration Year</td>
                         <td class="description">Expiration Month</td>
-                        <td class="quantity">Actions</td>
+                        <td ng-if="recordActions" class="quantity">Actions</td>
                         <td></td>
                     </tr>
                 </thead>
@@ -31,8 +31,8 @@
                             
                                <h5>{{card.expirationMonth}}</h5>
                         </td>
-                        <td>
-                            <toolbar actions='recordActions'></toolbar>
+                        <td ng-if="recordActions">
+                            <button ng-repeat="(key, action) in recordActions" id="{{$parent.$index}}-{{key}}-btn" ng-class="action.class || 'btn btn-default btn-sm'" ng-hide="action.show && !action.show(card)" ng-click="action.fn(card)"><span class="glyphicon glyphicon-{{action.icon}}"></span> {{action.displayName}}</button>
                         </td>
                     </tr>
                 </tbody>

@@ -26,7 +26,6 @@ package co.edu.uniandes.csw.artwork.test.logic;
 import co.edu.uniandes.csw.artwork.ejbs.ArtworkLogic;
 import co.edu.uniandes.csw.artwork.api.IArtworkLogic;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
-import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.artwork.persistence.ArtworkPersistence;
 import co.edu.uniandes.csw.artwork.entities.CategoryEntity;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
@@ -97,6 +96,11 @@ public class ArtworkLogicTest {
      */
     private List<ArtistEntity> artistData = new ArrayList<>();
 
+    /**
+     * @generated
+     */    
+    Long notExistId = 999L;
+    
     /**
      * @generated
      */
@@ -327,5 +331,88 @@ public class ArtworkLogicTest {
         CategoryEntity response = artworkLogic.getCategory(data.get(0).getId(), categoryData.get(0).getId());
         Assert.assertNull(response);
     }
+    
+    /**
+     * Prueba para countar artworks
+     *
+     * @generated
+     */
+    @Test
+    public void countArtworksTest() {
+        int artworksCount = artworkLogic.countArtworks();
+        Assert.assertEquals(data.size(), artworksCount);
+    }    
+    
+    /**
+     * Prueba para consultar la lista de Artworks
+     *
+     * @generated
+     */
+    @Test
+    public void getArtworksByArtistPagedTest() {
+        List<ArtworkEntity> list = artworkLogic.getArtworks(1, 10, fatherEntity.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (ArtworkEntity entity : list) {
+            boolean found = false;
+            for (ArtworkEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }    
+    
+    /**
+     * Prueba para consultar la lista de Artworks
+     *
+     * @generated
+     */
+    @Test
+    public void getArtworksPagedTest() {
+        List<ArtworkEntity> list = artworkLogic.getArtworks(1, 10, null);
+        Assert.assertEquals(data.size(), list.size());
+        for (ArtworkEntity entity : list) {
+            boolean found = false;
+            for (ArtworkEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }      
+    
+    
+    /**
+     * Prueba para consultar la lista de Artworks
+     *
+     * @generated
+     */
+    @Test
+    public void getArtworksByCategoryTest() {
+        List<ArtworkEntity> list = artworkLogic.getArtworkByCategory(1, 10, categoryData.get(0).getId(), fatherEntity.getName());
+        Assert.assertEquals(data.size(), list.size());
+        for (ArtworkEntity entity : list) {
+            boolean found = false;
+            for (ArtworkEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }      
+    
+    /**
+     * Prueba para consultar un Artwork
+     *
+     * @generated
+     */
+    @Test
+    public void getArtworkDontExistTest() {
+        ArtworkEntity resultEntity = artworkLogic.getArtwork(notExistId);
+        Assert.assertNull(resultEntity);
+    }    
+    
 }
-

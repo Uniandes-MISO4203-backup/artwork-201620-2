@@ -12,7 +12,7 @@
                         <td class="description">Subject</td>
                         <td class="description">Body</td>
                         <td class="description">Sent Date</td>
-                        <td class="quantity">Actions</td>
+                        <td ng-if="recordActions" class="quantity">Actions</td>
                         <td></td>
                     </tr>
                 </thead>
@@ -30,8 +30,8 @@
                         <td class="cart_description">
                                <h5>{{message.sentDate}}</h5>
                         </td>
-                        <td>
-                            <toolbar actions='recordActions'></toolbar>
+                        <td ng-if="recordActions">
+                            <button ng-repeat="(key, action) in recordActions" id="{{$parent.$index}}-{{key}}-btn" ng-class="action.class || 'btn btn-default btn-sm'" ng-hide="action.show && !action.show(message)" ng-click="action.fn(message)"><span class="glyphicon glyphicon-{{action.icon}}"></span> {{action.displayName}}</button>
                         </td>
                     </tr>
                 </tbody>

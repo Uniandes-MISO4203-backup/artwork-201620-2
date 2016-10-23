@@ -2,7 +2,7 @@
     var mod = ng.module("messageModule");
     
     mod.controller("messageListCtrl", ["$scope", '$state', 'messages', '$stateParams','$rootScope',
-        function ($scope, $state, messages, $params,$rootScope) {
+        function ($scope, $state, messages, $params, $rootScope) {
             $scope.records = messages;
             var roles = $rootScope.roles;
 

@@ -2,9 +2,10 @@
 
     var mod = ng.module("creditCardModule");
 
-    mod.controller("creditCardListCtrl", ["$scope", '$state', 'items', '$stateParams',
-        function ($scope, $state, items, $params) {
+    mod.controller("creditCardListCtrl", ["$scope", '$state', 'items', '$stateParams','$rootScope',
+        function ($scope, $state, items, $params, $rootScope) {
             $scope.records = items;
+            var roles = $rootScope.roles;            
 
             //Paginación
             this.itemsPerPage = $params.limit;
@@ -67,7 +68,7 @@
                         $state.go('creditCardDelete', {creditCardId: rc.id});
                     },
                     show: function () {
-                        return true;
+                        return (roles.indexOf("admin") !== -1);
                     }
                 }
             };
