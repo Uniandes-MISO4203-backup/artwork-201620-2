@@ -231,6 +231,27 @@ public class MessageTest {
         Assert.assertEquals(oraculo.size(), listItemTest.size());
     }        
     
+    /**
+     * Prueba para consultar un Item
+     *
+     * @generated
+     */
+    @Test
+    public void getMessagesPagedTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+
+        Response response = target
+                .queryParam("page", "1")                
+                .queryParam("maxRecords", "10")
+                .request()
+                .cookie(cookieSessionId).get();
+
+        String listItem = response.readEntity(String.class);
+        List<MessageDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
+        
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(oraculo.size(), listItemTest.size());
+    }        
     
     /**
      * Prueba para actualizar un Item

@@ -45,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a#scrollUp {
-    bottom: 0px;
+    bottom: 0;
     right: 10px;
     padding: 5px 10px;
     background: #FE980F;
@@ -87,7 +87,7 @@ a#scrollUp i{
     border: 0 none;
     border-radius: 0;
     color: #696763;
-    padding:0px;
+    padding:0;
 }
 
 
@@ -231,7 +231,7 @@ a#scrollUp i{
 }
 
 .mainmenu ul li:first-child{
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 .mainmenu ul li a {
@@ -431,7 +431,7 @@ ul.sub-menu {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     font-weight: 500;
-    margin-bottom:0px;
+    margin-bottom:0;
 }
 
 .video-gallery  h2 {
@@ -440,7 +440,7 @@ ul.sub-menu {
     font-size: 12px;
     font-weight: 300;
     text-transform:uppercase;
-    margin-top:0px;
+    margin-top:0;
 }
 
 
@@ -706,10 +706,10 @@ h2.title:before{
 
 .category-products .panel {
     background-color: #FFFFFF;
-    border: 0px;
-    border-radius: 0px;
+    border: 0;
+    border-radius: 0;
     box-shadow:none;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .category-products .panel-default .panel-heading {
@@ -1023,7 +1023,7 @@ h2.title {
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
     background-color: #FE980F;
-    border:0px;
+    border:0;
     color: #FFFFFF;
     cursor: default;
     margin-right:0;
@@ -1188,7 +1188,7 @@ h2.title {
 }
 
 #similar-product .carousel-inner .item{
-    padding-left:0px;
+    padding-left:0;
 }
 
 #similar-product .carousel-inner .item img {
@@ -1252,7 +1252,7 @@ h2.title {
     font-size: 30px;
     font-weight: 700;
     margin-right: 20px;
-    margin-top: 0px;
+    margin-top: 0;
 }
 .product-information span input {
     border: 1px solid #DEDEDC;
@@ -2518,7 +2518,7 @@ h2.title {
 
 .panel-header{
     width:100%; 
-    padding-bottom:0px;
+    padding-bottom:0;
     height: 100%;
     background: url("../img/banner_header.jpg") no-repeat center center;;
     margin-right: 0;

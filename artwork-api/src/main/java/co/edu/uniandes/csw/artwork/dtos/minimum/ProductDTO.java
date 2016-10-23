@@ -83,16 +83,6 @@ public class ProductDTO implements Serializable{
     }
 
     /**
-     * Establece el valor del atributo id.
-     *
-     * @param id nuevo valor del atributo
-     * @generated
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * Obtiene el atributo name.
      *
      * @return atributo name.
@@ -102,6 +92,16 @@ public class ProductDTO implements Serializable{
         return name;
     }
 
+    /**
+     * Establece el valor del atributo id.
+     *
+     * @param id nuevo valor del atributo
+     * @generated
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }    
+    
     /**
      * Establece el valor del atributo name.
      *

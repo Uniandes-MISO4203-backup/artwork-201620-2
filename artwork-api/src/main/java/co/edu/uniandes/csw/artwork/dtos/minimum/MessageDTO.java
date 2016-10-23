@@ -65,10 +65,6 @@ public class MessageDTO {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     public Date getSentDate() {
         return sentDate;
     }
@@ -77,6 +73,10 @@ public class MessageDTO {
         this.sentDate = sentDate;
     }
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+    
     public ClientDTO getClient() {
         return client;
     }

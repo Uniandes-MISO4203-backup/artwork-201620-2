@@ -234,6 +234,25 @@ public class ItemTest {
         Assert.assertEquals(itemTest.getQty(), oraculo.get(0).getQty());
     }   
 
+    /**
+     * Prueba para consultar un Item
+     *
+     * @generated
+     */
+    @Test
+    public void getItemsTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+
+        Response response = target
+            .request().cookie(cookieSessionId).get();
+
+        String listItem = response.readEntity(String.class);
+        List<ItemDetailDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
+        
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(oraculo.size(), listItemTest.size());
+    }        
+    
     
     /**
      * Prueba para actualizar un Item

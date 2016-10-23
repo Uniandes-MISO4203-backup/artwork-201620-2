@@ -254,6 +254,27 @@ public class ArtworkTest {
     }
 
     /**
+     * Prueba para consultar la lista de Artworks por paginas
+     *
+     * @generated
+     */
+    @Test
+    public void listArtworkPagedTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+
+        Response response = target
+            .queryParam("page", "1")                
+            .queryParam("maxRecords", "10")                
+            .request().cookie(cookieSessionId).get();
+
+        String listArtwork = response.readEntity(String.class);
+        List<ArtworkDTO> listArtworkTest = new ObjectMapper().readValue(listArtwork, List.class);
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(3, listArtworkTest.size());
+    }    
+    
+    
+    /**
      * Prueba para actualizar un Artwork
      *
      * @generated

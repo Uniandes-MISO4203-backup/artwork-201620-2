@@ -12,6 +12,8 @@ import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
 import co.edu.uniandes.csw.artwork.persistence.CreditCardPersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,6 +37,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class CreditCardLogicTest {
 
     ClientEntity fatherEntity;
+    Long notExistId = 999L;
 
     private PodamFactory factory = new PodamFactoryImpl();
     
@@ -98,6 +101,10 @@ public class CreditCardLogicTest {
 
             em.persist(entity);
             data.add(entity);
+            
+            while (Objects.equals(entity.getId(), notExistId)) {
+                notExistId = ThreadLocalRandom.current().nextLong();
+            }            
         }           
     }
     
@@ -226,4 +233,15 @@ public class CreditCardLogicTest {
         int countRecords = creditCardLogic.countItems();
         Assert.assertEquals(countRecords, data.size());
     }         
+    
+    /**
+     * Prueba para consultar un Item
+     *
+     * @generated
+     */
+    @Test()
+    public void getCreditCardDoesNotExistTest() {
+        CreditCardEntity resultEntity = creditCardLogic.getItem(notExistId);
+        Assert.assertNull(resultEntity);
+    }       
 }
