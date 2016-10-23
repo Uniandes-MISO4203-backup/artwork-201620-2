@@ -124,10 +124,12 @@ public class NationalityTest {
      */
     public void insertData() {
         for (int i = 0; i < 3; i++) {            
-            NationalityEntity artist = factory.manufacturePojo(NationalityEntity.class);
-            artist.setId(i + 1L);
-            em.persist(artist);
-            oraculo.add(artist);
+            NationalityEntity nationality = factory.manufacturePojo(NationalityEntity.class);
+            nationality.setId(i + 1L);
+            nationality.setName("Colombiana");
+            nationality.setName("Colombia");
+            em.persist(nationality);
+            oraculo.add(nationality);
         }
     }
 

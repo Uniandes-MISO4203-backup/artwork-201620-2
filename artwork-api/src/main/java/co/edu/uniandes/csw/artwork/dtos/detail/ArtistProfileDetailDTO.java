@@ -69,8 +69,15 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
      */
     @Override
     public ArtistEntity toEntity() {
-        ArtistEntity entity = super.toEntity();
-        return entity;
+        return super.toEntity();
+    }
+
+    
+    /**
+     * @return the surName
+     */
+    public String getSurName() {
+        return surName;
     }
 
      /**
@@ -94,34 +101,14 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
         return givenName;
     }
 
-    /**
-     * @param givenName the givenName to set
-     */
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-    /**
-     * @return the middleName
-     */
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    /**
+       /**
      * @param middleName the middleName to set
      */
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 
-    /**
-     * @return the surName
-     */
-    public String getSurName() {
-        return surName;
-    }
-
+   
     /**
      * @return the status
      */
@@ -157,6 +144,20 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+     /**
+     * @param givenName the givenName to set
+     */
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
+    /**
+     * @return the middleName
+     */
+    public String getMiddleName() {
+        return middleName;
     }
     
     /**

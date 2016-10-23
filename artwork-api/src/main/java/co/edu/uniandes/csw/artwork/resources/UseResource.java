@@ -14,7 +14,6 @@ import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.sdk.resource.ResourceException;
-import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 
