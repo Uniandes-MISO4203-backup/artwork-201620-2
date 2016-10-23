@@ -33,13 +33,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ArtistProfileDetailDTO extends ArtistDTO{
 
-    private String email;
-    private String givenName;
-    private String middleName ;
     private String surName;
     private String userName;
     private String role;
-    private String status; 
+    private String status;
+    private String middleName;
+    private String email;
+    private String givenName;
+    
+
 
     /**
      * @generated
@@ -71,20 +73,20 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
         return entity;
     }
 
-    /**
-     * @return the email
+     /**
+     * @param surName the surName to set
      */
-    public String getEmail() {
-        return email;
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
     /**
-     * @param email the email to set
+     * @return the userName
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public String getUserName() {
+        return userName;
     }
-
+    
     /**
      * @return the givenName
      */
@@ -121,18 +123,20 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
     }
 
     /**
-     * @param surName the surName to set
+     * @return the status
      */
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public String getStatus() {
+        return status;
     }
 
     /**
-     * @return the userName
+     * @param status the status to set
      */
-    public String getUserName() {
-        return userName;
+    public void setStatus(String status) {
+        this.status = status;
     }
+    
+   
 
     /**
      * @param userName the userName to set
@@ -141,6 +145,20 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
         this.userName = userName;
     }
 
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     /**
      * @return the role
      */
@@ -155,18 +173,6 @@ public class ArtistProfileDetailDTO extends ArtistDTO{
         this.role = role;
     }
 
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
 
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 }

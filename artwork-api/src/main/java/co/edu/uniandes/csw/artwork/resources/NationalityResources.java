@@ -42,36 +42,11 @@ public class NationalityResources {
     private Integer page;
     @QueryParam("maxRecords")
     private Integer maxRecords;
-
     /**
-     *
+     * 
      * @param entity
-     * @return
+     * @return 
      */
-    public static NationalityDTO refEntity2DTO(NationalityEntity entity) {
-        if (entity != null) {
-            NationalityDTO dto = new NationalityDTO();
-            dto.setId(entity.getId());
-            dto.setName(entity.getName());
-            dto.setDescription(entity.getDescription());
-
-            return dto;
-        } else {
-            return null;
-        }
-    }
-
-    public static NationalityEntity refDTO2Entity(NationalityDTO dto) {
-        if (dto != null) {
-            NationalityEntity entity = new NationalityEntity();
-            entity.setId(dto.getId());
-
-            return entity;
-        } else {
-            return null;
-        }
-    }
-
     public static NationalityDTO basicEntity2DTO(NationalityEntity entity) {
         if (entity != null) {
             NationalityDTO dto = new NationalityDTO();
@@ -84,7 +59,11 @@ public class NationalityResources {
             return null;
         }
     }
-
+    /**
+     * 
+     * @param dto
+     * @return 
+     */
     public static NationalityEntity basicDTO2Entity(NationalityDTO dto) {
         if (dto != null) {
             NationalityEntity entity = new NationalityEntity();
@@ -97,7 +76,11 @@ public class NationalityResources {
             return null;
         }
     }
-
+    /**
+     * 
+     * @param entity
+     * @return 
+     */
     public static NationalityDTO fullEntity2DTO(NationalityEntity entity) {
         if (entity != null) {
             NationalityDTO dto = basicEntity2DTO(entity);
@@ -106,7 +89,11 @@ public class NationalityResources {
             return null;
         }
     }
-
+    /**
+     * 
+     * @param dto
+     * @return 
+     */
     public static NationalityEntity fullDTO2Entity(NationalityDTO dto) {
         if (dto != null) {
             NationalityEntity entity = basicDTO2Entity(dto);
@@ -115,7 +102,11 @@ public class NationalityResources {
             return null;
         }
     }
-
+    /**
+     * 
+     * @param entities
+     * @return 
+     */
     public static List<NationalityDTO> listEntity2DTO(List<NationalityEntity> entities) {
         List<NationalityDTO> dtos = new ArrayList<>();
         if (entities != null) {
@@ -125,17 +116,10 @@ public class NationalityResources {
         }
         return dtos;
     }
-
-    public static List<NationalityEntity> listDTO2Entity(List<NationalityDTO> dtos) {
-        List<NationalityEntity> entities = new ArrayList<>();
-        if (dtos != null) {
-            for (NationalityDTO dto : dtos) {
-                entities.add(basicDTO2Entity(dto));
-            }
-        }
-        return entities;
-    }
-
+    /**
+     * 
+     * @return 
+     */
     @GET
     public List<NationalityDTO> getNationalitys() {
         if (page != null && maxRecords != null) {
@@ -144,20 +128,33 @@ public class NationalityResources {
         }
         return listEntity2DTO(nationalityLogic.getNationalitys());
     }
-
+    /**
+     * 
+     * @param id
+     * @return 
+     */
     @GET
     @Path("{id: \\d+}")
     public NationalityDTO getNationality(@PathParam("id") Long id) {
         return fullEntity2DTO(nationalityLogic.getNationality(id));
     }
-
+    /**
+     * 
+     * @param dto
+     * @return 
+     */
     @POST
     @StatusCreated
     public NationalityDTO createNationality(NationalityDTO dto) {
         NationalityEntity entity = fullDTO2Entity(dto);
         return fullEntity2DTO(nationalityLogic.createNationality(entity));
     }
-
+    /**
+     * 
+     * @param id
+     * @param dto
+     * @return 
+     */
     @PUT
     @Path("{id: \\d+}")
     public NationalityDTO updateNationality(@PathParam("id") Long id, NationalityDTO dto) {
@@ -165,7 +162,11 @@ public class NationalityResources {
         entity.setId(id);
         return fullEntity2DTO(nationalityLogic.updateNationality(entity));
     }
-
+    
+    /**
+     * 
+     * @param id 
+     */
     @DELETE
     @Path("{id: \\d+}")
     public void deleteNationality(@PathParam("id") Long id) {

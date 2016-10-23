@@ -238,6 +238,7 @@ public class ArtistTest {
         Assert.assertEquals(Ok, response.getStatus());
         Assert.assertEquals(3, listArtistTest.size());
     }
+    
 
     /**
      * Prueba para actualizar un Artist

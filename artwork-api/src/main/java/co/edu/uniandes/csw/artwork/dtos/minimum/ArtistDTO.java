@@ -58,7 +58,7 @@ public class ArtistDTO implements Serializable{
 	   if (entity!=null){
         this.id=entity.getId();
         this.name=entity.getName();
-        this.nationality = NationalityResources.refEntity2DTO(entity.getNationality());
+        this.nationality = NationalityResources.basicEntity2DTO(entity.getNationality());
         this.score = entity.getScore();
        }
     }
