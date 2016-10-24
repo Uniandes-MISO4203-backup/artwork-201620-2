@@ -149,4 +149,14 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     public void setQualify(List<QualifyEntity> qualify) {
         this.qualify = qualify;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

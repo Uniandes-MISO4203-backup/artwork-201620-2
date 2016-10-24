@@ -61,5 +61,15 @@ public class MessageEntity extends BaseEntity implements Serializable {
     
     public void setClient(ClientEntity client) {
         this.client = client;
-    }          
+    }         
+    
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

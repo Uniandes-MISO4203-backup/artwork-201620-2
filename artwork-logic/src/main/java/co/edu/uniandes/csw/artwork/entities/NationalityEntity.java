@@ -24,4 +24,14 @@ public class NationalityEntity extends BaseEntity implements Serializable {
     public void setDescription(String description){
         this.description = description;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

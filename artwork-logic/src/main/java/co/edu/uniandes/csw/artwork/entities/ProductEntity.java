@@ -54,4 +54,14 @@ public class ProductEntity extends BaseEntity implements Serializable {
     public void setPrice(Long price){
         this.price = price;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

@@ -58,4 +58,14 @@ public class CategoryEntity extends BaseEntity implements Serializable {
     public void setParentCategory(CategoryEntity parentcategory) {
         this.parentCategory = parentcategory;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
