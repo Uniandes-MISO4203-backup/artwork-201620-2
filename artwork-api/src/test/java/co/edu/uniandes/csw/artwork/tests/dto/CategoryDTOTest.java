@@ -5,9 +5,9 @@
  */
 package co.edu.uniandes.csw.artwork.tests.dto;
 
-import co.edu.uniandes.csw.artwork.dtos.detail.ArtistDetailDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistDTO;
-import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
+import co.edu.uniandes.csw.artwork.dtos.detail.CategoryDetailDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.CategoryDTO;
+import co.edu.uniandes.csw.artwork.entities.CategoryEntity;
 import java.io.File;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,11 +26,10 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 @RunWith(Arquillian.class)
-public class ArtistDTOTest {
-    
+public class CategoryDTOTest {
     PodamFactory factory = new PodamFactoryImpl();
 
-    private static ArtistEntity artistEntity;
+    private static CategoryEntity categoryEntity;
     
     @PersistenceContext(unitName = "ArtworkPU")
     private EntityManager em;
@@ -46,8 +45,8 @@ public class ArtistDTOTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ArtistDetailDTO.class.getPackage())
-                .addPackage(ArtistDTO.class.getPackage())
+                .addPackage(CategoryDetailDTO.class.getPackage())
+                .addPackage(CategoryDTO.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -59,14 +58,14 @@ public class ArtistDTOTest {
     }
     
     private void clearData() {
-        em.createQuery("delete from ArtistEntity").executeUpdate();
-        artistEntity = null;
+        em.createQuery("delete from CategoryEntity").executeUpdate();
+        categoryEntity = null;
     }
     
     public void insertData() {
-        artistEntity = factory.manufacturePojo(ArtistEntity.class);
-        artistEntity.setId(1L);
-        em.persist(artistEntity);
+        categoryEntity = factory.manufacturePojo(CategoryEntity.class);
+        categoryEntity.setId(1L);
+        em.persist(categoryEntity);
     }
     
     @Before
@@ -88,50 +87,29 @@ public class ArtistDTOTest {
     
     @Test
     public void setgetId() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
+        CategoryDTO category = factory.manufacturePojo(CategoryDTO.class);
         
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setId(artist.getId());
+        CategoryDTO newCategory = new CategoryDTO();
+        newCategory.setId(category.getId());
         
-        Assert.assertEquals(artist.getId(), newArtist.getId());
+        Assert.assertEquals(category.getId(), newCategory.getId());
     }
     
     @Test
     public void setgetName() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
+        CategoryDTO category = factory.manufacturePojo(CategoryDTO.class);
         
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setName(artist.getName());
+        CategoryDTO newCategory = new CategoryDTO();
+        newCategory.setName(category.getName());
         
-        Assert.assertEquals(artist.getName(), newArtist.getName());
-    }
-    
-    @Test
-    public void setgetNationality() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
-        
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setNationality(artist.getNationality());
-        
-        Assert.assertEquals(artist.getNationality(), newArtist.getNationality());
-    }
-    
-    @Test
-    public void setgetScore() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
-        
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setScore(artist.getScore());
-        
-        Assert.assertEquals(artist.getScore(), newArtist.getScore());
+        Assert.assertEquals(category.getName(), newCategory.getName());
     }
     
     @Test
     public void entity2DTO() {
-        ArtistDTO artist = new ArtistDTO(artistEntity);
+        CategoryDTO artist = new CategoryDTO(categoryEntity);
         
-        Assert.assertEquals(artist.getName(), artistEntity.getName());
-        Assert.assertEquals(artist.getId(), artistEntity.getId());
-        Assert.assertEquals(artist.getScore(), artistEntity.getScore());
+        Assert.assertEquals(artist.getName(), categoryEntity.getName());
+        Assert.assertEquals(artist.getId(), categoryEntity.getId());
     }
 }

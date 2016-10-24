@@ -5,9 +5,9 @@
  */
 package co.edu.uniandes.csw.artwork.tests.dto;
 
-import co.edu.uniandes.csw.artwork.dtos.detail.ArtistDetailDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ArtistDTO;
-import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
+import co.edu.uniandes.csw.artwork.dtos.detail.ClientDetailDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ClientDTO;
+import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import java.io.File;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,11 +26,10 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 @RunWith(Arquillian.class)
-public class ArtistDTOTest {
-    
+public class ClientDTOTest {
     PodamFactory factory = new PodamFactoryImpl();
 
-    private static ArtistEntity artistEntity;
+    private static ClientEntity clientEntity;
     
     @PersistenceContext(unitName = "ArtworkPU")
     private EntityManager em;
@@ -46,8 +45,8 @@ public class ArtistDTOTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ArtistDetailDTO.class.getPackage())
-                .addPackage(ArtistDTO.class.getPackage())
+                .addPackage(ClientDetailDTO.class.getPackage())
+                .addPackage(ClientDTO.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -59,14 +58,14 @@ public class ArtistDTOTest {
     }
     
     private void clearData() {
-        em.createQuery("delete from ArtistEntity").executeUpdate();
-        artistEntity = null;
+        em.createQuery("delete from CategoryEntity").executeUpdate();
+        clientEntity = null;
     }
     
     public void insertData() {
-        artistEntity = factory.manufacturePojo(ArtistEntity.class);
-        artistEntity.setId(1L);
-        em.persist(artistEntity);
+        clientEntity = factory.manufacturePojo(ClientEntity.class);
+        clientEntity.setId(1L);
+        em.persist(clientEntity);
     }
     
     @Before
@@ -88,50 +87,39 @@ public class ArtistDTOTest {
     
     @Test
     public void setgetId() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
+        ClientDTO client = factory.manufacturePojo(ClientDTO.class);
         
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setId(artist.getId());
+        ClientDTO newClient = new ClientDTO();
+        newClient.setId(client.getId());
         
-        Assert.assertEquals(artist.getId(), newArtist.getId());
+        Assert.assertEquals(client.getId(), newClient.getId());
     }
     
     @Test
     public void setgetName() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
+        ClientDTO client = factory.manufacturePojo(ClientDTO.class);
         
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setName(artist.getName());
+        ClientDTO newClient = new ClientDTO();
+        newClient.setName(client.getName());
         
-        Assert.assertEquals(artist.getName(), newArtist.getName());
+        Assert.assertEquals(client.getName(), newClient.getName());
     }
     
     @Test
-    public void setgetNationality() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
+    public void setgetAge() {
+        ClientDTO client = factory.manufacturePojo(ClientDTO.class);
         
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setNationality(artist.getNationality());
+        ClientDTO newClient = new ClientDTO();
+        newClient.setAge(client.getAge());
         
-        Assert.assertEquals(artist.getNationality(), newArtist.getNationality());
-    }
-    
-    @Test
-    public void setgetScore() {
-        ArtistDTO artist = factory.manufacturePojo(ArtistDTO.class);
-        
-        ArtistDTO newArtist = new ArtistDTO();
-        newArtist.setScore(artist.getScore());
-        
-        Assert.assertEquals(artist.getScore(), newArtist.getScore());
+        Assert.assertEquals(client.getAge(), newClient.getAge());
     }
     
     @Test
     public void entity2DTO() {
-        ArtistDTO artist = new ArtistDTO(artistEntity);
+        ClientDTO artist = new ClientDTO(clientEntity);
         
-        Assert.assertEquals(artist.getName(), artistEntity.getName());
-        Assert.assertEquals(artist.getId(), artistEntity.getId());
-        Assert.assertEquals(artist.getScore(), artistEntity.getScore());
+        Assert.assertEquals(artist.getName(), clientEntity.getName());
+        Assert.assertEquals(artist.getId(), clientEntity.getId());
     }
 }
