@@ -48,7 +48,6 @@ public class CreditCardResource {
     public List<CreditCardDTO> getCreditCards() {
         List<CreditCardEntity> items = creditCardLogic.getItems(clientsId);
         return creditCardEntity2DTO(items);
-        //// return new ArrayList<>();
     }    
    
     @POST

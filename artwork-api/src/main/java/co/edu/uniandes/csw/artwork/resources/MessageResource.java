@@ -68,7 +68,7 @@ public class MessageResource {
         for (Group gr : account.getGroups()) {
             
             Integer id = (int)account.getCustomData().get(CLIENT_ID);
-            boolean paged = CheckPaged();
+            boolean paged = checkPaged();
             
             if (gr.getHref().equals(ADMIN_HREF))  {
                 if (paged) {
@@ -109,10 +109,8 @@ public class MessageResource {
         for (Group gr : account.getGroups()) {
             Long clientId = new Long((int) account.getCustomData().get(CLIENT_ID));            
             
-            if (gr.getHref().equals(CLIENT_HREF)) {
-                if (entity.getClient() != null && !clientId.equals(entity.getClient().getId())) {
-                    throw new WebApplicationException(404);
-                }                    
+            if (gr.getHref().equals(CLIENT_HREF) && entity.getClient() != null && !clientId.equals(entity.getClient().getId())) {
+                throw new WebApplicationException(404);                  
             }
             
             return new MessageDTO(entity);
@@ -126,7 +124,7 @@ public class MessageResource {
     public MessageDTO updateMessage(@PathParam("id") Long id, MessageDTO dto) {
         String accountHref = req.getRemoteUser();
         Account account = Utils.getClient().getResource(accountHref, Account.class);
-        Long clientId = new Long(((int) account.getCustomData().get(CLIENT_ID)));
+        Long clientId = new Long((int) account.getCustomData().get(CLIENT_ID));
         
         MessageEntity entity = dto.toEntity();
         entity.setId(id);
@@ -140,13 +138,11 @@ public class MessageResource {
         messageLogic.deleteMessage(id);
     }
     
-    
-    private boolean CheckPaged() {
+    private boolean checkPaged() {
         if (page != null && maxRecords != null) {
             this.response.setIntHeader("X-Total-Count", messageLogic.countItems());
             return true;
         }        
-
         return false;
     }
 }
