@@ -21,6 +21,9 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class MessagePersistence extends CrudPersistence<MessageEntity>{
+    
+    private static final String CLIENTID="clientid";
+    
     @PersistenceContext(unitName="ArtworkPU")
     protected EntityManager em;
 
@@ -42,13 +45,13 @@ public class MessagePersistence extends CrudPersistence<MessageEntity>{
     
     public int count(Long clientid) {
         Query q = em.createQuery("select count(p) from MessageEntity p where (p.client.id = :clientid)");
-        q.setParameter("clientid", clientid);
+        q.setParameter(CLIENTID, clientid);
         return Integer.parseInt(q.getSingleResult().toString());
     }      
     
     public List<MessageEntity> findAll(Integer page, Integer maxRecords, Long clientid) {
         TypedQuery<MessageEntity> q = em.createQuery("select p from MessageEntity p where (p.client.id = :clientid)", MessageEntity.class);
-        q.setParameter("clientid", clientid);
+        q.setParameter(CLIENTID, clientid);
         if (page != null && maxRecords != null) {
             q.setFirstResult((page - 1) * maxRecords);
             q.setMaxResults(maxRecords);
@@ -58,7 +61,7 @@ public class MessagePersistence extends CrudPersistence<MessageEntity>{
     
     public MessageEntity find(Long clientid, Long messageid) {
         TypedQuery<MessageEntity> q = em.createQuery("select p from MessageEntity p where (p.client.id = :clientid) and (p.id = :messageid)", MessageEntity.class);
-        q.setParameter("clientid", clientid);
+        q.setParameter(CLIENTID, clientid);
         q.setParameter("messageid", messageid);
         return q.getSingleResult();
     }    
