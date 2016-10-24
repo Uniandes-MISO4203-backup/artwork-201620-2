@@ -10,7 +10,6 @@ import co.edu.uniandes.csw.artwork.api.IArtistLikeLogic;
 import co.edu.uniandes.csw.artwork.ejbs.ArtistLikeLogic;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.artwork.entities.ArtistLikeEntity;
-import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.persistence.ArtistLikePersistance;
 import java.util.ArrayList;
 import java.util.List;

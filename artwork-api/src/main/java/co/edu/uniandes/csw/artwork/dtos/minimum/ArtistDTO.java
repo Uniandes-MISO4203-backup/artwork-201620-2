@@ -55,11 +55,11 @@ public class ArtistDTO implements Serializable{
      * @generated
      */
     public ArtistDTO(ArtistEntity entity) {
-	   if (entity!=null){
-        this.id=entity.getId();
-        this.name=entity.getName();
-        this.nationality = NationalityResources.basicEntity2DTO(entity.getNationality());
-        this.score = entity.getScore();
+        if (entity!=null){
+            this.id=entity.getId();
+            this.name=entity.getName();
+            this.nationality = NationalityResources.basicEntity2DTO(entity.getNationality());
+            this.score = entity.getScore();
        }
     }
 
@@ -75,7 +75,7 @@ public class ArtistDTO implements Serializable{
         entity.setName(this.getName());
         entity.setNationality(NationalityResources.basicDTO2Entity(this.getNationality()));
         entity.setScore(this.score);
-    return entity;
+        return entity;
     }
 
     /**
