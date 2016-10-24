@@ -9,7 +9,7 @@
                 qty:1,
                 artwork:$scope.artwork
             };
-            Restangular.all('wishList').post(item).then(function(data) { 
+            Restangular.all('wishList').post(item).then(function() { 
                 $scope.added=true;
             });
         };
