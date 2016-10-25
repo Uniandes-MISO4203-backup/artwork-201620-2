@@ -48,8 +48,8 @@ SOFTWARE.
                         <td class="cart_description">
                             <h5>{{art.price}}</h5>
                         </td>
-                        <td>
-                            <toolbar actions='recordActions'></toolbar>
+                         <td ng-if="recordActions">
+                            <button ng-repeat="(key, action) in recordActions" id="{{$parent.$index}}-{{key}}-btn" ng-class="action.class || 'btn btn-default btn-sm'" ng-hide="action.show && !action.show(art)" ng-click="action.fn(art)"><span class="glyphicon glyphicon-{{action.icon}}"></span> {{action.displayName}}</button>
                         </td>
                     </tr>
                 </tbody>
@@ -57,13 +57,3 @@ SOFTWARE.
         </div>
     </div>
 </section>
-<pagination ng-if="ctrl.itemsPerPage < ctrl.totalItems"
-            total-items="ctrl.totalItems"
-            max-size="5"
-            ng-model="ctrl.currentPage"
-            ng-change="ctrl.pageChanged()"
-            items-per-page="ctrl.itemsPerPage"
-            class="pagination-md" 
-            boundary-links="true" 
-            rotate="false">
-</pagination>

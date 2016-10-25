@@ -40,14 +40,3 @@
         </div>
     </div>
 </section>
-
-<pagination ng-if="ctrl.itemsPerPage < ctrl.totalItems"
-            total-items="ctrl.totalItems"
-            max-size="5"
-            ng-model="ctrl.currentPage"
-            ng-change="ctrl.pageChanged()"
-            items-per-page="ctrl.itemsPerPage"
-            class="pagination-md" 
-            boundary-links="true" 
-            rotate="false">
-</pagination>
