@@ -15,11 +15,12 @@
     <class>co.edu.uniandes.csw.artwork.entities.MessageEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.ArtistLikeEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.QualifyEntity</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
-        <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
-        <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/> 
-        <property name="eclipselink.logging.level" value="SEVERE"/> 
-        <property name="eclipselink.logging.parameters" value="false"/>        
+      <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
+      <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.logging.parameters" value="false"/>
     </properties>
   </persistence-unit>
 </persistence>
