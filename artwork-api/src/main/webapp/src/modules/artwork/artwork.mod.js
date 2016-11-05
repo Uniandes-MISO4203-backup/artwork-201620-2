@@ -27,8 +27,9 @@ SOFTWARE.
     mod.constant('artworkModel', {
         name: 'artwork',
         displayName: 'Artwork',
-		url: 'artworks',
-        fields: {            name: {
+        url: 'artworks',
+        fields: {            
+            name: {
                 displayName: 'Name',
                 type: 'String',
                 required: true
@@ -42,7 +43,8 @@ SOFTWARE.
                 displayName: 'Price',
                 type: 'Long',
                 required: true
-            }        }
+            }        
+        }
     });
 
     mod.config(['$stateProvider',
@@ -64,7 +66,8 @@ SOFTWARE.
                     model: 'artworkModel',
                     artworks: ['artist', '$stateParams', 'model', function (artist, $params, model) {
                             return artist.getList(model.url, $params);
-                        }]                }
+                        }]                
+                }
             });
             $sp.state('artworkList', {
                 url: '/list',
@@ -195,7 +198,7 @@ SOFTWARE.
                 }
             });
             $sp.state('artworkClientDetail', {
-                url: '/detalle/{artworkId:int}',
+                url: '/detalle/{artistId:int}/{artworkId:int}',
                 views: {
                     mainView: {
                         templateUrl: baseInstancePath + 'client-detail/client-detail.tpl.html',
@@ -205,8 +208,7 @@ SOFTWARE.
                 resolve: {
                     model: 'artworkModel',
                     artwork: ['Restangular', 'model', '$stateParams', function (r, model, $params) {
-                            console.log($params.artworkId);
-                            return r.all(model.url).get($params.artworkId);
+                            return r.one('artists/'+$params.artistId+'/'+model.url+'/',$params.artworkId).get();
                         }]
                 }
             });

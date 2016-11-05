@@ -4,7 +4,7 @@
         <div class="left-sidebar">
             <h2>Categories</h2>
             <div class="panel-group category-products" id="accordian">
-                <div class="panel panel-default" ng-repeat="category in categorys">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a ng-click="filtrar('')" style="cursor: pointer">Show all</a></h4>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <a ui-sref="artworkClientDetail({artworkId: 1})"><img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;"></a>
+                            <a ui-sref="artworkClientDetail({artistId:artwork.artist.id,artworkId: artwork.id})"><img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;"></a>
                             <h2>{{artwork.price| currency}}</h2>
                             <h3>{{artwork.name}}</h3>
                             <add-wish-list artwork="artwork"></add-wish-list>
