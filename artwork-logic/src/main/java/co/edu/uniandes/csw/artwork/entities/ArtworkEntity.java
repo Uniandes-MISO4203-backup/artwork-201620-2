@@ -31,7 +31,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Temporal;
 
 /**
  * @generated
@@ -55,6 +57,10 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QualifyEntity> qualify = new ArrayList<>();
 
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date creationDate;
+    
     /**
      * Obtiene el atributo image.
      *
@@ -148,6 +154,14 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
      */
     public void setQualify(List<QualifyEntity> qualify) {
         this.qualify = qualify;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
     
     @Override
