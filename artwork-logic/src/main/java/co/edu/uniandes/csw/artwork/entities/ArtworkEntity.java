@@ -62,22 +62,18 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date creationDate;
     
-    @PodamExclude
+    
     @Column(length=1000) 
     private String description;
     
-    @PodamExclude
     @Column(length=1000) 
     private String otherImages;
     
-    @PodamExclude
     private String video;
     
-     @PodamExclude
     @Column(length=1000)
     private String placesVisited;
     
-    @PodamExclude
     @Column(length=1000)
     private String awards;
     

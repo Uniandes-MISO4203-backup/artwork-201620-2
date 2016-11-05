@@ -117,7 +117,7 @@ public class ArtworkDetailDTO extends ArtworkDTO {
         }
         
         if(this.getOtherImages()!= null){
-            String urlImages = null;
+            String urlImages = "";
             for (OtherImageDTO otherImage : this.getOtherImages()) {
                 urlImages += otherImage.getUrl()+",";
             }
@@ -125,7 +125,7 @@ public class ArtworkDetailDTO extends ArtworkDTO {
         }
         
         if(this.getPlaces()!= null){
-            String namePlaces = null;
+            String namePlaces = "";
             for (PlaceDTO place : this.getPlaces()) {
                 namePlaces += place.getName()+",";
             }
@@ -133,7 +133,7 @@ public class ArtworkDetailDTO extends ArtworkDTO {
         }
         
         if(this.getAwards()!= null){
-            String nameAwards = null;
+            String nameAwards = "";
             for (AwardDTO award : this.getAwards()) {
                 nameAwards += award.getName()+",";
             }
@@ -141,7 +141,7 @@ public class ArtworkDetailDTO extends ArtworkDTO {
         }
         
         entity.setDescription(this.description);
-        entity.setDescription(this.video);
+        entity.setVideo(this.video);
         
         return entity;
     }

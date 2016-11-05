@@ -167,6 +167,11 @@ public class ArtworkPersistenceTest {
         Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getImage(), entity.getImage());
         Assert.assertEquals(newEntity.getPrice(), entity.getPrice());
+        Assert.assertEquals(newEntity.getDescription(), entity.getDescription());
+        Assert.assertEquals(newEntity.getVideo(), entity.getVideo());
+        Assert.assertEquals(newEntity.getAwards(), entity.getAwards());
+        Assert.assertEquals(newEntity.getPlacesVisited(), entity.getPlacesVisited());
+        Assert.assertEquals(newEntity.getOtherImages(), entity.getOtherImages());
     }
 
     /**
@@ -234,6 +239,11 @@ public class ArtworkPersistenceTest {
         Assert.assertEquals(entity.getName(), newEntity.getName());
         Assert.assertEquals(entity.getImage(), newEntity.getImage());
         Assert.assertEquals(entity.getPrice(), newEntity.getPrice());
+        Assert.assertEquals(entity.getDescription(), newEntity.getDescription());
+        Assert.assertEquals(entity.getVideo(), newEntity.getVideo());
+        Assert.assertEquals(entity.getAwards(), newEntity.getAwards());
+        Assert.assertEquals(entity.getPlacesVisited(), newEntity.getPlacesVisited());
+        Assert.assertEquals(entity.getOtherImages(), newEntity.getOtherImages());
     }
 
     /**
@@ -269,5 +279,10 @@ public class ArtworkPersistenceTest {
         Assert.assertEquals(newEntity.getName(), resp.getName());
         Assert.assertEquals(newEntity.getImage(), resp.getImage());
         Assert.assertEquals(newEntity.getPrice(), resp.getPrice());
+        Assert.assertEquals(newEntity.getDescription(), resp.getDescription());
+        Assert.assertEquals(newEntity.getVideo(), resp.getVideo());
+        Assert.assertEquals(newEntity.getAwards(), resp.getAwards());
+        Assert.assertEquals(newEntity.getPlacesVisited(), resp.getPlacesVisited());
+        Assert.assertEquals(newEntity.getOtherImages(), resp.getOtherImages());
     }
 }
