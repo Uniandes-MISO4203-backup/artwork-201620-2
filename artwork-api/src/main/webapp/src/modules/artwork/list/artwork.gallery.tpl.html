@@ -35,17 +35,14 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;">
+                            <a ui-sref="artworkClientDetail({artworkId: 1})"><img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;"></a>
                             <h2>{{artwork.price| currency}}</h2>
                             <h3>{{artwork.name}}</h3>
-                            <artist-like artist="artwork.artist"></artist-like>
                             <add-wish-list artwork="artwork"></add-wish-list>
-                            <qualify artwork="artwork"></qualify>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div><
 </div>

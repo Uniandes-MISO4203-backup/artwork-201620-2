@@ -181,17 +181,34 @@ SOFTWARE.
             $sp.state('artworkGallery', {
                 url: '/artworkGallery',
                 views: {
-                     mainView: {
-                        templateUrl: basePath + 'list/artwork.gallery.tpl.html',
-                        controller: 'artworkListCtrl',
-                        controllerAs: 'ctrl'    
-                    }
+                    mainView: {
+                       templateUrl: basePath + 'list/artwork.gallery.tpl.html',
+                       controller: 'artworkListCtrl',
+                       controllerAs: 'ctrl'    
+                   }
                 },
                 resolve: {
                     model: 'artworkModel',
                     artworks: ['Restangular', 'model', '$stateParams', function (r, model, $params) {
                             return r.all(model.url).getList($params);
-                        }]                }
+                        }]                
+                }
+            });
+            $sp.state('artworkClientDetail', {
+                url: '/detalle/{artworkId:int}',
+                views: {
+                    mainView: {
+                        templateUrl: baseInstancePath + 'client-detail/client-detail.tpl.html',
+                        controller: 'artworkClientDetailCtrl'
+                    }
+                },
+                resolve: {
+                    model: 'artworkModel',
+                    artwork: ['Restangular', 'model', '$stateParams', function (r, model, $params) {
+                            console.log($params.artworkId);
+                            return r.all(model.url).get($params.artworkId);
+                        }]
+                }
             });
 	}]);
 })(window.angular);
