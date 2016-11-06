@@ -2,52 +2,75 @@
     <div class="product-details"><!--product-details-->
         <div class="col-sm-5">
             <div class="view-product">
-                <img ng-src='{{artwork.image}}' alt="" />
+                <img style="max-height: 315px; max-width: 420;" ng-src='{{artwork.image}}' alt="{{artwork.name}}" />
+                <br>
+                <h4>More about it:</h4>
+                <iframe width="420" height="315" ng-src="{{artwork.video}}"></iframe>
             </div>
-<!--            <div id="similar-product" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-                    <div class="item">
-                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-                    <div class="item">
-                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-                </div>
-                 Controls 
-                <a class="left item-control" href="#similar-product" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="right item-control" href="#similar-product" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </div>-->
         </div>
         <div class="col-sm-7">
             <div class="product-information"><!--/product-information-->
                 <h3>{{artwork.name}}</h3>
                 <h2>Author: {{artwork.artist.name}}</h2>
-                <p>Web ID: {{artwork.id}}</p
-                <!-- RATING ACA -->
+                <p>Web ID: {{artwork.id}}</p>
+                <p>Description: {{artwork.description}}</p>
                 <span>
                     <span>${{artwork.price}}</span>
                 </span>
-                <br>
-                
-                <!-- INFORMACION EXTRA ACA -->
             </div><!--/product-information-->
             <add-wish-list artwork="artwork"></add-wish-list>
             <artist-like style="margin: 10px;" artist="artwork.artist"></artist-like>
+            <div class="category-tab shop-details-tab" style="margin: 10px;"><!--category-tab-->
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs">
+                        <li ng-if="detail!=='images'"><a ng-click="changeDetail('images')">Other images</a></li>
+                        <li ng-if="detail==='images'" class="active"><a>Other images</a></li>
+                        <li ng-if="detail!=='awards'"><a ng-click="changeDetail('awards')">Awards</a></li>
+                        <li ng-if="detail==='awards'" class="active"><a>Awards</a></li>
+                        <li ng-if="detail!=='places'"><a ng-click="changeDetail('places')">Places</a></li>
+                        <li ng-if="detail==='places'" class="active"><a>Places</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">              
+                    <div class="tab-pane fade" ng-if='detail==="images"'>
+                        <div class="col-sm-3" ng-repeat="image in artwork.otherImages">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img ng-src="image.url" style='max-height: 134px; max-width: 268px;'/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" ng-if='detail==="awards"'>
+                        <div class="col-sm-3" ng-repeat="award in artwork.awards">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <p>{{award.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" ng-if='detail==="places"'>
+                        <div class="col-sm-3" ng-repeat="place in artwork.places">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <p>{{place.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/category-tab-->
+            
             <br>
             <qualify style="margin: 10px;" artwork="artwork"></qualify>
+            
         </div>
     </div><!--/product-details-->
 </div>

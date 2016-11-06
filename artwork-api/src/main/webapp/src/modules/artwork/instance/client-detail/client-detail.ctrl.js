@@ -5,6 +5,9 @@
     mod.controller("artworkClientDetailCtrl", ['$scope', "artwork",
         function ($scope, artwork) {
             $scope.artwork = artwork;
-            console.log($scope.artwork);
+            $scope.detail = 'images';
+            $scope.changeDetail = function(detail) {
+                $scope.detail = detail;
+            };
         }]);
 })(window.angular);
