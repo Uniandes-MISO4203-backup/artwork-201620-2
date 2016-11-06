@@ -5,15 +5,15 @@
                 <img style="max-height: 315px; max-width: 420;" ng-src='{{artwork.image}}' alt="{{artwork.name}}" />
                 <br>
                 <h4>More about it:</h4>
-                <iframe width="420" height="315" ng-src="{{artwork.video}}"></iframe>
+                <iframe width="420" height="315" ng-src="{{artwork.video|trusted}}"></iframe>
             </div>
         </div>
         <div class="col-sm-7">
             <div class="product-information"><!--/product-information-->
                 <h3>{{artwork.name}}</h3>
                 <h2>Author: {{artwork.artist.name}}</h2>
-                <p>Web ID: {{artwork.id}}</p>
-                <p>Description: {{artwork.description}}</p>
+                <p><b>Web ID: </b>{{artwork.id}}</p>
+                <p><b>Description: </b>{{artwork.description}}</p>
                 <span>
                     <span>${{artwork.price}}</span>
                 </span>
@@ -31,46 +31,36 @@
                         <li ng-if="detail==='places'" class="active"><a>Places</a></li>
                     </ul>
                 </div>
-                <div class="tab-content">              
-                    <div class="tab-pane fade" ng-if='detail==="images"'>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" ng-if='detail==="images"'>
                         <div class="col-sm-3" ng-repeat="image in artwork.otherImages">
                             <div class="product-image-wrapper">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <img ng-src="image.url" style='max-height: 134px; max-width: 268px;'/>
-                                    </div>
-                                </div>
+                                <img ng-src="{{image.url}}" style='max-height: 134px; max-width: 268px;'/>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" ng-if='detail==="awards"'>
+                    <div class="tab-pane fade active in" ng-if='detail==="awards"'>
                         <div class="col-sm-3" ng-repeat="award in artwork.awards">
-                            <div class="product-image-wrapper">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <p>{{award.name}}</p>
-                                    </div>
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <p><span class="glyphicon glyphicon-star-empty"></span> {{award.name}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" ng-if='detail==="places"'>
+                    <div class="tab-pane fade active in" ng-if='detail==="places"'>
                         <div class="col-sm-3" ng-repeat="place in artwork.places">
-                            <div class="product-image-wrapper">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <p>{{place.name}}</p>
-                                    </div>
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <p><span class="glyphicon glyphicon-plane"></span> {{place.name}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div><!--/category-tab-->
-            
             <br>
             <qualify style="margin: 10px;" artwork="artwork"></qualify>
-            
         </div>
     </div><!--/product-details-->
 </div>
