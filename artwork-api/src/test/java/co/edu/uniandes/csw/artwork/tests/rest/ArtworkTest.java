@@ -23,11 +23,15 @@ SOFTWARE.
 */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
+import co.edu.uniandes.csw.artwork.dtos.detail.ArtworkDetailDTO;
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.AwardDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.OtherImageDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.PlaceDTO;
 import co.edu.uniandes.csw.artwork.resources.ArtworkResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
@@ -197,21 +201,33 @@ public class ArtworkTest {
      */
     @Test
     public void createArtworkTest() throws IOException {
-        ArtworkDTO artwork = factory.manufacturePojo(ArtworkDTO.class);
+        ArtworkDetailDTO artwork = factory.manufacturePojo(ArtworkDetailDTO.class);
+        List <PlaceDTO> places = new ArrayList<PlaceDTO>();
+        places.add(factory.manufacturePojo(PlaceDTO.class));
+        artwork.setPlaces(places);
+        List <OtherImageDTO> otherImages = new ArrayList<OtherImageDTO>();
+        otherImages.add(factory.manufacturePojo(OtherImageDTO.class));
+        artwork.setOtherImages(otherImages);
+        List <AwardDTO> awards = new ArrayList<AwardDTO>();
+        awards.add(factory.manufacturePojo(AwardDTO.class));
+        artwork.setAwards(awards);
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId)
             .post(Entity.entity(artwork, MediaType.APPLICATION_JSON));
 
-        ArtworkDTO  artworkTest = (ArtworkDTO) response.readEntity(ArtworkDTO.class);
+        ArtworkDetailDTO  artworkTest = (ArtworkDetailDTO) response.readEntity(ArtworkDetailDTO.class);
 
         Assert.assertEquals(Created, response.getStatus());
 
         Assert.assertEquals(artwork.getName(), artworkTest.getName());
         Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
         Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
-
+        Assert.assertEquals(artwork.getOtherImages().get(0).getUrl(), artworkTest.getOtherImages().get(0).getUrl());
+        Assert.assertEquals(artwork.getPlaces().get(0).getName(), artworkTest.getPlaces().get(0).getName());
+        Assert.assertEquals(artwork.getAwards().get(0).getName(), artworkTest.getAwards().get(0).getName());
+        
         ArtworkEntity entity = em.find(ArtworkEntity.class, artworkTest.getId());
         Assert.assertNotNull(entity);
     }
@@ -233,6 +249,20 @@ public class ArtworkTest {
         Assert.assertEquals(artworkTest.getName(), oraculo.get(0).getName());
         Assert.assertEquals(artworkTest.getImage(), oraculo.get(0).getImage());
         Assert.assertEquals(artworkTest.getPrice(), oraculo.get(0).getPrice());
+    }
+    
+     @Test
+    public void getArtworkDetailByIdTest() {
+        Cookie cookieSessionId = login(username, password);
+
+        ArtworkDetailDTO artworkTest = target
+            .path(oraculo.get(0).getId().toString())
+            .request().cookie(cookieSessionId).get(ArtworkDetailDTO.class);
+        
+        Assert.assertEquals(artworkTest.getId(), oraculo.get(0).getId());
+        Assert.assertEquals(artworkTest.getPlaces().get(0).getName(), oraculo.get(0).getPlacesVisited());
+        Assert.assertEquals(artworkTest.getAwards().get(0).getName(), oraculo.get(0).getAwards());
+        Assert.assertEquals(artworkTest.getOtherImages().get(0).getUrl(), oraculo.get(0).getOtherImages());
     }
 
     /**
