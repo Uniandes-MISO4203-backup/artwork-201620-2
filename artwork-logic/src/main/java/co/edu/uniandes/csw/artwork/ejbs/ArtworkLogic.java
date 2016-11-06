@@ -29,6 +29,7 @@ import co.edu.uniandes.csw.artwork.persistence.ArtworkPersistence;
 import co.edu.uniandes.csw.artwork.api.IArtistLogic;
 import co.edu.uniandes.csw.artwork.entities.ArtistEntity;
 import co.edu.uniandes.csw.artwork.entities.CategoryEntity;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -131,6 +132,7 @@ public class ArtworkLogic implements IArtworkLogic {
     public ArtworkEntity createArtwork(Long artistid, ArtworkEntity entity) {
         ArtistEntity artist = artistLogic.getArtist(artistid);
         entity.setArtist(artist);
+        entity.setCreationDate(new Date());
         ArtworkEntity response = persistence.create(entity);
         return response;
     }

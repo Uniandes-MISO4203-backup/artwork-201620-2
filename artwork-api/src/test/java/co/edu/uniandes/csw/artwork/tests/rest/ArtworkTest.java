@@ -224,6 +224,7 @@ public class ArtworkTest {
         Assert.assertEquals(artwork.getName(), artworkTest.getName());
         Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
         Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
+        Assert.assertNotNull(artworkTest.getCreationDate());
         Assert.assertEquals(artwork.getOtherImages().get(0).getUrl(), artworkTest.getOtherImages().get(0).getUrl());
         Assert.assertEquals(artwork.getPlaces().get(0).getName(), artworkTest.getPlaces().get(0).getName());
         Assert.assertEquals(artwork.getAwards().get(0).getName(), artworkTest.getAwards().get(0).getName());
@@ -249,6 +250,7 @@ public class ArtworkTest {
         Assert.assertEquals(artworkTest.getName(), oraculo.get(0).getName());
         Assert.assertEquals(artworkTest.getImage(), oraculo.get(0).getImage());
         Assert.assertEquals(artworkTest.getPrice(), oraculo.get(0).getPrice());
+        Assert.assertNotNull(artworkTest.getCreationDate());
     }
     
      @Test
@@ -263,6 +265,7 @@ public class ArtworkTest {
         Assert.assertEquals(artworkTest.getPlaces().get(0).getName(), oraculo.get(0).getPlacesVisited());
         Assert.assertEquals(artworkTest.getAwards().get(0).getName(), oraculo.get(0).getAwards());
         Assert.assertEquals(artworkTest.getOtherImages().get(0).getUrl(), oraculo.get(0).getOtherImages());
+        Assert.assertNotNull(artworkTest.getCreationDate());
     }
 
     /**
@@ -331,6 +334,7 @@ public class ArtworkTest {
         Assert.assertEquals(artwork.getName(), artworkTest.getName());
         Assert.assertEquals(artwork.getImage(), artworkTest.getImage());
         Assert.assertEquals(artwork.getPrice(), artworkTest.getPrice());
+        Assert.assertNotNull(artworkTest.getCreationDate());
     }
 
     /**

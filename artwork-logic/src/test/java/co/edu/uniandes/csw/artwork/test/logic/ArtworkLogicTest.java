@@ -192,6 +192,8 @@ public class ArtworkLogicTest {
         Assert.assertEquals(newEntity.getAwards(), entity.getAwards());
         Assert.assertEquals(newEntity.getPlacesVisited(), entity.getPlacesVisited());
         Assert.assertEquals(newEntity.getOtherImages(), entity.getOtherImages());
+        Assert.assertEquals(newEntity.getOtherImages(), entity.getOtherImages());
+        Assert.assertNotNull(entity.getCreationDate());
     }
 
     /**
@@ -234,6 +236,7 @@ public class ArtworkLogicTest {
         Assert.assertEquals(entity.getAwards(), resultEntity.getAwards());
         Assert.assertEquals(entity.getPlacesVisited(), resultEntity.getPlacesVisited());
         Assert.assertEquals(entity.getOtherImages(), resultEntity.getOtherImages());
+        Assert.assertNotNull(entity.getCreationDate());
     }
 
     /**
@@ -269,6 +272,8 @@ public class ArtworkLogicTest {
         Assert.assertEquals(pojoEntity.getName(), resp.getName());
         Assert.assertEquals(pojoEntity.getImage(), resp.getImage());
         Assert.assertEquals(pojoEntity.getPrice(), resp.getPrice());
+        Assert.assertEquals(pojoEntity.getCreationDate().getTime(), 
+                resp.getCreationDate().getTime());
     }
 
     /**
