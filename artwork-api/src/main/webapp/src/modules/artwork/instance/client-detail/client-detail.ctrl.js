@@ -4,6 +4,7 @@
 
     mod.controller("artworkClientDetailCtrl", ['$scope', "artwork",
         function ($scope, artwork) {
-            $scope.currentRecord = artwork;
+            $scope.artwork = artwork;
+            console.log($scope.artwork);
         }]);
 })(window.angular);
