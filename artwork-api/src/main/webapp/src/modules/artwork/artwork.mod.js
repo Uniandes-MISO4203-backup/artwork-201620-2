@@ -27,8 +27,9 @@ SOFTWARE.
     mod.constant('artworkModel', {
         name: 'artwork',
         displayName: 'Artwork',
-		url: 'artworks',
-        fields: {            name: {
+        url: 'artworks',
+        fields: {            
+            name: {
                 displayName: 'Name',
                 type: 'String',
                 required: true
@@ -42,7 +43,8 @@ SOFTWARE.
                 displayName: 'Price',
                 type: 'Long',
                 required: true
-            }        }
+            }        
+        }
     });
 
     mod.config(['$stateProvider',
@@ -64,7 +66,8 @@ SOFTWARE.
                     model: 'artworkModel',
                     artworks: ['artist', '$stateParams', 'model', function (artist, $params, model) {
                             return artist.getList(model.url, $params);
-                        }]                }
+                        }]                
+                }
             });
             $sp.state('artworkList', {
                 url: '/list',
@@ -181,17 +184,33 @@ SOFTWARE.
             $sp.state('artworkGallery', {
                 url: '/artworkGallery',
                 views: {
-                     mainView: {
-                        templateUrl: basePath + 'list/artwork.gallery.tpl.html',
-                        controller: 'artworkListCtrl',
-                        controllerAs: 'ctrl'    
-                    }
+                    mainView: {
+                       templateUrl: basePath + 'list/artwork.gallery.tpl.html',
+                       controller: 'artworkListCtrl',
+                       controllerAs: 'ctrl'    
+                   }
                 },
                 resolve: {
                     model: 'artworkModel',
                     artworks: ['Restangular', 'model', '$stateParams', function (r, model, $params) {
                             return r.all(model.url).getList($params);
-                        }]                }
+                        }]                
+                }
+            });
+            $sp.state('artworkClientDetail', {
+                url: '/detalle/{artistId:int}/{artworkId:int}',
+                views: {
+                    mainView: {
+                        templateUrl: baseInstancePath + 'client-detail/client-detail.tpl.html',
+                        controller: 'artworkClientDetailCtrl'
+                    }
+                },
+                resolve: {
+                    model: 'artworkModel',
+                    artwork: ['Restangular', 'model', '$stateParams', function (r, model, $params) {
+                            return r.one('artists/'+$params.artistId+'/'+model.url+'/',$params.artworkId).get();
+                        }]
+                }
             });
 	}]);
 })(window.angular);
