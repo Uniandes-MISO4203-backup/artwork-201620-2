@@ -28,7 +28,6 @@ SOFTWARE.
     mod.controller("artworkListCtrl", ["$scope", '$state', 'artworks', '$stateParams','Restangular',
         function ($scope, $state, artworks, $params,Restangular) {
             $scope.records = artworks;
-            console.log($scope.records);
             //Paginación
             this.itemsPerPage = $params.limit;
             this.currentPage = $params.page;
@@ -36,6 +35,11 @@ SOFTWARE.
             
             $scope.category = null;
             $scope.categorys = [];
+            
+            Restangular.all("artworks").customGET("recent").then(function (response) {                    
+                console.log("recent");
+                console.log(response);
+            });
             
             $scope.getCategorys = function (parentCategory) {
                 Restangular.all("categorys").customGET('parents/'+parentCategory).then(function (response) {

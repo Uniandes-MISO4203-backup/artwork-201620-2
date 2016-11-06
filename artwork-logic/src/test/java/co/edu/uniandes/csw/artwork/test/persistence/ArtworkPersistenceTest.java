@@ -227,6 +227,16 @@ public class ArtworkPersistenceTest {
         }
     }
     
+    @Test
+    public void getArtworksNewAdquisition(){
+        List<ArtworkEntity> list = artworkPersistence.getArtworksNewAdquisitions();
+        Assert.assertTrue(list.size() <= 5);
+        for (int i = 0; i < list.size() - 1; i ++) {
+            Assert.assertTrue(list.get(i).getCreationDate().getTime() >=
+                list.get(i+1).getCreationDate().getTime());
+        }
+    }
+    
     /**
      * Prueba para consultar un Artwork.
      *

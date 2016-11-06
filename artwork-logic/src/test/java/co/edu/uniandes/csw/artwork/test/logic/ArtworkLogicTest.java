@@ -416,7 +416,18 @@ public class ArtworkLogicTest {
             }
             Assert.assertTrue(found);
         }
-    }      
+    }
+    
+    @Test
+    public void getArtworksNewAdquisitionsTest() {
+        List<ArtworkEntity> list = artworkLogic.getArtworksNewAdquisitions();
+        Assert.assertTrue(list.size() <= 5);
+        for (int i = 0; i < list.size() - 1; i ++) {
+            Assert.assertTrue(list.get(i).getCreationDate().getTime() >=
+                list.get(i+1).getCreationDate().getTime());
+        }
+    }
+    
     
     /**
      * Prueba para consultar un Artwork

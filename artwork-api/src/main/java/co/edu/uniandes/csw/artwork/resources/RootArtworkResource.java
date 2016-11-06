@@ -111,4 +111,11 @@ public class RootArtworkResource {
         }
         return listEntity2DTO(ArtworkLogic.getArtworkByCategory(null,null,categoryid, artistName));
     }
+    
+    @GET
+    @Path("/recent")
+    public List<ArtworkDetailDTO> getArtworksNewAdquisitionsTest() 
+    {   
+        return listEntity2DTO(ArtworkLogic.getArtworksNewAdquisitions());
+    }
 }

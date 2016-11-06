@@ -102,6 +102,12 @@ public class ArtworkLogic implements IArtworkLogic {
         return persistence.getArtworkByCategory(page, maxRecords,categoryid, artistName);  
         
     }
+    
+    @Override
+    public List<ArtworkEntity> getArtworksNewAdquisitions() {        
+        return persistence.getArtworksNewAdquisitions();
+    }
+    
 
     /**
      * Obtiene los datos de una instancia de Artwork a partir de su ID.
