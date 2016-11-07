@@ -94,9 +94,19 @@ SOFTWARE.
                         return (roles.indexOf("client") !== -1);
                     }
                 },
+                shoppingCart: {
+                    displayName: 'Shopping Cart',
+                    icon: 'shopping-cart',
+                    fn: function () {
+                        $state.go('shoppingCart');
+                    },
+                    show: function () {
+                        return (roles.indexOf("client") !== -1);
+                    }
+                },                
                 creditCardList: {
                     displayName: 'Credit Card List',
-                    icon: 'link',
+                    icon: 'usd',
                     fn: function () {
                         $state.go('creditCardList');
                     }

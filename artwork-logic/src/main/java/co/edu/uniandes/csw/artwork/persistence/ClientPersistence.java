@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
+import co.edu.uniandes.csw.artwork.entities.ShoppingCartItemEntity;
 import co.edu.uniandes.csw.crud.spi.persistence.CrudPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,4 +72,16 @@ public class ClientPersistence extends CrudPersistence<ClientEntity> {
     public void setCreditCards(List<CreditCardEntity> creditCards) {
         this.creditCards = creditCards;
     }    
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "shoppingcart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShoppingCartItemEntity> shoppingCart = new ArrayList<>();
+
+    public List<ShoppingCartItemEntity> getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShopingCart(List<ShoppingCartItemEntity> shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }       
 }

@@ -40,7 +40,8 @@ SOFTWARE.
         'messageModule',
         'artistLikeModule',
         'qualifyModule',
-        'wishListModule'
+        'wishListModule',
+        'shoppingCartModule'        
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {
@@ -158,6 +159,8 @@ SOFTWARE.
               if (!$rootScope.authenticated) {
                   auth.goToLogin();
               }
+              
+              return $rootScope.authenticated;
             };
             
         }]);
