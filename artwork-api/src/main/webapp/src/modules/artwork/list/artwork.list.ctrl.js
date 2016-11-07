@@ -36,9 +36,12 @@ SOFTWARE.
             $scope.category = null;
             $scope.categorys = [];
             
-            Restangular.all("artworks").customGET("recent").then(function (response) {                    
-                console.log("recent");
-                console.log(response);
+                
+            //Carrousel
+            $scope.active = 0;
+
+            Restangular.all("artworks").customGET("recent").then(function (response) {
+                $scope.slides = response;
             });
             
             $scope.getCategorys = function (parentCategory) {
