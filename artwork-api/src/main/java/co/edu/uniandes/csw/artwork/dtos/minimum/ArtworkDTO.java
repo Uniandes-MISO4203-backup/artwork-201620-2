@@ -26,6 +26,7 @@ package co.edu.uniandes.csw.artwork.dtos.minimum;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @generated
@@ -37,7 +38,7 @@ public class ArtworkDTO implements Serializable{
     private String name;
     private String image;
     private Long price;
-
+    private Date creationDate;
     /**
      * @generated
      */
@@ -52,11 +53,12 @@ public class ArtworkDTO implements Serializable{
      * @generated
      */
     public ArtworkDTO(ArtworkEntity entity) {
-	   if (entity!=null){
-        this.id=entity.getId();
-        this.name=entity.getName();
-        this.image=entity.getImage();
-        this.price=entity.getPrice();
+	if (entity!=null){
+            this.id=entity.getId();
+            this.name=entity.getName();
+            this.image=entity.getImage();
+            this.price=entity.getPrice();
+            this.creationDate=entity.getCreationDate();
        }
     }
 
@@ -72,7 +74,8 @@ public class ArtworkDTO implements Serializable{
         entity.setName(this.getName());
         entity.setImage(this.getImage());
         entity.setPrice(this.getPrice());
-    return entity;
+        entity.setCreationDate(this.getCreationDate());
+        return entity;
     }
 
     /**
@@ -155,4 +158,12 @@ public class ArtworkDTO implements Serializable{
         this.price = price;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+    
 }

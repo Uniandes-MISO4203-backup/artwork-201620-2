@@ -91,4 +91,12 @@ public class ArtworkPersistence extends CrudPersistence<ArtworkEntity> {
         }
         return q.getResultList();
     }
+    
+    public List<ArtworkEntity> getArtworksNewAdquisitions() {
+        TypedQuery<ArtworkEntity> q = em.createQuery(
+            "select p from ArtworkEntity p ORDER BY p.creationDate DESC", ArtworkEntity.class);
+        q.setMaxResults(5);
+        return q.getResultList();
+    }
+
 }

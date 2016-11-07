@@ -31,7 +31,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
 
 /**
  * @generated
@@ -55,6 +58,27 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QualifyEntity> qualify = new ArrayList<>();
 
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date creationDate;
+    
+    
+    @Column(length=1000) 
+    private String description;
+    
+    @Column(length=1000) 
+    private String otherImages;
+    
+    private String video;
+    
+    @Column(length=1000)
+    private String placesVisited;
+    
+    @Column(length=1000)
+    private String awards;
+    
+    
+    
     /**
      * Obtiene el atributo image.
      *
@@ -149,8 +173,87 @@ public class ArtworkEntity extends BaseEntity implements Serializable {
     public void setQualify(List<QualifyEntity> qualify) {
         this.qualify = qualify;
     }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
     
-    @Override
+   
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the otherImages
+     */
+    public String getOtherImages() {
+        return otherImages;
+    }
+
+    /**
+     * @param otherImages the otherImages to set
+     */
+    public void setOtherImages(String otherImages) {
+        this.otherImages = otherImages;
+    }
+
+    /**
+     * @return the video
+     */
+    public String getVideo() {
+        return video;
+    }
+
+    /**
+     * @param video the video to set
+     */
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    /**
+     * @return the placesVisited
+     */
+    public String getPlacesVisited() {
+        return placesVisited;
+    }
+
+    /**
+     * @param placesVisited the placesVisited to set
+     */
+    public void setPlacesVisited(String placesVisited) {
+        this.placesVisited = placesVisited;
+    }
+
+    /**
+     * @return the awards
+     */
+    public String getAwards() {
+        return awards;
+    }
+
+    /**
+     * @param awards the awards to set
+     */
+    public void setAwards(String awards) {
+        this.awards = awards;
+    }
+    
+     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }

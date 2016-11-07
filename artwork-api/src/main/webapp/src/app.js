@@ -25,6 +25,7 @@ SOFTWARE.
     var mod = ng.module('mainApp', [
         //'ngCrudMock',
         'ngCrud',
+        'ngAnimate',
         'ui.router',
         'ui.bootstrap',
         'clientModule',

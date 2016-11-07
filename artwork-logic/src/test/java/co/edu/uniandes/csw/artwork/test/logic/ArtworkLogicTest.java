@@ -187,7 +187,13 @@ public class ArtworkLogicTest {
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getName(), entity.getName());
         Assert.assertEquals(newEntity.getImage(), entity.getImage());
-        Assert.assertEquals(newEntity.getPrice(), entity.getPrice());
+        Assert.assertEquals(newEntity.getDescription(), entity.getDescription());
+        Assert.assertEquals(newEntity.getVideo(), entity.getVideo());
+        Assert.assertEquals(newEntity.getAwards(), entity.getAwards());
+        Assert.assertEquals(newEntity.getPlacesVisited(), entity.getPlacesVisited());
+        Assert.assertEquals(newEntity.getOtherImages(), entity.getOtherImages());
+        Assert.assertEquals(newEntity.getOtherImages(), entity.getOtherImages());
+        Assert.assertNotNull(entity.getCreationDate());
     }
 
     /**
@@ -225,6 +231,12 @@ public class ArtworkLogicTest {
         Assert.assertEquals(entity.getName(), resultEntity.getName());
         Assert.assertEquals(entity.getImage(), resultEntity.getImage());
         Assert.assertEquals(entity.getPrice(), resultEntity.getPrice());
+        Assert.assertEquals(entity.getDescription(), resultEntity.getDescription());
+        Assert.assertEquals(entity.getVideo(), resultEntity.getVideo());
+        Assert.assertEquals(entity.getAwards(), resultEntity.getAwards());
+        Assert.assertEquals(entity.getPlacesVisited(), resultEntity.getPlacesVisited());
+        Assert.assertEquals(entity.getOtherImages(), resultEntity.getOtherImages());
+        Assert.assertNotNull(entity.getCreationDate());
     }
 
     /**
@@ -260,6 +272,8 @@ public class ArtworkLogicTest {
         Assert.assertEquals(pojoEntity.getName(), resp.getName());
         Assert.assertEquals(pojoEntity.getImage(), resp.getImage());
         Assert.assertEquals(pojoEntity.getPrice(), resp.getPrice());
+        Assert.assertEquals(pojoEntity.getCreationDate().getTime(), 
+                resp.getCreationDate().getTime());
     }
 
     /**
@@ -402,7 +416,18 @@ public class ArtworkLogicTest {
             }
             Assert.assertTrue(found);
         }
-    }      
+    }
+    
+    @Test
+    public void getArtworksNewAdquisitionsTest() {
+        List<ArtworkEntity> list = artworkLogic.getArtworksNewAdquisitions();
+        Assert.assertTrue(list.size() <= 5);
+        for (int i = 0; i < list.size() - 1; i ++) {
+            Assert.assertTrue(list.get(i).getCreationDate().getTime() >=
+                list.get(i+1).getCreationDate().getTime());
+        }
+    }
+    
     
     /**
      * Prueba para consultar un Artwork
