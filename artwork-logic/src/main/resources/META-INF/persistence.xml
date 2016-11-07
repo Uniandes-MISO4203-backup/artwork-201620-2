@@ -15,6 +15,7 @@
     <class>co.edu.uniandes.csw.artwork.entities.MessageEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.ArtistLikeEntity</class>
     <class>co.edu.uniandes.csw.artwork.entities.QualifyEntity</class>
+    <class>co.edu.uniandes.csw.artwork.entities.ShoppingCartItemEntity</class>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>

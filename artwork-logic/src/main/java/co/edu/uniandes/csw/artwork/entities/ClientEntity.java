@@ -96,6 +96,18 @@ public class ClientEntity extends BaseEntity implements Serializable {
         this.messages = messages;
     }      
     
+    @PodamExclude
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShoppingCartItemEntity> shoppingCart = new ArrayList<>();
+
+    public List<ShoppingCartItemEntity> getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(List<ShoppingCartItemEntity> shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }       
+    
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
