@@ -35,13 +35,14 @@ SOFTWARE.
         <link href="bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<link href="src/assets/css/main.css" rel="stylesheet">
 	<link href="src/assets/css/responsive.css" rel="stylesheet">
-
+        <!--<link href="bower_components/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet">-->
+        
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>                
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="bower_components/angular-mocks/angular-mocks.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="bower_components/ui.bootstrap/src/carousel/carousel.js"></script>
         <script src="bower_components/lodash/lodash.js"></script>
         <script src="bower_components/restangular/dist/restangular.js"></script>
         <script src="bower_components/ng-crud/dist/ngcrud.js"></script>
@@ -74,6 +75,7 @@ SOFTWARE.
         <script src="src/modules/artwork/instance/delete/artwork.delete.ctrl.js"></script>
         <script src="src/modules/artwork/instance/detail/artwork.detail.ctrl.js"></script>
         <script src="src/modules/artwork/instance/edit/artwork.edit.ctrl.js"></script>
+        <script src="src/modules/artwork/instance/client-detail/client-detail.ctrl.js"></script>
         <script src="src/modules/artwork/list/artwork.list.ctrl.js"></script>
         <script src="src/modules/artwork/new/artwork.new.ctrl.js"></script>
         <script src="src/modules/artist/artist.ctrl.js"></script>
@@ -119,6 +121,9 @@ SOFTWARE.
         <script src="src/modules/wishList/wishList.ctrl.js"></script>
         <script src="src/modules/wishList/wishList.dir.js"></script>
         <script src="src/modules/wishList/list/wishList.list.ctrl.js"></script>
+	<script src="src/modules/shoppingcart/shoppingCart.mod.js"></script>
+        <script src="src/modules/shoppingcart/shoppingCart.dir.js"></script>
+        <script src="src/modules/shoppingcart/list/shoppingCart.list.ctrl.js"></script>        
         <!-- /include -->
         <!-- endbuild -->
 
@@ -147,6 +152,7 @@ SOFTWARE.
                                     <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
                                     <li ng-if="message"><a ui-sref="messageList">Messages</a></li>
                                     <li ng-if="item"><a ui-sref="wishList">Wishlist</a></li>
+                                    <li ng-if="shoppingcart"><a ui-sref="shoppingCart"><span class="glyphicon glyphicon-shopping-cart">Cart</span></a></li>                                    
                                     <login-button></login-button>                                    
                                 </ul>
                             </div>
@@ -163,16 +169,14 @@ SOFTWARE.
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                         <div class="col-sm-5 col-sm-offset-4" style="text-align: center">
+                        <div class="col-sm-5 col-sm-offset-4" style="text-align: center">
                             <span>© Copyright 2016 Artwork By Froba All right reserved.</span><br>
                             <span>Grupo 1 - Gestión de Proyectos de Software</span><br>
                             <span>Universidad de los Andes</span>  
-                         </div>
-                       
+                        </div>
                     </div>
                 </div>
             </div>
         </footer>
-        
     </body>
 </html>

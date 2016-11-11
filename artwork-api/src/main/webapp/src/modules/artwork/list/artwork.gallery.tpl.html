@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <div class="row">
+    <div class="col-sm-12">
+        <div uib-carousel active="active" interval="5000" no-wrap="false">
+        <div uib-slide ng-repeat="slide in slides track by $index" index="$index">
+          <img ng-src="{{slide.image}}" height="200">
+          <div class="carousel-caption">
+            <h4>Nueva adquisición: {{slide.creationDate}}</h4>
+            <p></p>
+          </div>
+        </div>
+      </div>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
     <div class="col-sm-3">
         <div class="left-sidebar">
             <h2>Categories</h2>
             <div class="panel-group category-products" id="accordian">
-                <div class="panel panel-default" ng-repeat="category in categorys">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"><a ng-click="filtrar('')" style="cursor: pointer">Show all</a></h4>
                     </div>
@@ -35,17 +50,15 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;">
+                            <a ui-sref="artworkClientDetail({artistId:artwork.artist.id,artworkId: artwork.id})"><img ng-src="{{artwork.image}}" alt='{{artwork.name}}' style="height: 268px; max-width: 249px;"></a>
                             <h2>{{artwork.price| currency}}</h2>
                             <h3>{{artwork.name}}</h3>
-                            <artist-like artist="artwork.artist"></artist-like>
                             <add-wish-list artwork="artwork"></add-wish-list>
-                            <qualify artwork="artwork"></qualify>
-
+                            <add-shopping-cart artwork="artwork"></add-shopping-cart>                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div><
 </div>

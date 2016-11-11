@@ -5,10 +5,15 @@
  */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
+import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ClientDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.MessageDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ShoppingCartDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.ShoppingCartItemDTO;
+import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
-import co.edu.uniandes.csw.artwork.entities.MessageEntity;
-import co.edu.uniandes.csw.artwork.resources.MessageResource;
+import co.edu.uniandes.csw.artwork.entities.ShoppingCartItemEntity;
+import co.edu.uniandes.csw.artwork.resources.CreditCardResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
@@ -17,6 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,24 +53,28 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author juan
  */
 @RunWith(Arquillian.class)
-public class MessageTest {
+public class ShoppingCartTest {
+    
+    ArtworkEntity artwork;
+    ArtworkEntity artwork2;    
+    ClientEntity fatherEntity;
+    Long notExistId = 999L;
+    private List<ShoppingCartItemEntity> data = new ArrayList<ShoppingCartItemEntity>();
     
     private WebTarget target;
     private final String apiPath = Utils.apiPath;
     private final String username = Utils.username;
-    private final String password = Utils.password;    
+    private final String password = Utils.password;        
     
-    @ArquillianResource
-    private URL deploymentURL;    
-    PodamFactory factory = new PodamFactoryImpl();
-    
-    private final static List<MessageEntity> oraculo = new ArrayList<>();
     private final int Ok = Response.Status.OK.getStatusCode();
     private final int Created = Response.Status.CREATED.getStatusCode();
-    private final int OkWithoutContent = Response.Status.NO_CONTENT.getStatusCode();   
+    private final int OkWithoutContent = Response.Status.NO_CONTENT.getStatusCode();    
     
-    ClientEntity fatherClientEntity;
-    private final String messagePath = "messages";
+    private final String itemPath = "shoppingCart";    
+
+    @ArquillianResource
+    private URL deploymentURL;    
+    PodamFactory factory = new PodamFactoryImpl();    
     
     @Deployment
     public static WebArchive createDeployment() {
@@ -73,7 +84,7 @@ public class MessageTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(MessageResource.class.getPackage())
+                .addPackage(CreditCardResource.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -82,7 +93,7 @@ public class MessageTest {
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/shiro.ini"))
                 // El archivo web.xml es necesario para el despliegue de los servlets
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"));
-    }    
+    }       
     
     private WebTarget createWebTarget() {
         return ClientBuilder.newClient().target(deploymentURL.toString()).path(apiPath);
@@ -94,32 +105,52 @@ public class MessageTest {
     @Inject
     private UserTransaction utx;
 
-    private void clearData() {
-        em.createQuery("delete from MessageEntity").executeUpdate();
-        em.createQuery("delete from ClientEntity").executeUpdate();
-        oraculo.clear();
-    }    
-    
-   /**
-     * Datos iniciales para el correcto funcionamiento de las pruebas.
+     /**
+     * Limpia las tablas que están implicadas en la prueba.
      *
      * @generated
      */
-    public void insertData() {
-        fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
-        fatherClientEntity.setId(99999L);
-        em.persist(fatherClientEntity);
+    private void clearData() {
+        em.createQuery("delete from ShoppingCartItemEntity").executeUpdate();
+        em.createQuery("delete from ArtworkEntity").executeUpdate();
+        em.createQuery("delete from ClientEntity").executeUpdate();
+    }   
+    
+    private void insertData() {
+        em.createNativeQuery("INSERT INTO ClientEntity (ID, NAME, AGE) VALUES(99999, 'Test User', 35)").executeUpdate();
+        fatherEntity = em.getReference(ClientEntity.class, 99999L);
+        em.persist(fatherEntity);
+        
+        artwork = factory.manufacturePojo(ArtworkEntity.class);
+        artwork.setId(1L);
+        em.persist(artwork);        
+        
+        artwork2 = factory.manufacturePojo(ArtworkEntity.class);
+        artwork2.setId(2L);
+        em.persist(artwork2);            
+        
+        for (int i = 0; i < 3; i++) {
+            ShoppingCartItemEntity entity = factory.manufacturePojo(ShoppingCartItemEntity.class);
+            entity.setClient(fatherEntity);
+            entity.setArtwork(artwork);
 
-        for (int i = 0; i < 3; i++) {            
-            MessageEntity item = factory.manufacturePojo(MessageEntity.class);
-            item.setId(i + 1L);
-            item.setClient(fatherClientEntity);
-            em.persist(item);
-            oraculo.add(item);
-        }
+            if (i == 0) {
+                entity.setQty(1L);
+            } 
+            else if (i == 1) {
+                entity.setQty(10L);
+            } 
+            
+            em.persist(entity);
+            data.add(entity);
+            
+            while (Objects.equals(entity.getId(), notExistId)) {
+                notExistId = ThreadLocalRandom.current().nextLong();
+            }            
+        }           
     }
 
-    /**
+        /**
      * Configuración inicial de la prueba.
      *
      * @generated
@@ -140,8 +171,9 @@ public class MessageTest {
             }
         }
         target = createWebTarget()
-                .path(messagePath);
+                .path(itemPath);
     }    
+    
     
     /**
      * Login para poder consultar los diferentes servicios
@@ -163,7 +195,7 @@ public class MessageTest {
         } else {
             return null;
         }
-    }    
+    }       
     
     /**
      * Prueba para crear un Item
@@ -171,63 +203,87 @@ public class MessageTest {
      * @generated
      */
     @Test
-    public void createMessageTest() throws IOException {
-        MessageDTO item = factory.manufacturePojo(MessageDTO.class);
+    public void createShoppingCartItemTest() throws IOException {
+        ShoppingCartItemDTO item = factory.manufacturePojo(ShoppingCartItemDTO.class);
+        item.setArtwork(new ArtworkDTO(artwork2));
+        item.setClient(new ClientDTO(fatherEntity));
+        
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId)
             .post(Entity.entity(item, MediaType.APPLICATION_JSON));
 
-        MessageDTO itemTest = (MessageDTO)response.readEntity(MessageDTO.class);
-
+        ShoppingCartItemDTO itemTest = (ShoppingCartItemDTO)response.readEntity(ShoppingCartItemDTO.class);
         Assert.assertEquals(Created, response.getStatus());
-        Assert.assertEquals(itemTest.getSubject(), item.getSubject());
-        Assert.assertEquals(itemTest.getBody(), item.getBody());         
+        Assert.assertEquals(item.getQuantity(), itemTest.getQuantity());
+        Assert.assertEquals(item.getArtwork().getId(), itemTest.getArtwork().getId());
         
-        MessageEntity entity = em.find(MessageEntity.class, itemTest.getId());
+        ShoppingCartItemEntity entity = em.find(ShoppingCartItemEntity.class, itemTest.getId());
         Assert.assertNotNull(entity);
-        Assert.assertEquals(entity.getSubject(), item.getSubject());
-        Assert.assertEquals(entity.getBody(), item.getBody());         
+
+        Assert.assertEquals(itemTest.getId(), entity.getId());
+        Assert.assertEquals(item.getQuantity(), entity.getQty());
+        Assert.assertEquals(item.getArtwork().getId(), entity.getArtwork().getId());
     }    
     
     
     /**
-     * Prueba para consultar un Item
+     * Prueba para crear un Item
      *
      * @generated
      */
     @Test
-    public void getMessageByIdTest() {
+    public void increaseShoppingCartItemTest() throws IOException {
+        ShoppingCartItemDTO item = factory.manufacturePojo(ShoppingCartItemDTO.class);
+        item.setArtwork(new ArtworkDTO(artwork2));
+        item.setClient(new ClientDTO(fatherEntity));
+        Long expectedQty = item.getQuantity() + 1;
+        
         Cookie cookieSessionId = login(username, password);
 
-        MessageDTO itemTest = target
-            .path(oraculo.get(0).getId().toString())
-            .request().cookie(cookieSessionId).get(MessageDTO.class);
+        Response response = target
+            .request().cookie(cookieSessionId)
+            .post(Entity.entity(item, MediaType.APPLICATION_JSON));
+
+        response.readEntity(ShoppingCartItemDTO.class);
+        Assert.assertEquals(Created, response.getStatus());
+
+        response = target
+            .request().cookie(cookieSessionId)
+            .post(Entity.entity(item, MediaType.APPLICATION_JSON));        
         
-        Assert.assertEquals(itemTest.getId(), oraculo.get(0).getId());
-        Assert.assertEquals(itemTest.getSubject(), oraculo.get(0).getSubject());
-        Assert.assertEquals(itemTest.getBody(), oraculo.get(0).getBody());  
-    }    
+        ShoppingCartItemDTO itemTest = (ShoppingCartItemDTO)response.readEntity(ShoppingCartItemDTO.class);        
+        Assert.assertEquals(Created, response.getStatus());
+        Assert.assertEquals(expectedQty, itemTest.getQuantity());
+        Assert.assertEquals(item.getArtwork().getId(), itemTest.getArtwork().getId());
+        Assert.assertEquals(item.getClient().getId(), itemTest.getClient().getId());          
+        
+        ShoppingCartItemEntity entity = em.find(ShoppingCartItemEntity.class, itemTest.getId());
+        Assert.assertNotNull(entity);
+
+        Assert.assertEquals(itemTest.getId(), entity.getId());
+        Assert.assertEquals(expectedQty, entity.getQty());
+        Assert.assertEquals(item.getArtwork().getId(), entity.getArtwork().getId());
+        Assert.assertEquals(item.getClient().getId(), entity.getClient().getId());        
+    }      
     
     
     /**
-     * Prueba para consultar un Item
+     * Prueba para consultar la lista de Items
      *
      * @generated
      */
     @Test
-    public void getMessagesTest() throws IOException {
+    public void getShoppingCartTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId).get();
 
-        String listItem = response.readEntity(String.class);
-        List<MessageDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
-        
+        ShoppingCartDTO itemTest = (ShoppingCartDTO)response.readEntity(ShoppingCartDTO.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(oraculo.size(), listItemTest.size());
+        Assert.assertEquals(3, itemTest.getCartItems().size());
     }        
     
     /**
@@ -236,7 +292,7 @@ public class MessageTest {
      * @generated
      */
     @Test
-    public void getMessagesPagedTest() throws IOException {
+    public void getShoppingCartPagedTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
@@ -245,40 +301,9 @@ public class MessageTest {
                 .request()
                 .cookie(cookieSessionId).get();
 
-        String listItem = response.readEntity(String.class);
-        List<MessageDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
-        
+        ShoppingCartDTO itemTest = (ShoppingCartDTO)response.readEntity(ShoppingCartDTO.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(oraculo.size(), listItemTest.size());
-    }        
-    
-    /**
-     * Prueba para actualizar un Item
-     *
-     * @generated
-     */
-    @Test
-    public void updateMessageTest() throws IOException {
-        Cookie cookieSessionId = login(username, password);
-        MessageDTO item = new MessageDTO(oraculo.get(0));
-
-        MessageDTO itemChanged = factory.manufacturePojo(MessageDTO.class);
-
-        item.setBody(itemChanged.getBody());
-        item.setSentDate(itemChanged.getSentDate());
-        item.setSubject(itemChanged.getSubject());
-
-        Response response = target
-            .path(item.getId().toString())
-            .request().cookie(cookieSessionId)
-            .put(Entity.entity(item, MediaType.APPLICATION_JSON));
-
-        MessageDTO itemTest = (MessageDTO)response.readEntity(MessageDTO.class);
-
-        Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(item.getId(), itemTest.getId());
-        Assert.assertEquals(item.getSubject(), itemTest.getSubject());
-        Assert.assertEquals(item.getBody(), itemTest.getBody());  
+        Assert.assertEquals(3, itemTest.getCartItems().size());
     }       
     
     /**
@@ -287,13 +312,13 @@ public class MessageTest {
      * @generated
      */
     @Test
-    public void deleteMessageTest() {
+    public void deleteShoppingCartItemTest() {
         Cookie cookieSessionId = login(username, password);
-        MessageDTO item = new MessageDTO(oraculo.get(0));
+        ShoppingCartItemDTO item = new ShoppingCartItemDTO(data.get(0));
         Response response = target
             .path(item.getId().toString())
             .request().cookie(cookieSessionId).delete();
 
         Assert.assertEquals(OkWithoutContent, response.getStatus());
-    }      
+    }       
 }

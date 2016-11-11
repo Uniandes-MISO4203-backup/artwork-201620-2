@@ -245,5 +245,24 @@ public class RootArtworkTest {
         List<ArtworkDTO> listArtworkTest = new ObjectMapper().readValue(listArtwork, List.class);
         Assert.assertEquals(Ok, response.getStatus());
         Assert.assertEquals(3, listArtworkTest.size());
+    }
+    
+    /**
+     * Prueba para consultar la lista de Artworks recientes
+     *
+     * @throws java.io.IOException
+     * @generated
+     */
+    @Test
+    public void getArtworksNewAdquisitionsTest() throws IOException  {
+
+        Response response = target
+                .path("recent")
+                .request().get();
+
+        String listArtwork = response.readEntity(String.class);
+        List<ArtworkDTO> listArtworkTest = new ObjectMapper().readValue(listArtwork, List.class);
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertTrue(listArtworkTest.size() <= 5);
     }      
 }

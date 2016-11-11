@@ -6,7 +6,9 @@
     "csw-ng-auth": "^0.1.0",
     "angular-ui-router": "~0.2.15",
     "ui.bootstrap": "2.2.0",
-    "components-font-awesome": "4.6.3"
+    "components-font-awesome": "4.6.3",
+    "angular-animate": "^1.5.8",
+    "angular-bootstrap": "^2.2.0"
   },
   "overrides": {
     "bootstrap": {
