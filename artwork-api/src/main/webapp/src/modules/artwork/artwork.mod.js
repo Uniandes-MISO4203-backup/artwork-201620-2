@@ -202,7 +202,8 @@ SOFTWARE.
                 views: {
                     mainView: {
                         templateUrl: baseInstancePath + 'client-detail/client-detail.tpl.html',
-                        controller: 'artworkClientDetailCtrl'
+                        controller: 'artworkClientDetailCtrl',
+                        controllerAs: 'ctrl' 
                     }
                 },
                 resolve: {
