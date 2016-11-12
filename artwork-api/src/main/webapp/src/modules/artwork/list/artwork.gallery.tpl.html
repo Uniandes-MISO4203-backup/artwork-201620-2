@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <div class="row">
     <div class="col-sm-12">
-        <div uib-carousel active="active" interval="5000" no-wrap="false">
-        <div uib-slide ng-repeat="slide in slides track by $index" index="$index">
-          <img ng-src="{{slide.image}}" height="200">
+        <carousel interval="5000" no-wrap="noWrapSlides">
+        <slide ng-repeat="slide in slides" active="slide.active">
+            <img ng-src="{{slide.image}}" style="margin:auto; height:200px;">
           <div class="carousel-caption">
             <h4>Nueva adquisición: {{slide.creationDate}}</h4>
             <p></p>
           </div>
-        </div>
-      </div>
+        </slide>
+      </carousel>
         <hr />
     </div>
 </div>
