@@ -38,6 +38,26 @@ SOFTWARE.
             this.pageChanged = function () {
                 $state.go('clientList', {page: this.currentPage});
             };
+            
+            $scope.newClient = function() {
+                $state.go('clientNew');
+            };
+            
+            $scope.refreshPage = function() {
+                $state.reload();
+            };
+            
+            $scope.goDetail = function(client) {
+                $state.go('clientDetail', {clientId: client.id});
+            };
+            
+            $scope.delete = function(client) {
+                $state.go('clientDelete', {clientId: client.id});
+            };
+            
+            $scope.edit = function(client) {
+                $state.go('clientEdit', {clientId: client.id});
+            };
 
             $scope.actions = {                
                 create: {
