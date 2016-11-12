@@ -1,44 +1,67 @@
-<!--
-The MIT License (MIT)
-
-Copyright (c) 2015 Los Andes University
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
--->
 <header>
     <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
 </header>
-<div  class="container-fluid well">
-    <div class="col-md-12">
-        <p>
-        <label><strong>Name: </strong></label><span id="name"> {{currentRecord.name}}</span>
-        </p>
-        <p>
-        <label><strong>Image: </strong></label><span id="image"> {{currentRecord.image}}</span>
-        </p>
-        <p>
-        <label><strong>Price: </strong></label><span id="price"> {{currentRecord.price}}</span>
-        </p>
-    </div>
+<div>
+    <div class="product-details"><!--product-details-->
+        <div class="col-sm-5">
+            <div class="view-product">
+                <img style="max-height: 315px; max-width: 420;" ng-src='{{artwork.image}}' alt="{{artwork.name}}" />
+                <br>
+                <h4>More about it:</h4>
+                <iframe width="420" height="315" ng-src="{{artwork.video|trusted}}"></iframe>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="product-information"><!--/product-information-->
+                <h3>{{artwork.name}}</h3>
+                <h2>Author: {{artwork.artist.name}}</h2>
+                <p><b>Web ID: </b>{{artwork.id}}</p>
+                <p><b>Description: </b>{{artwork.description}}</p>
+                <span>
+                    <span>${{artwork.price}}</span>
+                </span>
+            </div><!--/product-information-->
+            <div class="category-tab shop-details-tab" style="margin: 10px;"><!--category-tab-->
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs">
+                        <li ng-if="detail!=='images'"><a ng-click="changeDetail('images')">Other images</a></li>
+                        <li ng-if="detail==='images'" class="active"><a>Other images</a></li>
+                        <li ng-if="detail!=='awards'"><a ng-click="changeDetail('awards')">Awards</a></li>
+                        <li ng-if="detail==='awards'" class="active"><a>Awards</a></li>
+                        <li ng-if="detail!=='places'"><a ng-click="changeDetail('places')">Places</a></li>
+                        <li ng-if="detail==='places'" class="active"><a>Places</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" ng-if='detail==="images"'>
+                        <div class="col-sm-3" ng-repeat="image in artwork.otherImages">
+                            <div class="product-image-wrapper">
+                                <img ng-src="{{image.url}}" style='max-height: 134px; max-width: 268px;'/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade active in" ng-if='detail==="awards"'>
+                        <div class="col-sm-3" ng-repeat="award in artwork.awards">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <p><span class="glyphicon glyphicon-star-empty"></span> {{award.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade active in" ng-if='detail==="places"'>
+                        <div class="col-sm-3" ng-repeat="place in artwork.places">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <p><span class="glyphicon glyphicon-plane"></span> {{place.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/category-tab-->
+            <br>
+        </div>
+    </div><!--/product-details-->
 </div>
 <div ui-view="artworkChieldView"></div>
-<artist-like artist="artwork.artist"></artist-like>
-<qualify artwork="artwork"></qualify>
-<commentDir></commentDir>
-<!-- TODO -->

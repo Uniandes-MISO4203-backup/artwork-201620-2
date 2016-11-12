@@ -27,7 +27,11 @@ SOFTWARE.
 
     mod.controller("artworkDetailCtrl", ['$scope', "$state", "artwork",
         function ($scope, $state, artwork) {
-            $scope.currentRecord = artwork;
+            $scope.artwork = artwork;
+            $scope.detail = 'images';
+            $scope.changeDetail = function(detail) {
+                $scope.detail = detail;
+            };
             $scope.actions = {
                 create: {
                     displayName: 'Create',
