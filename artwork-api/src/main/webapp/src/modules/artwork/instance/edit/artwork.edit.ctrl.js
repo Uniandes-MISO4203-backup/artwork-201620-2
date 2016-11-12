@@ -40,6 +40,7 @@ SOFTWARE.
                         }
                     }
                 },
+                
                 cancel: {
                     displayName: 'Cancel',
                     icon: 'remove',
@@ -47,6 +48,24 @@ SOFTWARE.
                         $state.go('artworkDetail');
                     }
                 }
+            };
+            $scope.addOtherImage = function() {
+                $scope.currentRecord.otherImages.push({url:''});
+            };
+            $scope.removeOtherImage = function(index){
+                $scope.currentRecord.otherImages.splice(index,1);
+            };
+           $scope.addAwards = function() {
+                $scope.currentRecord.awards.push({url:''});
+            };
+            $scope.removeAwards = function(index){
+                $scope.currentRecord.awards.splice(index, 1);
+            };
+            $scope.addPlaces = function() {
+                $scope.currentRecord.places.push({url:''});
+            };
+            $scope.removePlaces = function(index){
+                $scope.currentRecord.places.splice(index, 1);
             };
         }]);
 })(window.angular);

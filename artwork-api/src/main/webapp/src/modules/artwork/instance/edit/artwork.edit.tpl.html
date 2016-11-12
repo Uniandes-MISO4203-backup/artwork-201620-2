@@ -32,8 +32,33 @@ SOFTWARE.
 <header>
     <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
 </header>
-<form novalidate name="artworkForm" role="form">
-    <fieldset>
-        <crud-form fields='model.fields' record='currentRecord' lists-of-values="references"></crud-form>
-    </fieldset>
-</form>
+<div class="col-sm-12">
+    <form novalidate name="artworkForm" role="form"> 
+        <div class="col-sm-6">
+            <h2 class="title text-center">General Information</h2>
+        
+            * Name: <input type="text" ng-model="currentRecord.name"  ng-required="true" placeholder="* Name" class="form-control"/><br />
+            * Image: <input type="text" ng-model="currentRecord.image"  ng-required="true" placeholder="* Image" class="form-control"/><br />
+            * Price: <input type="text" ng-model="currentRecord.price"  ng-required="true" placeholder="* Price" class="form-control"/><br />
+            Video: <input type="text" ng-model="currentRecord.video"  ng-required="false" placeholder="Video" class="form-control"/><br />
+            Description: <textarea ng-model="currentRecord.description"  ng-required="false" placeholder="Description" rows="8" class="form-control"/><br /><br />
+        </div>
+        <div class="col-sm-5 col-sm-offset-1" >
+            <h2 class="title text-center">Other Images</h2>
+            <input ng-repeat="image in currentRecord.otherImages" type="text" ng-model="image.url"  ng-required="false" placeholder="Other Image" class="form-control"/>
+             <button class="btn btn-primary" ng-click="addOtherImage()">+</button>
+            <button class="btn btn-primary" ng-click="removeOtherImage(currentRecord.otherImages.lenght)">-</button><br/><br/>
+            
+            
+            <h2 class="title text-center">Awards</h2>
+            <input ng-repeat="award in currentRecord.awards" type="text" ng-model="award.name"  ng-required="false" placeholder="New Award" class="form-control"/>
+            <button class="btn btn-primary" ng-click="addAwards()">+</button>
+            <button class="btn btn-primary" ng-click="removeAwards(currentRecord.awards.lenght)">-</button><br/><br/>
+            
+            <h2 class="title text-center">Visited Places</h2>
+            <input ng-repeat="place in currentRecord.places" type="text" ng-model="place.name"  ng-required="false" placeholder="New Place" class="form-control"/>
+            <button class="btn btn-primary" ng-click="addPlaces()">+</button>
+            <button class="btn btn-primary" ng-click="removePlaces(currentRecord.places.lenght)">-</button><br/><br/>
+        </div>
+    </form>
+</div>
