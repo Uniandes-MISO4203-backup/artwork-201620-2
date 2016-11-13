@@ -37,7 +37,26 @@ SOFTWARE.
             this.pageChanged = function () {
                 $state.go('categoryList', {page: this.currentPage});
             };
-
+            
+            $scope.newCategory = function(){
+                $state.go('categoryNew');
+            }
+            $scope.refreshPage = function(){
+                $state.reload();
+            }
+            
+            $scope.goDetail = function(category) {
+                $state.go('categoryDetail', {categoryId: category.id});
+            };
+            
+            $scope.delete = function(category) {
+                $state.go('categoryDelete', {categoryId: category.id});
+            };
+            
+            $scope.edit = function(category) {
+                $state.go('categoryEdit', {categoryId: category.id});
+            };
+            
             $scope.actions = {
                 create: {
                     displayName: 'Create',
