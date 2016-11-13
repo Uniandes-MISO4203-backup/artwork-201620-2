@@ -38,7 +38,24 @@ SOFTWARE.
             this.pageChanged = function () {
                 $state.go('nationalityList', {page: this.currentPage});
             };
-
+            
+            $scope.newCategory = function(){
+                $state.go('nationalityNew');
+            }
+            $scope.refreshPage = function(){
+                $state.reload();
+            }
+            $scope.goDetail = function(rc) {
+                $state.go('nationalityDetail', {nationalityId: rc.id});
+            };
+            
+            $scope.delete = function(rc) {
+                $state.go('nationalityDelete', {nationalityId: rc.id});
+            };
+            
+            $scope.edit = function(rc) {
+                $state.go('nationalityEdit', {nationalityId: rc.id});
+            };
             $scope.actions = {
                 create: {
                     displayName: 'Create',

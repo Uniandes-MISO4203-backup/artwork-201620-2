@@ -29,6 +29,23 @@ SOFTWARE.
     mod.controller("nationalityNewCtrl", ["$scope", "$state", "nationalitys",
         function ($scope, $state, nationalitys) {
             $scope.currentRecord = {};
+            
+            $scope.goToList = function() {
+                $state.go('nationalityList');
+            }
+            
+            $scope.saveRecord = function() {
+                if ($scope.nationalityForm.$valid) {
+                    nationalitys.post($scope.currentRecord).then(function (rc) {
+                        $state.go('nationalityDetail', {nationalityId: rc.id}, {reload: true});
+                    });
+                }
+            }
+            
+            $scope.cancel = function() {
+                $state.go('nationalityList');
+            }
+            
             $scope.actions = {
                 save: {
                     displayName: 'Save',

@@ -21,9 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<header>
-    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
-</header>
+<section>
+    <div class="container">
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="goToList()">Nationalities</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="newRecord()"><span class='glyphicon glyphicon-plus'></span> Create</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="editRecord()"><span class='glyphicon glyphicon-edit'></span> Edit</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="deleteRecord()"><span class='glyphicon glyphicon-minus'></span> Delete</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class='btn btn-primary' ng-click="refreshPage()"><span class='glyphicon glyphicon-refresh'></span></button>
+    </div>
+</section>
 <div  class="container-fluid well">
     <div class="col-md-12">
         <p>

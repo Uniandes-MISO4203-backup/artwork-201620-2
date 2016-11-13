@@ -28,6 +28,23 @@ SOFTWARE.
     mod.controller("nationalityEditCtrl", ["$scope", "$state", "nationality",
         function ($scope, $state, nationality) {
             $scope.currentRecord = nationality;
+            
+            $scope.goToList = function() {
+                $state.go('nationalityList');
+            }
+            
+            $scope.saveRecord = function() {
+                if ($scope.nationalityForm.$valid) {
+                    $scope.currentRecord.put().then(function (rc) {
+                        $state.go('nationalityDetail', {nationalityId: rc.id}, {reload: true});
+                    });
+                }
+            }
+            
+            $scope.cancel = function() {
+                $state.go('nationalityDetail');
+            }
+            
             $scope.actions = {
                 save: {
                     displayName: 'Save',

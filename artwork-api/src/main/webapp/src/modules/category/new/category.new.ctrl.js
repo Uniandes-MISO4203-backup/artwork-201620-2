@@ -35,9 +35,9 @@ SOFTWARE.
             }
             
             $scope.saveCategory = function() {
-                if ($scope.categoryForm.$valid) {
-                    categorys.post($scope.currentRecord).then(function (rc) {
-                        $state.go('categoryDetail', {categoryId: rc.id}, {reload: true});
+                if ($scope.nationalityForm.$valid) {
+                    nationalitys.post($scope.currentRecord).then(function (rc) {
+                        $state.go('nationalityDetail', {nationalityId: rc.id}, {reload: true});
                     });
                 }
             }

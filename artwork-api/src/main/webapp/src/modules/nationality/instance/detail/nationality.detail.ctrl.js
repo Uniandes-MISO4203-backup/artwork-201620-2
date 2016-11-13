@@ -29,6 +29,27 @@ SOFTWARE.
         function ($scope, $state, nationality,$rootScope) {
             $scope.currentRecord = nationality;
             var roles = $rootScope.roles;
+            
+            $scope.refreshPage = function(){
+                $state.reload();
+            }
+            
+            $scope.goToList = function() {
+                $state.go('nationalityList');
+            }
+            
+            $scope.newRecord = function() {
+                $state.go('nationalityNew');
+            }
+            
+            $scope.editRecord = function() {
+                $state.go('nationalityEdit');
+            }
+            
+            $scope.deleteRecord = function() {
+                $state.go('nationalityDelete');
+            }
+            
             $scope.actions = {
                 create: {
                     displayName: 'Create',
