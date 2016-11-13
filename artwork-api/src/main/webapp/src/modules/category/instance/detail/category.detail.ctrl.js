@@ -28,6 +28,29 @@ SOFTWARE.
     mod.controller("categoryDetailCtrl", ['$scope', "$state", "category",
         function ($scope, $state, category) {
             $scope.currentRecord = category;
+            
+            
+            $scope.refreshPage = function(){
+                $state.reload();
+            }
+            
+            $scope.goToList = function() {
+                $state.go('categoryList');
+            }
+            
+            $scope.newCategory = function() {
+                $state.go('categoryNew');
+            }
+            
+            $scope.editCategory = function() {
+                $state.go('categoryEdit');
+            }
+            
+            $scope.deleteCategory = function() {
+                $state.go('categoryDelete');
+            }
+            
+            
             $scope.actions = {
                 create: {
                     displayName: 'Create',

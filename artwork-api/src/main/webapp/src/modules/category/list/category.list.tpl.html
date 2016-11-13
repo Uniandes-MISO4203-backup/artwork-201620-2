@@ -23,7 +23,8 @@ SOFTWARE.
 -->
 <section>
     <div class="container">
-        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="newCategory()">Create Category</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="">Categories</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="newCategory()"><span class='glyphicon glyphicon-plus'></span> Create</button>
         <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class='btn btn-primary' ng-click="refreshPage()"><span class='glyphicon glyphicon-refresh'></span></button>
     </div>
 </section>

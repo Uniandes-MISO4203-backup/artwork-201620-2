@@ -29,6 +29,23 @@ SOFTWARE.
     mod.controller("categoryNewCtrl", ["$scope", "$state", "categorys",
         function ($scope, $state, categorys) {
             $scope.currentRecord = {};
+            
+            $scope.goToList = function() {
+                $state.go('categoryList');
+            }
+            
+            $scope.saveCategory = function() {
+                if ($scope.categoryForm.$valid) {
+                    categorys.post($scope.currentRecord).then(function (rc) {
+                        $state.go('categoryDetail', {categoryId: rc.id}, {reload: true});
+                    });
+                }
+            }
+            
+            $scope.cancel = function() {
+                $state.go('categoryList');
+            }
+            
             $scope.actions = {
                 save: {
                     displayName: 'Save',

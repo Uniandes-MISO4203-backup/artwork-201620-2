@@ -29,9 +29,13 @@ SOFTWARE.
         <alert type="warning">Image field must be a URL</alert>
     </ng-message>
 </div>
-<header>
-    <toolbar name="model.name" display-name="model.displayName" actions='actions'></toolbar>
-</header>
+<section>
+    <div class="container">
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="goToList()">Categories</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="saveCategory()"><span class='glyphicon glyphicon-save'></span> Save</button>
+        <button ng-if="roles.indexOf('admin') !== -1" style="margin-top: 10px; margin-bottom: 10px;" class="btn btn-primary" ng-click="cancel()"><span class='glyphicon glyphicon-remove'></span> Cancel</button>
+    </div>
+</section>
 <form novalidate name="categoryForm" role="form">
     <fieldset>
         <crud-form fields='model.fields' record='currentRecord' lists-of-values="references"></crud-form>
