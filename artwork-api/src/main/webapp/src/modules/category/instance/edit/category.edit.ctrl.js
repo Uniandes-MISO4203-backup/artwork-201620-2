@@ -28,6 +28,23 @@ SOFTWARE.
     mod.controller("categoryEditCtrl", ["$scope", "$state", "category",
         function ($scope, $state, category) {
             $scope.currentRecord = category;
+            
+            $scope.goToList = function() {
+                $state.go('categoryList');
+            }
+            
+            $scope.saveCategory = function() {
+                if ($scope.categoryForm.$valid) {
+                    $scope.currentRecord.put().then(function (rc) {
+                        $state.go('categoryDetail', {categoryId: rc.id}, {reload: true});
+                    });
+                }
+            }
+            
+            $scope.cancel = function() {
+                $state.go('categoryDetail');
+            }
+            
             $scope.actions = {
                 save: {
                     displayName: 'Save',
