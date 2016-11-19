@@ -3,7 +3,9 @@
     <div class="col-sm-12">
         <carousel interval="5000" no-wrap="noWrapSlides">
         <slide ng-repeat="slide in slides" active="slide.active">
-            <img ng-src="{{slide.image}}" style="margin:auto; height:200px;">
+            <a ui-sref="artworkClientDetail({artistId:slide.artist.id,artworkId: slide.id})">
+                <img ng-src="{{slide.image}}" style="margin:auto; height:200px;">
+            </a>
           <div class="carousel-caption">
             <h4>Nueva adquisición: {{slide.creationDate}}</h4>
             <p></p>
