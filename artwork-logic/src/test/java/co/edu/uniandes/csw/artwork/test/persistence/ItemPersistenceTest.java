@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 package co.edu.uniandes.csw.artwork.test.persistence;
+import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.ItemEntity;
 import co.edu.uniandes.csw.artwork.persistence.ItemPersistence;
@@ -115,6 +116,7 @@ public class ItemPersistenceTest {
     private void clearData() {
         em.createQuery("delete from ItemEntity").executeUpdate();
         em.createQuery("delete from ClientEntity").executeUpdate();
+        em.createQuery("delete from ArtworkEntity").executeUpdate();
     }
 
     /**
@@ -129,12 +131,14 @@ public class ItemPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-            fatherEntity = factory.manufacturePojo(ClientEntity.class);
-            fatherEntity.setId(1L);
-            em.persist(fatherEntity);
+        fatherEntity = factory.manufacturePojo(ClientEntity.class);
+        fatherEntity.setId(1L);
+        em.persist(fatherEntity);
         for (int i = 0; i < 3; i++) {
+            ArtworkEntity artwork = factory.manufacturePojo(ArtworkEntity.class);
+            em.persist(artwork);
             ItemEntity entity = factory.manufacturePojo(ItemEntity.class);
-            
+            entity.setArtwork(artwork);
             entity.setClient(fatherEntity);
             em.persist(entity);
             data.add(entity);
@@ -147,7 +151,7 @@ public class ItemPersistenceTest {
      */
     @Test
     public void createItemTest() {
-		PodamFactory factory = new PodamFactoryImpl();
+	PodamFactory factory = new PodamFactoryImpl();
         ItemEntity newEntity = factory.manufacturePojo(ItemEntity.class);
         newEntity.setClient(fatherEntity);
         ItemEntity result = itemPersistence.create(newEntity);
@@ -178,6 +182,15 @@ public class ItemPersistenceTest {
             }
             Assert.assertTrue(found);
         }
+    }
+    
+    @Test
+    public void getItemsByArtworkTest() {
+        ItemEntity entity = data.get(0);
+        ItemEntity item = itemPersistence.findByArtwork(entity.getClient().getId(), entity.getArtwork().getId());
+        Assert.assertNotNull(item);
+        Assert.assertEquals(entity.getName(), item.getName());
+        Assert.assertEquals(entity.getQty(), item.getQty());
     }
 
     /**

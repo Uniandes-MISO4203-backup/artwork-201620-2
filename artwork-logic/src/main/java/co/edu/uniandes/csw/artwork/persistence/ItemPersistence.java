@@ -63,6 +63,18 @@ public class ItemPersistence extends CrudPersistence<ItemEntity> {
         return q.getSingleResult();
     }
     
+    public ItemEntity findByArtwork(Long clientid, Long artworkid) {
+        TypedQuery<ItemEntity> q = em.createQuery("select p from ItemEntity p where (p.client.id=:clientid) and (p.artwork.id=:artworkid)", ItemEntity.class);
+        q.setParameter("clientid", clientid);
+        q.setParameter("artworkid", artworkid);
+        try {
+            ItemEntity result = q.getSingleResult();
+            return result;
+        } catch(Exception e) {
+            return null;
+        }  
+    }
+    
     public List<ItemEntity> findAll(Integer page, Integer maxRecords, Long clientid) {
         TypedQuery<ItemEntity> q = em.createQuery("select p from ItemEntity p where (p.client.id = :clientid)", ItemEntity.class);
         q.setParameter("clientid", clientid);
