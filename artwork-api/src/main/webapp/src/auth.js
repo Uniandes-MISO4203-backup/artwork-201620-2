@@ -44,7 +44,6 @@
                             $rootScope.category = true;
                             $rootScope.artist = true;
                             $rootScope.client = true;
-                            $rootScope.product = true;
                             $rootScope.nationality = true;
                             $rootScope.message = true;
                             $rootScope.profile = false;
