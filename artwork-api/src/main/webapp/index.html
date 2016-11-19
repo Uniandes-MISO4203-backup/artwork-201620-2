@@ -124,6 +124,10 @@ SOFTWARE.
 	<script src="src/modules/shoppingcart/shoppingCart.mod.js"></script>
         <script src="src/modules/shoppingcart/shoppingCart.dir.js"></script>
         <script src="src/modules/shoppingcart/list/shoppingCart.list.ctrl.js"></script>        
+	<script src="src/modules/checkout/checkout.mod.js"></script>
+        <script src="src/modules/checkout/checkout.dir.js"></script>        
+        <script src="src/modules/checkout/checkout.ctrl.js"></script>                
+        <script src="src/modules/checkout/list/checkout.list.ctrl.js"></script>                
         <!-- /include -->
         <!-- endbuild -->
 
@@ -152,6 +156,7 @@ SOFTWARE.
                                     <li ng-if="nationality"><a ui-sref="nationalityList">Nationality</a></li>
                                     <li ng-if="message"><a ui-sref="messageList">Messages</a></li>
                                     <li ng-if="item"><a ui-sref="wishList">Wishlist</a></li>
+                                    <li ng-if="checkout"><a ui-sref="checkoutList">Orders</a></li>                                    
                                     <li ng-if="shoppingcart"><a ui-sref="shoppingCart"><span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>                                    
                                     <login-button></login-button>                                    
                                 </ul>

@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.artwork.api.ICreditCardLogic;
 import co.edu.uniandes.csw.artwork.dtos.minimum.CreditCardDTO;
 import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
 import co.edu.uniandes.csw.auth.provider.StatusCreated;
+import co.edu.uniandes.csw.auth.stormpath.Utils;
+import com.stormpath.sdk.account.Account;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -18,6 +20,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -38,6 +41,9 @@ public class CreditCardResource {
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
     @PathParam("clientsId") private Long clientsId;
+    
+    @Context private HttpServletRequest request;
+    private final static String CLIENT_ID = "client_id";
 
     /**
      * Retrieves representation of an instance of co.edu.uniandes.csw.artwork.resources.CreditCardResource
@@ -46,6 +52,18 @@ public class CreditCardResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<CreditCardDTO> getCreditCards() {
+        
+        if (clientsId == null) {
+            String accountHref = request.getRemoteUser();
+            if (accountHref == null) {
+                return null;
+            }
+
+            Account account = Utils.getClient().getResource(accountHref, Account.class);
+            int clientId = (int)account.getCustomData().get(CLIENT_ID);
+            clientsId = new Long(clientId);        
+        }
+        
         List<CreditCardEntity> items = creditCardLogic.getItems(clientsId);
         return creditCardEntity2DTO(items);
     }    

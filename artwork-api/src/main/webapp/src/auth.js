@@ -16,6 +16,7 @@
                         $rootScope.profile = false;
                         $rootScope.profileArtist = false;
                         $rootScope.shoppingcart = false;
+                        $rootScope.checkout = false;
                     } else {
                         $rootScope.authenticated = true;
                         var roles = $rootScope.roles = response.roles;
@@ -29,7 +30,8 @@
                             $rootScope.message = true;
                             $rootScope.item = true;
                             $rootScope.profileArtist = false;
-                            $rootScope.shoppingcart = true;                            
+                            $rootScope.shoppingcart = true;
+                            $rootScope.checkout = true;                            
                         }
                         if (roles.indexOf("artist") !== -1) {
                             $rootScope.category = false;
