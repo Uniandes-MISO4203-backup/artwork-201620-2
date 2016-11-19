@@ -157,7 +157,7 @@ public class ItemLogicTest {
      * @generated
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             ArtworkEntity artwork = factory.manufacturePojo(ArtworkEntity.class);
             em.persist(artwork);
             artworkData.add(artwork);
@@ -175,8 +175,8 @@ public class ItemLogicTest {
             ItemEntity entity = factory.manufacturePojo(ItemEntity.class);
             entity.setClient(fatherEntity);
 
-            entity.setArtwork(artworkData.get(0));
-            entity.setProduct(productData.get(0));
+            entity.setArtwork(artworkData.get(i));
+            entity.setProduct(productData.get(i));
 
             em.persist(entity);
             data.add(entity);
@@ -190,6 +190,7 @@ public class ItemLogicTest {
     @Test
     public void createItemTest() {
         ItemEntity newEntity = factory.manufacturePojo(ItemEntity.class);
+        newEntity.setArtwork(artworkData.get(3));
         ItemEntity result = itemLogic.createItem(fatherEntity.getId(), newEntity);
         Assert.assertNotNull(result);
         ItemEntity entity = em.find(ItemEntity.class, result.getId());
@@ -198,6 +199,21 @@ public class ItemLogicTest {
         Assert.assertEquals(newEntity.getQty(), entity.getQty());
     }
 
+    @Test
+    public void createAddQtyItemTest() {
+        ItemEntity newEntity = factory.manufacturePojo(ItemEntity.class);
+        ArtworkEntity artwork = artworkData.get(3);
+        newEntity.setArtwork(artwork);
+        ItemEntity temp = itemLogic.createItem(fatherEntity.getId(), newEntity);
+        newEntity = factory.manufacturePojo(ItemEntity.class);
+        newEntity.setArtwork(artwork);
+        ItemEntity result = itemLogic.createItem(fatherEntity.getId(), newEntity);
+        Assert.assertNotNull(result);
+        ItemEntity entity = em.find(ItemEntity.class, result.getId());
+        Long qty = temp.getQty()+1;
+        Assert.assertEquals(qty, entity.getQty());
+    }
+    
     /**
      * Prueba para consultar la lista de Items
      *

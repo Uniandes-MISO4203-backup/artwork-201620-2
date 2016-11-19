@@ -111,8 +111,18 @@ public class ItemLogic implements IItemLogic {
     public ItemEntity createItem(Long clientid, ItemEntity entity) {
         ClientEntity client = clientLogic.getClient(clientid);
         entity.setClient(client);
+        ItemEntity item = getCurrentItem(clientid, entity.getArtwork().getId());
+        if(item!=null) {
+            item.setQty(item.getQty()+1);
+            persistence.update(item);
+            return item;
+        }
         ItemEntity response = persistence.create(entity);
         return response;
+    }
+    
+    private ItemEntity getCurrentItem(Long clientId, Long artworkId) {
+        return persistence.findByArtwork(clientId, artworkId);
     }
 
     /**
