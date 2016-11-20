@@ -30,6 +30,7 @@ import co.edu.uniandes.csw.artwork.entities.ItemEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.dtos.minimum.ItemDTO;
 import co.edu.uniandes.csw.artwork.dtos.minimum.MessageDTO;
+import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.resources.ItemResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import java.io.File;
@@ -71,7 +72,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class ItemTest {
 
-      private WebTarget target;
+    private WebTarget target;
     private final String apiPath = Utils.apiPath;
     private final String username = Utils.username;
     private final String password = Utils.password;    
@@ -85,8 +86,10 @@ public class ItemTest {
     private final int Created = Response.Status.CREATED.getStatusCode();
     private final int OkWithoutContent = Response.Status.NO_CONTENT.getStatusCode();   
     
-    ClientEntity fatherClientEntity;
     private final String messagePath = "wishList";
+    
+    private ArtworkEntity artwork;
+    private ClientEntity fatherEntity;
     
     @Deployment
     public static WebArchive createDeployment() {
@@ -129,14 +132,18 @@ public class ItemTest {
      * @generated
      */
     public void insertData() {
-
         em.createNativeQuery("INSERT INTO ClientEntity (ID, NAME, AGE) VALUES(99999, 'Test User', 35)").executeUpdate();
-        fatherClientEntity = em.getReference(ClientEntity.class, 99999L);
+        fatherEntity = em.getReference(ClientEntity.class, 99999L);
 
+        artwork = factory.manufacturePojo(ArtworkEntity.class);
+        artwork.setId(1L);
+        em.persist(artwork); 
+        
         for (int i = 0; i < 3; i++) {            
             ItemEntity item = factory.manufacturePojo(ItemEntity.class);
             item.setId(i + 1L);
-            item.setClient(fatherClientEntity);
+            item.setClient(fatherEntity);
+            item.setArtwork(artwork);
             em.persist(item);
             oraculo.add(item);
         }
@@ -154,7 +161,6 @@ public class ItemTest {
             clearData();
             insertData();
             utx.commit();
-            
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -196,7 +202,13 @@ public class ItemTest {
      */
     @Test
     public void createItemTest() throws IOException {
-        ItemDTO item = factory.manufacturePojo(ItemDTO.class);
+        ItemEntity itemE = factory.manufacturePojo(ItemEntity.class);
+        itemE.setId(4 + 1L);
+        itemE.setClient(fatherEntity);
+        itemE.setArtwork(artwork);
+        
+        ItemDetailDTO item = new ItemDetailDTO(itemE);
+        
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
