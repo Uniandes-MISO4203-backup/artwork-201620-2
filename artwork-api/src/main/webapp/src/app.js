@@ -41,7 +41,8 @@ SOFTWARE.
         'artistLikeModule',
         'qualifyModule',
         'wishListModule',
-        'shoppingCartModule'        
+        'shoppingCartModule',
+        'checkoutModule'        
     ]);
 
     mod.config(['$logProvider', function ($logProvider) {
@@ -105,6 +106,11 @@ SOFTWARE.
                         label: 'Messages',
                         icon: 'list-alt',
                         state: 'messageList'                    
+                    },{
+                        id: 'cart',
+                        label: 'Shopping Cart',
+                        icon: 'shopping-cart',
+                        state: 'shoppingCart'                    
                     }],
                 'artist': [{
                         id: 'artist',

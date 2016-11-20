@@ -60,7 +60,7 @@ public class ClientResource {
 
     private static final String CLIENT_HREF = "https://api.stormpath.com/v1/groups/5xJfg140VZoCF2Ny36Y7k1";
     private static final String ADMIN_HREF = "https://api.stormpath.com/v1/groups/G6wKFbwsYpo7yFR3ziC4v";    
-
+    
     @Inject private IClientLogic clientLogic;
     @Context private HttpServletResponse response;
     @Context private HttpServletRequest req;
@@ -197,5 +197,10 @@ public class ClientResource {
     public Class<CreditCardResource> getCreditCardResource(@PathParam("clientsId") Long clientsId){
         existsClient(clientsId);
         return CreditCardResource.class;
-    } 
+    }
+    
+    @Path("/creditCard")
+    public Class<CreditCardResource> getClientCreditCardResource(){
+        return CreditCardResource.class;
+    }     
 }

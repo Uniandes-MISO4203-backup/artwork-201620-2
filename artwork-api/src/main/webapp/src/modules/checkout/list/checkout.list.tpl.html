@@ -1,0 +1,43 @@
+<h3>My Recent Orders</h3>
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <th class="col-sm-1">Order Date</th>
+                        <th class="col-sm-1">Total</th>
+                        <th class="col-sm-2">Payment Method</th>
+                        <th class="col-sm-2">Shipping Address</th>                        
+                        <th class="col-sm-4">Artworks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="order in records">
+                        <td>
+                            {{order.checkOutDate}}
+                        </td>
+                        <td>
+                            <p>{{order.total| currency}}</p>
+                        </td>
+                        <td>
+                            {{order.creditCard.type}} {{order.creditCard.number}}
+                        </td>
+                        <td>
+                            {{order.shippingAddress}}
+                        </td>                        
+                        <td>
+                            <div class="row">
+                                <div ng-repeat="item in order.checkOutItems" class="col-sm-3">
+                                    <a href="#" onclick="return false;" class="thumbnail">
+                                        <img class="thumbnail" src="{{item.artwork.image}}" alt="{{item.artwork.name}} ({{item.qty}})" title="{{item.artwork.name}} ({{item.qty}})">
+                                </a>
+                              </div>
+                            </div>
+                        </td>                         
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section> <!--/#cart_items-->

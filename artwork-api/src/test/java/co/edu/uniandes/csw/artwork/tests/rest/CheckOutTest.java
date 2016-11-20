@@ -5,14 +5,15 @@
  */
 package co.edu.uniandes.csw.artwork.tests.rest;
 
-import co.edu.uniandes.csw.artwork.dtos.minimum.ArtworkDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ClientDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ShoppingCartDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ShoppingCartItemDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.CheckOutDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.CheckOutItemDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.CreditCardDTO;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
+import co.edu.uniandes.csw.artwork.entities.CheckOutEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
+import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
 import co.edu.uniandes.csw.artwork.entities.ShoppingCartItemEntity;
-import co.edu.uniandes.csw.artwork.resources.ShoppingCartResource;
+import co.edu.uniandes.csw.artwork.resources.CheckOutResource;
 import co.edu.uniandes.csw.artwork.tests.Utils;
 import co.edu.uniandes.csw.auth.model.UserDTO;
 import co.edu.uniandes.csw.auth.security.JWT;
@@ -20,9 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import static java.util.Calendar.DAY_OF_YEAR;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,6 +34,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -51,13 +53,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author juan
  */
 @RunWith(Arquillian.class)
-public class ShoppingCartTest {
+public class CheckOutTest {
     
-    ArtworkEntity artwork;
-    ArtworkEntity artwork2;    
     ClientEntity fatherEntity;
-    Long notExistId = 999L;
-    private List<ShoppingCartItemEntity> data = new ArrayList<ShoppingCartItemEntity>();
+    CreditCardEntity creditCard;
+    ArtworkEntity artwork;
+    List<ShoppingCartItemEntity> shoppingCart = new ArrayList<>();   
+    private List<CheckOutEntity> data = new ArrayList<>();
     
     private WebTarget target;
     private final String apiPath = Utils.apiPath;
@@ -68,7 +70,7 @@ public class ShoppingCartTest {
     private final int Created = Response.Status.CREATED.getStatusCode();
     private final int OkWithoutContent = Response.Status.NO_CONTENT.getStatusCode();    
     
-    private final String itemPath = "shoppingCart";    
+    private final String itemPath = "checkout";    
 
     @ArquillianResource
     private URL deploymentURL;    
@@ -82,7 +84,7 @@ public class ShoppingCartTest {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ShoppingCartResource.class.getPackage())
+                .addPackage(CheckOutResource.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -91,7 +93,7 @@ public class ShoppingCartTest {
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/shiro.ini"))
                 // El archivo web.xml es necesario para el despliegue de los servlets
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"));
-    }       
+    }        
     
     private WebTarget createWebTarget() {
         return ClientBuilder.newClient().target(deploymentURL.toString()).path(apiPath);
@@ -103,51 +105,53 @@ public class ShoppingCartTest {
     @Inject
     private UserTransaction utx;
 
-     /**
+        /**
      * Limpia las tablas que están implicadas en la prueba.
      *
      * @generated
      */
     private void clearData() {
         em.createQuery("delete from ShoppingCartItemEntity").executeUpdate();
+        em.createQuery("delete from CheckOutItemEntity").executeUpdate();
+        em.createQuery("delete from CheckOutEntity").executeUpdate();
         em.createQuery("delete from ArtworkEntity").executeUpdate();
-        em.createQuery("delete from ClientEntity").executeUpdate();
-    }   
+        em.createQuery("delete from CreditCardEntity").executeUpdate();        
+        em.createQuery("delete from ClientEntity").executeUpdate();        
+    }  
     
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
+     *
+     * @generated
+     */
     private void insertData() {
+
         em.createNativeQuery("INSERT INTO ClientEntity (ID, NAME, AGE) VALUES(99999, 'Test User', 35)").executeUpdate();
         fatherEntity = em.getReference(ClientEntity.class, 99999L);
-        em.persist(fatherEntity);
+        em.persist(fatherEntity);     
         
         artwork = factory.manufacturePojo(ArtworkEntity.class);
-        artwork.setId(1L);
-        em.persist(artwork);        
+        em.persist(artwork);
         
-        artwork2 = factory.manufacturePojo(ArtworkEntity.class);
-        artwork2.setId(2L);
-        em.persist(artwork2);            
+        ShoppingCartItemEntity item = factory.manufacturePojo(ShoppingCartItemEntity.class);
+        item.setClient(fatherEntity);
+        item.setArtwork(artwork);
+        em.persist(item);
+        shoppingCart.add(item);
+        
+        creditCard = factory.manufacturePojo(CreditCardEntity.class);
+        em.persist(creditCard);
         
         for (int i = 0; i < 3; i++) {
-            ShoppingCartItemEntity entity = factory.manufacturePojo(ShoppingCartItemEntity.class);
+            CheckOutEntity entity = factory.manufacturePojo(CheckOutEntity.class);
             entity.setClient(fatherEntity);
-            entity.setArtwork(artwork);
-
-            if (i == 0) {
-                entity.setQty(1L);
-            } 
-            else if (i == 1) {
-                entity.setQty(10L);
-            } 
+            entity.setCreditCard(creditCard);            
             
             em.persist(entity);
             data.add(entity);
-            
-            while (Objects.equals(entity.getId(), notExistId)) {
-                notExistId = ThreadLocalRandom.current().nextLong();
-            }            
-        }           
-    }
-
+        }  
+    }      
+    
         /**
      * Configuración inicial de la prueba.
      *
@@ -170,8 +174,7 @@ public class ShoppingCartTest {
         }
         target = createWebTarget()
                 .path(itemPath);
-    }    
-    
+    }
     
     /**
      * Login para poder consultar los diferentes servicios
@@ -193,104 +196,77 @@ public class ShoppingCartTest {
         } else {
             return null;
         }
-    }       
-    
-    /**
+    }   
+
+        /**
      * Prueba para crear un Item
      *
      * @generated
      */
     @Test
-    public void createShoppingCartItemTest() throws IOException {
-        ShoppingCartItemDTO item = factory.manufacturePojo(ShoppingCartItemDTO.class);
-        item.setArtwork(new ArtworkDTO(artwork2));
-        item.setClient(new ClientDTO(fatherEntity));
-        
+    public void createCheckOutTest() throws IOException {
+        CheckOutDTO item = factory.manufacturePojo(CheckOutDTO.class);
+        item.setCreditCard(new CreditCardDTO(creditCard));
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId)
             .post(Entity.entity(item, MediaType.APPLICATION_JSON));
 
-        ShoppingCartItemDTO itemTest = (ShoppingCartItemDTO)response.readEntity(ShoppingCartItemDTO.class);
-        Assert.assertEquals(Created, response.getStatus());
-        Assert.assertEquals(item.getQuantity(), itemTest.getQuantity());
-        Assert.assertEquals(item.getArtwork().getId(), itemTest.getArtwork().getId());
+        CheckOutDTO result = (CheckOutDTO)response.readEntity(CheckOutDTO.class);
+        Assert.assertNotNull(result);
         
-        ShoppingCartItemEntity entity = em.find(ShoppingCartItemEntity.class, itemTest.getId());
-        Assert.assertNotNull(entity);
-
-        Assert.assertEquals(itemTest.getId(), entity.getId());
-        Assert.assertEquals(item.getQuantity(), entity.getQty());
-        Assert.assertEquals(item.getArtwork().getId(), entity.getArtwork().getId());
-    }    
-    
-    
-    /**
-     * Prueba para crear un Item
-     *
-     * @generated
-     */
-    @Test
-    public void increaseShoppingCartItemTest() throws IOException {
-        ShoppingCartItemDTO item = factory.manufacturePojo(ShoppingCartItemDTO.class);
-        item.setArtwork(new ArtworkDTO(artwork2));
-        item.setClient(new ClientDTO(fatherEntity));
-        Long expectedQty = item.getQuantity() + 1;
+        ShoppingCartItemEntity shoppingItem = shoppingCart.get(0);
         
-        Cookie cookieSessionId = login(username, password);
-
-        Response response = target
-            .request().cookie(cookieSessionId)
-            .post(Entity.entity(item, MediaType.APPLICATION_JSON));
-
-        response.readEntity(ShoppingCartItemDTO.class);
-        Assert.assertEquals(Created, response.getStatus());
-
-        response = target
-            .request().cookie(cookieSessionId)
-            .post(Entity.entity(item, MediaType.APPLICATION_JSON));        
+        CheckOutEntity entity = em.find(CheckOutEntity.class, result.getId());
+        Assert.assertEquals(result.getId(), entity.getId());
+        Assert.assertEquals(result.getShippingAddress(), entity.getShippingAddress());
         
-        ShoppingCartItemDTO itemTest = (ShoppingCartItemDTO)response.readEntity(ShoppingCartItemDTO.class);        
-        Assert.assertEquals(Created, response.getStatus());
-        Assert.assertEquals(expectedQty, itemTest.getQuantity());
-        Assert.assertEquals(item.getArtwork().getId(), itemTest.getArtwork().getId());
-        Assert.assertEquals(item.getClient().getId(), itemTest.getClient().getId());          
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(entity.getCheckOutDate());
         
-        ShoppingCartItemEntity entity = em.find(ShoppingCartItemEntity.class, itemTest.getId());
-        Assert.assertNotNull(entity);
-
-        Assert.assertEquals(itemTest.getId(), entity.getId());
-        Assert.assertEquals(expectedQty, entity.getQty());
-        Assert.assertEquals(item.getArtwork().getId(), entity.getArtwork().getId());
-        Assert.assertEquals(item.getClient().getId(), entity.getClient().getId());        
-    }      
+        Calendar calresult = Calendar.getInstance();
+        calresult.setTime(result.getCheckOutDate());
+        
+        Assert.assertEquals(cal.get(DAY_OF_YEAR), calresult.get(DAY_OF_YEAR));
+        Assert.assertEquals(result.getCreditCard().getNumber(), entity.getCreditCard().getNumber());
+        
+        Long total =  shoppingItem.getQty() *  shoppingItem.getArtwork().getPrice();
+        Assert.assertEquals(result.getTotal(), total);
+        
+        List<CheckOutItemDTO> items = result.getCheckOutItems();
+        Assert.assertEquals(result.getCheckOutItems().size(), items.size());                
+        
+        CheckOutItemDTO checkOutItem = result.getCheckOutItems().get(0);
+        Assert.assertEquals(checkOutItem.getQty(), shoppingItem.getQty());
+        Assert.assertEquals(checkOutItem.getArtwork().getId(), shoppingItem.getArtwork().getId());        
+    } 
     
-    
-    /**
+        /**
      * Prueba para consultar la lista de Items
      *
      * @generated
      */
     @Test
-    public void getShoppingCartTest() throws IOException {
+    public void listCheckOutTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
             .request().cookie(cookieSessionId).get();
 
-        ShoppingCartDTO itemTest = (ShoppingCartDTO)response.readEntity(ShoppingCartDTO.class);
+        String listItem = response.readEntity(String.class);
+        List<CheckOutDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(3, itemTest.getCartItems().size());
-    }        
+        Assert.assertEquals(3, listItemTest.size());
+    }
     
-    /**
-     * Prueba para consultar un Item
+     /**
+     * Prueba para consultar la lista de Items
      *
      * @generated
      */
     @Test
-    public void getShoppingCartPagedTest() throws IOException {
+    public void listCheckOutPagedTest() throws IOException {
         Cookie cookieSessionId = login(username, password);
 
         Response response = target
@@ -299,24 +275,9 @@ public class ShoppingCartTest {
                 .request()
                 .cookie(cookieSessionId).get();
 
-        ShoppingCartDTO itemTest = (ShoppingCartDTO)response.readEntity(ShoppingCartDTO.class);
+        String listItem = response.readEntity(String.class);
+        List<CheckOutDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
         Assert.assertEquals(Ok, response.getStatus());
-        Assert.assertEquals(3, itemTest.getCartItems().size());
-    }       
-    
-    /**
-     * Prueba para eliminar un Item
-     *
-     * @generated
-     */
-    @Test
-    public void deleteShoppingCartItemTest() {
-        Cookie cookieSessionId = login(username, password);
-        ShoppingCartItemDTO item = new ShoppingCartItemDTO(data.get(0));
-        Response response = target
-            .path(item.getId().toString())
-            .request().cookie(cookieSessionId).delete();
-
-        Assert.assertEquals(OkWithoutContent, response.getStatus());
-    }       
+        Assert.assertEquals(3, listItemTest.size());
+    }    
 }

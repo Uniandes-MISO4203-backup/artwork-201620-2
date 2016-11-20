@@ -1,4 +1,10 @@
-<h3>Shopping Cart</h3> <b>Total : {{cart.total | currency}}</b>
+<h3>Shopping Cart</h3>
+<section>
+    <div class="container">
+        <check-out cart="cart"></check-out>        
+        <b>Total : {{cart.total | currency}}</b>        
+    </div>
+</section>
 <section id="cart_items">
     <div class="container">
         <div class="table-responsive cart_info">
