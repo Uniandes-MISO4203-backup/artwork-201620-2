@@ -16,6 +16,15 @@
         };
 
         $scope.checkOut = checkOut;
+        var alertBox = function(){
+            $modal.open({
+                templateUrl: 'src/modules/checkout/checkoutalert.tpl.html',
+                controller: modalAlertController,
+                scope: $scope
+            });
+        };
+
+        $scope.alertBox = alertBox;        
     });
     
     modalController.$inject = ['$scope', '$modalInstance', '$state', 'creditcards', 'Restangular'];
@@ -30,8 +39,7 @@
         
         $scope.checkOut = function(){
             r.all('checkout').post($scope.checkout).then(function() { 
-                alert('Your order was successfully created!');
-                $modalInstance.close($state.go('checkoutList'));                
+                $modalInstance.close($scope.alertBox());
             });
         };
 
@@ -41,5 +49,12 @@
         
         $scope.creditcards = creditcards;
     };    
+    
+    modalAlertController.$inject = ['$scope', '$modalInstance', '$state'];
+    function modalAlertController($scope, $modalInstance, $state){
+        $scope.cancel = function () {
+            $modalInstance.close($state.go('checkoutList'));
+        };
+    };        
     
 })(window.angular);

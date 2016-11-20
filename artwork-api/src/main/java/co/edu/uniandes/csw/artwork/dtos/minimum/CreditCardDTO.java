@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.artwork.dtos.minimum;
 
 import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -14,7 +15,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author juan
  */
 @XmlRootElement
-public class CreditCardDTO {
+public class CreditCardDTO implements Serializable {
     
     private Long id;
     
