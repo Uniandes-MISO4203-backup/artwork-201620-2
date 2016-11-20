@@ -112,8 +112,8 @@ public class CreditCardTest {
      * @generated
      */
     public void insertData() {
-        fatherClientEntity = factory.manufacturePojo(ClientEntity.class);
-        fatherClientEntity.setId(1L);
+        em.createNativeQuery("INSERT INTO ClientEntity (ID, NAME, AGE) VALUES(99999, 'Test User', 35)").executeUpdate();
+        fatherClientEntity = em.getReference(ClientEntity.class, 99999L);
         em.persist(fatherClientEntity);
 
         for (int i = 0; i < 3; i++) {            
@@ -145,6 +145,7 @@ public class CreditCardTest {
                 e1.printStackTrace();
             }
         }
+        
         target = createWebTarget()
                 .path(clientPath)
                 .path(fatherClientEntity.getId().toString())
@@ -244,6 +245,27 @@ public class CreditCardTest {
         Assert.assertEquals(3, listItemTest.size());
     }    
     
+    /**
+     * Prueba para consultar la lista de Items
+     *
+     * @generated
+     */
+    @Test
+    public void listCreditCardUserTest() throws IOException {
+        Cookie cookieSessionId = login(username, password);
+
+        target = createWebTarget()
+                .path(clientPath)
+                .path(itemPath);
+        
+        Response response = target
+            .request().cookie(cookieSessionId).get();
+
+        String listItem = response.readEntity(String.class);
+        List<CreditCardDTO> listItemTest = new ObjectMapper().readValue(listItem, List.class);
+        Assert.assertEquals(Ok, response.getStatus());
+        Assert.assertEquals(3, listItemTest.size());
+    }
     
     /**
      * Prueba para actualizar un Item

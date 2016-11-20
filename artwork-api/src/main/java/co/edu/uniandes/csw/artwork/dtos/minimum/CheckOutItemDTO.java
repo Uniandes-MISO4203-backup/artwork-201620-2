@@ -24,6 +24,14 @@ public class CheckOutItemDTO implements Serializable {
     @PodamExclude
     private ArtworkDTO artwork;    
 
+    CheckOutItemDTO(CheckOutItemEntity entity) {
+        this.setQty(entity.getQty());
+        this.setArtwork(new ArtworkDTO(entity.getArtwork()));
+    }
+
+    public CheckOutItemDTO() {
+    }
+    
     public Long getId() {
         return id;
     }

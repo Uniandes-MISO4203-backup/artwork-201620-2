@@ -36,7 +36,7 @@ public class CheckOutPersistence extends CrudPersistence<CheckOutEntity>{
     
     public List<CheckOutEntity> findAll(Integer page, Integer maxRecords, Long clientid) {
 
-        TypedQuery<CheckOutEntity> q = em.createQuery("select p from CheckOutEntity p where (p.client.id = :clientid)", CheckOutEntity.class);
+        TypedQuery<CheckOutEntity> q = em.createQuery("select p from CheckOutEntity p where (p.client.id = :clientid) order by p.checkOutDate DESC", CheckOutEntity.class);
         q.setParameter("clientid", clientid);
         
         if (page != null && maxRecords != null) {

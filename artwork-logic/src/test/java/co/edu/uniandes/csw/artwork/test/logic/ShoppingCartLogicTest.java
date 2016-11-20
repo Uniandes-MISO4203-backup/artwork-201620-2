@@ -10,7 +10,7 @@ import co.edu.uniandes.csw.artwork.ejbs.ShoppingCartItemLogic;
 import co.edu.uniandes.csw.artwork.entities.ArtworkEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
 import co.edu.uniandes.csw.artwork.entities.ShoppingCartItemEntity;
-import co.edu.uniandes.csw.artwork.persistence.CreditCardPersistence;
+import co.edu.uniandes.csw.artwork.persistence.ShoppingCartItemPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -61,11 +61,10 @@ public class ShoppingCartLogicTest {
                 .addPackage(ShoppingCartItemEntity.class.getPackage())
                 .addPackage(ShoppingCartItemLogic.class.getPackage())
                 .addPackage(IShoppingCartItemLogic.class.getPackage())
-                .addPackage(CreditCardPersistence.class.getPackage())
+                .addPackage(ShoppingCartItemPersistence.class.getPackage())                
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
     
     @Before
     public void configTest() {

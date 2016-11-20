@@ -20,10 +20,19 @@
     
     modalController.$inject = ['$scope', '$modalInstance', '$state', 'creditcards', 'Restangular'];
     function modalController($scope, $modalInstance, $state, creditcards, r){
-        var checkout = $scope.checkout;
+        
+        $scope.checkout = {
+            shippingAddress: '',
+            creditCard : {
+                id: ''
+            }
+        };
         
         $scope.checkOut = function(){
-            r.all('checkout').post(checkout)
+            r.all('checkout').post($scope.checkout).then(function() { 
+                alert('Your order was successfully created!');
+                $modalInstance.close($state.go('checkoutList'));                
+            });
         };
 
         $scope.cancel = function () {

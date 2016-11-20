@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.artwork.ejbs;
 
 import co.edu.uniandes.csw.artwork.api.ICheckOutLogic;
 import co.edu.uniandes.csw.artwork.api.IClientLogic;
+import co.edu.uniandes.csw.artwork.api.IShoppingCartItemLogic;
 import co.edu.uniandes.csw.artwork.entities.CheckOutEntity;
 import co.edu.uniandes.csw.artwork.entities.CheckOutItemEntity;
 import co.edu.uniandes.csw.artwork.entities.ClientEntity;
@@ -31,9 +32,12 @@ public class CheckOutLogic implements ICheckOutLogic {
     @Inject
     private IClientLogic clientLogic;
     
+    @Inject
+    private IShoppingCartItemLogic itemLogic;    
+    
     @Override
     public int countItems() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return persistence.count();
     }
 
     @Override
@@ -58,8 +62,10 @@ public class CheckOutLogic implements ICheckOutLogic {
             CheckOutItemEntity checkOutItem = new CheckOutItemEntity();
             checkOutItem.setArtwork(item.getArtwork());
             checkOutItem.setQty(item.getQty());
+            checkOutItem.setCheckOut(entity);
             checkOutList.add(checkOutItem);
             total += item.getArtwork().getPrice() * item.getQty();
+            itemLogic.removeItem(item.getId());
         }
         
         entity.setTotal(total);

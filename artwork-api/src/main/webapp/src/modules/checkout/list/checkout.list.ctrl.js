@@ -2,15 +2,15 @@
 
     var mod = ng.module("checkoutModule");
 
-    mod.controller("checkoutListCtrl", ["$scope", '$state', 'item', '$stateParams', 'Restangular',
-        function ($scope, $state, item, $params, r) {
-            $scope.cart = item;
+    mod.controller("checkoutListCtrl", ["$scope", '$state', 'item', '$stateParams',
+        function ($scope, $state, item, $params) {
+            $scope.records = item;
             this.itemsPerPage = $params.limit;
             this.currentPage = $params.page;
-            this.totalItems = item.cartItems.totalRecords;
+            this.totalItems = item.totalRecords;
 
             this.pageChanged = function () {
-                $state.go('shoppingCart', {page: this.currentPage});
+                $state.go('checkoutList', {page: this.currentPage});
             };
         }]);
 })(window.angular);

@@ -6,9 +6,11 @@
 package co.edu.uniandes.csw.artwork.resources;
 
 import co.edu.uniandes.csw.artwork.api.ICheckOutLogic;
+import co.edu.uniandes.csw.artwork.api.ICreditCardLogic;
 import co.edu.uniandes.csw.artwork.dtos.minimum.CheckOutDTO;
-import co.edu.uniandes.csw.artwork.dtos.minimum.ShoppingCartItemDTO;
+import co.edu.uniandes.csw.artwork.dtos.minimum.CreditCardDTO;
 import co.edu.uniandes.csw.artwork.entities.CheckOutEntity;
+import co.edu.uniandes.csw.artwork.entities.CreditCardEntity;
 import co.edu.uniandes.csw.auth.provider.StatusCreated;
 import co.edu.uniandes.csw.auth.stormpath.Utils;
 import com.stormpath.sdk.account.Account;
@@ -17,22 +19,29 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author juan
  */
 @Path("/checkout")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class CheckOutResource {
     
     private final static String CLIENT_ID = "client_id";
     
     @Inject private ICheckOutLogic itemLogic;
+    @Inject private ICreditCardLogic creditCardLogic;
+    
     @Context private HttpServletResponse response;
     @QueryParam("page") private Integer page;
     @QueryParam("limit") private Integer maxRecords;
@@ -77,7 +86,7 @@ public class CheckOutResource {
             return listEntity2DTO(itemLogic.getItems(page, maxRecords, clientsId));
         }
             
-        return listEntity2DTO(itemLogic.getItems(clientsId));
+        return listEntity2DTO(itemLogic.getItems(1, 10, clientsId));
     }      
     
     /**
@@ -98,6 +107,9 @@ public class CheckOutResource {
         Account account = Utils.getClient().getResource(accountHref, Account.class);
         int clientId = (int) account.getCustomData().get(CLIENT_ID);
         Long clientsId = new Long(clientId);
+        
+        CreditCardEntity creditCard = creditCardLogic.getItem(dto.getCreditCard().getId());
+        dto.setCreditCard(new CreditCardDTO(creditCard));
         
         return new CheckOutDTO(itemLogic.addItem(clientsId, dto.toEntity()));
     }       
